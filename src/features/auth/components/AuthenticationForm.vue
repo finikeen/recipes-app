@@ -2,7 +2,7 @@
   <div class="auth-form">
     <h2 class="auth-form__title">{{ isLogin ? "Login" : "Sign Up" }}</h2>
 
-    <form @submit.prevent="handleSubmit" class="auth-form__fields" novalidate>
+    <form @submit.prevent="handleSubmit" class="auth-form__fields">
       <div class="auth-form__field">
         <label for="auth-email" class="auth-form__label">Email</label>
         <InputText
@@ -23,7 +23,7 @@
           :feedback="false"
           toggleMask
           fluid
-          aria-required="true"
+          :inputProps="{ 'aria-required': 'true' }"
         />
       </div>
 
