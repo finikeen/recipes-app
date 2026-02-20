@@ -74,6 +74,8 @@ function handleSubmit() {
 </script>
 
 <style scoped>
+@reference "tailwindcss";
+
 .auth-form {
   @apply flex flex-col gap-6 w-full max-w-sm mx-auto;
 }

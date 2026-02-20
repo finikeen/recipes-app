@@ -9,6 +9,8 @@ import AuthenticationForm from "@/features/auth/components/AuthenticationForm.vu
 </script>
 
 <style scoped>
+@reference "tailwindcss";
+
 .auth-view {
   @apply flex items-center justify-center min-h-[60vh] px-4;
 }
