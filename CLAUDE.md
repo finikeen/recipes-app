@@ -61,6 +61,8 @@ src/
 
 ## Additional Coding Preferences
 
+- Accessible form labels and ARIA attributes where appropriate (WCAG 2.1 Level AA standard)
+- Responsive layout suitable for mobile and desktop
 - Do NOT use semicolons for JavaScript
 - Do NOT apply tailwind classes directly to component templates unless essential or just 2 at most. If an element needs more than 2 tailwind classes, combine them into a custom class using the `@apply` directive.
 - Use minimal project dependencies, where possible

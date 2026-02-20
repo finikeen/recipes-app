@@ -5,7 +5,12 @@
       "Bash(npm install:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "WebSearch"
+      "WebSearch",
+      "mcp__primevue__get_component",
+      "mcp__primevue__get_component_props",
+      "mcp__primevue__get_component_import",
+      "mcp__primevue__get_usage_example",
+      "mcp__primevue__get_example"
     ]
   },
   "hooks": {
