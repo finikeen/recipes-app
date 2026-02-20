@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/features/recipes/views/HomeView.vue'
 import RecipeDetailView from '@/features/recipes/views/RecipeDetailView.vue'
 import RecipeFormView from '@/features/recipes/views/RecipeFormView.vue'
+import AuthView from '@/features/auth/views/AuthView.vue'
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: '/recipes/:id/edit',
     name: 'recipe-edit',
     component: RecipeFormView
+  },
+  {
+    path: '/auth',
+    name: 'auth',
+    component: AuthView
   },
   {
     path: '/:pathMatch(.*)*',
