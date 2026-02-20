@@ -68,7 +68,7 @@ function toggleMode() {
 function handleSubmit() {
   console.log(`[Auth] mode=${mode.value}`, {
     email: email.value,
-    password: password.value,
+    password: "[REDACTED]",
   });
 }
 </script>
