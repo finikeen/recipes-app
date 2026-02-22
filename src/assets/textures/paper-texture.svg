@@ -1,0 +1,10 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="paper">
+      <feTurbulence type="fractalNoise" baseFrequency="2.5" numOctaves="6" result="noise" seed="3" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+  <rect width="512" height="512" fill="#242424" />
+  <rect width="512" height="512" fill="#ffffff" opacity="0.08" filter="url(#paper)" />
+</svg>
