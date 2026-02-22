@@ -6,10 +6,12 @@ import 'primeicons/primeicons.css'
 import router from './router/index.js'
 import App from './App.vue'
 import './assets/main.css'
+import { useAuthStore } from './features/auth/store.js'
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 app.use(PrimeVue, {
   theme: {
@@ -20,4 +22,8 @@ app.use(PrimeVue, {
   }
 })
 
-app.mount('#app')
+// Initialize Firebase auth listener before mounting
+const authStore = useAuthStore()
+authStore.initializeAuthListener().then(() => {
+  app.mount('#app')
+})
