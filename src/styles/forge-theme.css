@@ -3,29 +3,29 @@
 */
 
 :root {
-  /* Base Colors */
-  --surface-ground: #1a1a1a;
-  --surface-0: #242424;
-  --surface-50: #2a2a2a;
-  --surface-100: #333333;
-  --surface-200: #3a3a3a;
+  /* Base Colors - Depth Layered (very dark to warm mid-tone) */
+  --surface-ground: #0f0f0f;    /* Deep night - outer forge darkness */
+  --surface-0: #252525;         /* Cards - slightly warm in forge light */
+  --surface-50: #2d2d2d;        /* Warm mid-tone - forge glow influence */
+  --surface-100: #353535;       /* Subtle warmth - readable UI */
+  --surface-200: #3d3d3d;       /* Slightly lighter warm tone */
 
   /* Text Colors */
   --text-color: #e0e0e0;
   --text-color-secondary: #888888;
 
-  /* Primary Accent - Amber */
-  --primary-color: #d4a574;
-  --primary-light: #e8b88f;
+  /* Primary Accent - Brighter Amber (forge glow) */
+  --primary-color: #e8a042;     /* Bright amber - glowing forge light */
+  --primary-light: #f4b968;     /* Lighter amber - intense glow */
 
   /* Borders & Dividers */
-  --surface-border: #333333;
-  --surface-section: #242424;
+  --surface-border: #353535;
+  --surface-section: #252525;
 
   /* Error/Warning (warm colors, not bright) */
   --red-500: #d97757;
-  --orange-500: #d4a574;
-  --yellow-500: #c9a566;
+  --orange-500: #e8a042;        /* Match primary amber */
+  --yellow-500: #e8a042;        /* Warm forge tone */
 
   /* Success (cool to match forge palette) */
   --green-500: #66b3a3;
@@ -41,6 +41,8 @@
 body {
   background-color: var(--surface-ground);
   color: var(--text-color);
+  /* Subtle warmth to backgrounds for forge atmosphere */
+  background: linear-gradient(135deg, var(--surface-ground) 0%, rgba(31, 15, 10, 0.3) 100%);
 }
 
 /* Link colors */
