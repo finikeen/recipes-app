@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
+import { getFirestore, connectFirestoreEmulator, enableIndexedDbPersistence } from 'firebase/firestore'
 import { getStorage, connectStorageEmulator } from 'firebase/storage'
 
 const firebaseConfig = {
@@ -18,7 +18,6 @@ const db = getFirestore(app)
 const storage = getStorage(app)
 
 // Enable offline persistence for Firestore
-import { enableIndexedDbPersistence } from 'firebase/firestore'
 enableIndexedDbPersistence(db).catch(err => {
   if (err.code === 'failed-precondition') {
     console.warn('Firestore persistence failed: multiple tabs open')
