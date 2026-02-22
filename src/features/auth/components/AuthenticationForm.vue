@@ -1,3 +1,40 @@
+<script setup>
+import { ref, computed } from "vue";
+import InputText from "primevue/inputtext";
+import Password from "primevue/password";
+import Button from "primevue/button";
+
+const props = defineProps({
+  initialMode: {
+    type: String,
+    default: "login",
+    validator: (v) => ["login", "signup"].includes(v),
+  },
+});
+
+const emit = defineEmits(["submit"]);
+
+const mode = ref(props.initialMode);
+const email = ref("");
+const password = ref("");
+
+const isLogin = computed(() => mode.value === "login");
+
+function toggleMode() {
+  mode.value = isLogin.value ? "signup" : "login";
+  email.value = "";
+  password.value = "";
+}
+
+function handleSubmit() {
+  emit("submit", {
+    email: email.value,
+    password: password.value,
+    mode: mode.value,
+  });
+}
+</script>
+
 <template>
   <div class="auth-form">
     <h2 class="auth-form__title">{{ isLogin ? "Login" : "Sign Up" }}</h2>
@@ -38,40 +75,6 @@
     </p>
   </div>
 </template>
-
-<script setup>
-import { ref, computed } from "vue";
-import InputText from "primevue/inputtext";
-import Password from "primevue/password";
-import Button from "primevue/button";
-
-const props = defineProps({
-  initialMode: {
-    type: String,
-    default: "login",
-    validator: (v) => ["login", "signup"].includes(v),
-  },
-});
-
-const mode = ref(props.initialMode);
-const email = ref("");
-const password = ref("");
-
-const isLogin = computed(() => mode.value === "login");
-
-function toggleMode() {
-  mode.value = isLogin.value ? "signup" : "login";
-  email.value = "";
-  password.value = "";
-}
-
-function handleSubmit() {
-  console.log(`[Auth] mode=${mode.value}`, {
-    email: email.value,
-    password: "[REDACTED]",
-  });
-}
-</script>
 
 <style scoped>
 @reference "../../../assets/main.css";
