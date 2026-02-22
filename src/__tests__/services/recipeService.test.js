@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { recipeService } from '@/features/recipes/services/recipeService'
+import * as firebaseMock from '@/services/firebase'
 
 vi.mock('@/services/firebase', () => ({
   auth: { currentUser: null },
@@ -21,6 +22,10 @@ vi.mock('firebase/firestore', () => ({
 }))
 
 describe('recipeService', () => {
+  beforeEach(() => {
+    firebaseMock.auth.currentUser = null
+  })
+
   it('throws when adding recipe without authentication', async () => {
     await expect(recipeService.addRecipe({ name: 'Test' })).rejects.toThrow('User not authenticated')
   })
