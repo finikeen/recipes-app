@@ -1,32 +1,32 @@
 <script setup>
-import { onMounted, ref, computed } from "vue"
-import Skeleton from "primevue/skeleton"
-import { useRecipesStore } from "@/features/recipes/store"
-import RecipeCard from "@/features/recipes/components/RecipeCard.vue"
+import { onMounted, ref, computed } from "vue";
+import Skeleton from "primevue/skeleton";
+import { useRecipesStore } from "@/features/recipes/store";
+import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
 
-const recipesStore = useRecipesStore()
+const recipesStore = useRecipesStore();
 
-const featuredIndex = ref(null)
+const featuredIndex = ref(null);
 
 const featuredRecipe = computed(() => {
-  if (!recipesStore.recipes.length || featuredIndex.value === null) return null
-  return recipesStore.recipes[featuredIndex.value]
-})
+  if (!recipesStore.recipes.length || featuredIndex.value === null) return null;
+  return recipesStore.recipes[featuredIndex.value];
+});
 
 const pickRandom = () => {
-  const len = recipesStore.recipes.length
-  if (!len) return
-  featuredIndex.value = Math.floor(Math.random() * len)
-}
+  const len = recipesStore.recipes.length;
+  if (!len) return;
+  featuredIndex.value = Math.floor(Math.random() * len);
+};
 
 onMounted(async () => {
-  await recipesStore.loadAllRecipes()
-  pickRandom()
-})
+  await recipesStore.loadAllRecipes();
+  pickRandom();
+});
 </script>
 
 <template>
-  <div class="featured__container">
+  <div class="featured__container forge__texture-subtle">
     <h1 class="featured__title">Recipe Forge</h1>
     <p class="featured__subtitle">
       Create and refine your recipes. Build a collection that's completely
@@ -44,12 +44,14 @@ onMounted(async () => {
     </div>
 
     <div v-else>
-      <div class="featured__card-wrapper">
+      <div
+        class="featured__card-wrapper forge__card forge__texture-metal forge__distressed"
+      >
         <RecipeCard :recipe="featuredRecipe" />
       </div>
       <button
         v-if="recipesStore.recipes.length > 1"
-        class="featured__button"
+        class="featured__button forge__button"
         @click="pickRandom"
       >
         Load another
