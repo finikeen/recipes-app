@@ -10,7 +10,10 @@
       "mcp__primevue__get_component_props",
       "mcp__primevue__get_component_import",
       "mcp__primevue__get_usage_example",
-      "mcp__primevue__get_example"
+      "mcp__primevue__get_example",
+      "Bash(head:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs"
     ]
   },
   "hooks": {
