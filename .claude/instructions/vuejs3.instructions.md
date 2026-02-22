@@ -18,6 +18,7 @@ Instructions for building high-quality VueJS 3 applications with the Composition
 - other considerations: axios, vee-validate, yup
 - Plain JavaScript (no TypeScript)
 - Single File Components (`.vue`) with `<script setup>` syntax
+- `script` then `template` then `style`
 
 ## Development Standards
 
