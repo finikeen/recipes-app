@@ -1,2 +1,8 @@
+/* Forge Theme - Dark Mode with Amber Accents */
+@import "../styles/forge-theme.css";
+@import "../styles/forge-textures.css";
+@import "../styles/forge-components.css";
+@import "../styles/forge-animations.css";
+
 @import "tailwindcss";
 @import "tailwindcss-primeui";
