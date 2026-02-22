@@ -98,7 +98,7 @@ VITE_FIREBASE_APP_ID=1:123456789:web:abc123
 
 ## 6. Apply Firestore Security Rules
 
-The app's security rules restrict each user to reading and writing only their own recipes. See [`docs/firestore-security-rules.md`](./firestore-security-rules.md) for the full rules and an explanation of each permission.
+The app's security rules restrict each user to reading any recipes but writing only their own recipes. See [`docs/firestore-security-rules.md`](./firestore-security-rules.md) for the full rules and an explanation of each permission.
 
 To apply the rules:
 
