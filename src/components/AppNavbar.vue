@@ -17,7 +17,7 @@ const handleLogout = async () => {
       Recipes
     </RouterLink>
     <div class="navbar__links">
-      <RouterLink :to="{ name: 'home' }" class="navbar__link">
+      <RouterLink :to="{ name: 'browse' }" class="navbar__link">
         Browse
       </RouterLink>
       <RouterLink :to="{ name: 'recipe-create' }" class="navbar__link">

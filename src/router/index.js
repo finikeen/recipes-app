@@ -3,6 +3,7 @@ import { watch } from 'vue'
 import HomeView from '@/features/recipes/views/HomeView.vue'
 import RecipeDetailView from '@/features/recipes/views/RecipeDetailView.vue'
 import RecipeFormView from '@/features/recipes/views/RecipeFormView.vue'
+import BrowseView from '@/features/recipes/views/BrowseView.vue'
 import AuthView from '@/features/auth/views/AuthView.vue'
 import { useAuthStore } from '@/features/auth/store'
 
@@ -11,6 +12,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/browse',
+    name: 'browse',
+    component: BrowseView
   },
   {
     path: '/recipes/:id',
@@ -46,7 +52,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
-  const protectedRoutes = ['recipe-detail', 'recipe-create', 'recipe-edit']
+  const protectedRoutes = ['recipe-create', 'recipe-edit']
 
   // Wait for Firebase to restore auth state before checking
   if (!authStore.authReady) {
