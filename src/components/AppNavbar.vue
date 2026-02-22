@@ -1,3 +1,16 @@
+<script setup>
+import { useAuthStore } from "@/features/auth/store";
+import { useRouter } from "vue-router";
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleLogout = async () => {
+  await authStore.logout();
+  router.push({ name: "auth" });
+};
+</script>
+
 <template>
   <nav class="navbar">
     <RouterLink :to="{ name: 'home' }" class="navbar__brand">
@@ -10,14 +23,19 @@
       <RouterLink :to="{ name: 'recipe-create' }" class="navbar__link">
         New Recipe
       </RouterLink>
-      <RouterLink :to="{ name: 'auth' }" class="navbar__link">
+      <button
+        v-if="authStore.isAuthenticated"
+        class="navbar__link navbar__link--button"
+        @click="handleLogout"
+      >
+        Sign Out
+      </button>
+      <RouterLink v-else :to="{ name: 'auth' }" class="navbar__link">
         Sign In
       </RouterLink>
     </div>
   </nav>
 </template>
-
-<script setup></script>
 
 <style scoped>
 @reference "../assets/main.css";
@@ -36,5 +54,9 @@
 
 .navbar__link {
   @apply text-muted-color hover:text-color transition-colors no-underline;
+}
+
+.navbar__link--button {
+  @apply bg-transparent border-0 cursor-pointer p-0;
 }
 </style>
