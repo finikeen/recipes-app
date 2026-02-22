@@ -1,27 +1,27 @@
 <script setup>
-import { onMounted, ref, computed } from "vue"
-import Skeleton from "primevue/skeleton"
-import Paginator from "primevue/paginator"
-import { useRecipesStore } from "@/features/recipes/store"
-import RecipeCard from "@/features/recipes/components/RecipeCard.vue"
+import { onMounted, ref, computed } from "vue";
+import Skeleton from "primevue/skeleton";
+import Paginator from "primevue/paginator";
+import { useRecipesStore } from "@/features/recipes/store";
+import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
 
-const recipesStore = useRecipesStore()
+const recipesStore = useRecipesStore();
 
-const currentPage = ref(0)
-const rowsPerPage = 9
+const currentPage = ref(0);
+const rowsPerPage = 9;
 
 const paginatedRecipes = computed(() => {
-  const start = currentPage.value * rowsPerPage
-  return recipesStore.recipes.slice(start, start + rowsPerPage)
-})
+  const start = currentPage.value * rowsPerPage;
+  return recipesStore.recipes.slice(start, start + rowsPerPage);
+});
 
 onMounted(async () => {
-  await recipesStore.loadAllRecipes()
-})
+  await recipesStore.loadAllRecipes();
+});
 </script>
 
 <template>
-  <div>
+  <div class="browse__container forge__texture-subtle">
     <p class="browse__subtitle">
       Create and refine your recipes. Build a collection that's completely
       unique to you.
@@ -52,11 +52,13 @@ onMounted(async () => {
     </div>
 
     <div v-else class="browse__grid">
-      <RecipeCard
+      <div
         v-for="recipe in paginatedRecipes"
         :key="recipe.id"
-        :recipe="recipe"
-      />
+        class="forge__card forge__texture-metal forge__distressed"
+      >
+        <RecipeCard :recipe="recipe" />
+      </div>
     </div>
 
     <Paginator
@@ -72,6 +74,10 @@ onMounted(async () => {
 
 <style scoped>
 @reference "../../../assets/main.css";
+
+.browse__container {
+  @apply w-full;
+}
 
 .browse__subtitle {
   @apply text-lg text-muted-color mb-4;
