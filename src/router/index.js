@@ -3,6 +3,7 @@ import HomeView from '@/features/recipes/views/HomeView.vue'
 import RecipeDetailView from '@/features/recipes/views/RecipeDetailView.vue'
 import RecipeFormView from '@/features/recipes/views/RecipeFormView.vue'
 import AuthView from '@/features/auth/views/AuthView.vue'
+import { useAuthStore } from '@/features/auth/store'
 
 const routes = [
   {
@@ -37,7 +38,20 @@ const routes = [
   }
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  const protectedRoutes = ['recipe-detail', 'recipe-create', 'recipe-edit']
+
+  if (protectedRoutes.includes(to.name) && !authStore.isAuthenticated) {
+    next({ name: 'auth' })
+  } else {
+    next()
+  }
+})
+
+export default router
