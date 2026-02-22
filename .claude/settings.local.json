@@ -13,7 +13,9 @@
       "mcp__primevue__get_example",
       "Bash(head:*)",
       "mcp__context7__resolve-library-id",
-      "mcp__context7__query-docs"
+      "mcp__context7__query-docs",
+      "Bash(git switch:*)",
+      "Bash(tail:*)"
     ]
   },
   "hooks": {
