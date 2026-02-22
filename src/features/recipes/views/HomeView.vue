@@ -1,6 +1,7 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref, computed } from "vue";
 import Skeleton from "primevue/skeleton";
+import Paginator from "primevue/paginator";
 import { useAuthStore } from "@/features/auth/store";
 import { useRecipesStore } from "@/features/recipes/store";
 import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
@@ -8,10 +9,16 @@ import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
 const authStore = useAuthStore();
 const recipesStore = useRecipesStore();
 
+const currentPage = ref(0);
+const rowsPerPage = 9;
+
+const paginatedRecipes = computed(() => {
+  const start = currentPage.value * rowsPerPage;
+  return recipesStore.recipes.slice(start, start + rowsPerPage);
+});
+
 onMounted(async () => {
-  if (authStore.isAuthenticated) {
-    await recipesStore.loadUserRecipes();
-  }
+  await recipesStore.loadAllRecipes();
 });
 </script>
 
@@ -23,11 +30,7 @@ onMounted(async () => {
       unique to you.
     </p>
 
-    <div v-if="!authStore.isAuthenticated" class="home__sign-in-message">
-      Please sign in to view your recipes.
-    </div>
-
-    <div v-else-if="recipesStore.loading" class="home__grid">
+    <div v-if="recipesStore.loading" class="home__grid">
       <div v-for="i in 9" :key="i" class="home__skeleton-card">
         <Skeleton
           class="home__skeleton-card__image"
@@ -53,11 +56,20 @@ onMounted(async () => {
 
     <div v-else class="home__grid">
       <RecipeCard
-        v-for="recipe in recipesStore.recipes"
+        v-for="recipe in paginatedRecipes"
         :key="recipe.id"
         :recipe="recipe"
       />
     </div>
+
+    <Paginator
+      v-if="recipesStore.recipes.length > rowsPerPage"
+      :rows="rowsPerPage"
+      :totalRecords="recipesStore.recipes.length"
+      :first="currentPage * rowsPerPage"
+      @page="currentPage = $event.page"
+      class="home__paginator"
+    />
   </div>
 </template>
 
@@ -70,10 +82,6 @@ onMounted(async () => {
 
 .home__subtitle {
   @apply text-lg text-muted-color mb-4;
-}
-
-.home__sign-in-message {
-  @apply text-muted-color text-center py-12;
 }
 
 .home__empty-message {
@@ -94,5 +102,9 @@ onMounted(async () => {
 
 .home__skeleton-card__title {
   @apply mb-2;
+}
+
+.home__paginator {
+  @apply mt-6;
 }
 </style>

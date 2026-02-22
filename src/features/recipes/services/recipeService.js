@@ -83,5 +83,14 @@ export const recipeService = {
     } catch (err) {
       throw new Error(`Failed to get user recipes: ${err.message}`)
     }
+  },
+
+  async getAllRecipes() {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'recipes'))
+      return querySnapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }))
+    } catch (err) {
+      throw new Error(`Failed to get recipes: ${err.message}`)
+    }
   }
 }

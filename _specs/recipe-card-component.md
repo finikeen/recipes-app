@@ -12,7 +12,7 @@ A reusable recipe card component that displays essential recipe information in a
 - Display recipe title as the primary heading
 - Display a truncated description (2-3 lines maximum) with ellipsis if text exceeds limit
 - Display up to 5 recipe tags (e.g., cuisine type, dietary restrictions, cooking method)
-- Accept a recipe object from the recipes collection with standard structure (id, title, description, tags)
+- Accept a recipe object from the recipes collection with standard structure (id, name, description, tags)
 - Be fully responsive for mobile and desktop viewports
 - Support hover/focus states for interactive feedback
 - Maintain theme-aware styling using PrimeVue semantic tokens
@@ -22,7 +22,7 @@ A reusable recipe card component that displays essential recipe information in a
 ## Component API
 
 - **Props:**
-  - `recipe` (Object): A recipe object with at minimum { id, title, description, tags }
+  - `recipe` (Object): A recipe object with at minimum { id, name, description, tags }
   - `clickable` (Boolean, optional): Whether the card responds to click events (default: true)
 
 - **Emits:**

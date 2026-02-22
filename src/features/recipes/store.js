@@ -67,6 +67,19 @@ export const useRecipesStore = defineStore('recipes', () => {
     }
   }
 
+  const loadAllRecipes = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      recipes.value = await recipeService.getAllRecipes()
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   const getRecipeById = async (recipeId) => {
     loading.value = true
     error.value = null
@@ -88,6 +101,7 @@ export const useRecipesStore = defineStore('recipes', () => {
     updateRecipe,
     deleteRecipe,
     loadUserRecipes,
+    loadAllRecipes,
     getRecipeById
   }
 })

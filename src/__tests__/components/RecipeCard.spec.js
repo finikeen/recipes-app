@@ -8,7 +8,7 @@ describe('RecipeCard', () => {
     it('renders recipe title', () => {
       const recipe = {
         id: 1,
-        title: 'Pasta Carbonara',
+        name:'Pasta Carbonara',
         description: 'A classic Italian pasta',
         tags: ['Italian', 'Pasta']
       }
@@ -19,7 +19,7 @@ describe('RecipeCard', () => {
     it('renders recipe description', () => {
       const recipe = {
         id: 1,
-        title: 'Pasta',
+        name:'Pasta',
         description: 'A delicious dish with noodles',
         tags: []
       }
@@ -30,7 +30,7 @@ describe('RecipeCard', () => {
     it('renders tags', () => {
       const recipe = {
         id: 1,
-        title: 'Pasta',
+        name:'Pasta',
         description: 'A dish',
         tags: ['Italian', 'Quick']
       }
@@ -45,7 +45,7 @@ describe('RecipeCard', () => {
     it('truncates long tag names to 15 characters', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: ['VeryLongTagNameThatExceedsFifteen']
       }
@@ -57,7 +57,7 @@ describe('RecipeCard', () => {
     it('does not truncate short tags', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: ['Short']
       }
@@ -68,7 +68,7 @@ describe('RecipeCard', () => {
     it('displays up to 5 tags only', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6', 'Tag7']
       }
@@ -85,7 +85,7 @@ describe('RecipeCard', () => {
       const longDescription = 'Line 1\nLine 2\nLine 3\nLine 4'
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: longDescription,
         tags: []
       }
@@ -101,7 +101,7 @@ describe('RecipeCard', () => {
     it('emits click event when card is clicked and clickable is true', async () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: []
       }
@@ -114,7 +114,7 @@ describe('RecipeCard', () => {
     it('does not emit click event when clickable is false', async () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: []
       }
@@ -127,7 +127,7 @@ describe('RecipeCard', () => {
     it('emits tag-click with full tag name when tag is clicked', async () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: ['VeryLongTagNameThatExceedsFifteen', 'Short']
       }
@@ -142,7 +142,7 @@ describe('RecipeCard', () => {
     it('prevents card click when tag is clicked', async () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: ['Tag1']
       }
@@ -160,7 +160,7 @@ describe('RecipeCard', () => {
     it('handles missing description with fallback text', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: '',
         tags: []
       }
@@ -171,7 +171,7 @@ describe('RecipeCard', () => {
     it('handles null description with fallback text', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: null,
         tags: []
       }
@@ -182,7 +182,7 @@ describe('RecipeCard', () => {
     it('handles missing tags array', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc'
       }
       const wrapper = mount(RecipeCard, { props: { recipe } })
@@ -192,7 +192,7 @@ describe('RecipeCard', () => {
     it('handles empty tags array', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: []
       }
@@ -204,7 +204,7 @@ describe('RecipeCard', () => {
       const longTitle = 'A'.repeat(100)
       const recipe = {
         id: 1,
-        title: longTitle,
+        name:longTitle,
         description: 'Desc',
         tags: []
       }
@@ -216,7 +216,7 @@ describe('RecipeCard', () => {
     it('provides full tag name in title attribute for accessibility', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: ['VeryLongTagNameThatExceedsFifteen']
       }
@@ -231,7 +231,7 @@ describe('RecipeCard', () => {
     it('has clickable defaulting to true', () => {
       const recipe = {
         id: 1,
-        title: 'Recipe',
+        name:'Recipe',
         description: 'Desc',
         tags: []
       }

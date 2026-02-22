@@ -6,7 +6,7 @@
     @click="handleCardClick"
   >
     <template #title>
-      <span data-test="title">{{ recipe.title ?? "Untitled Recipe" }}</span>
+      <span data-test="title">{{ recipe.name ?? "Untitled Recipe" }}</span>
     </template>
     <template #content>
       <p

@@ -1,16 +1,16 @@
 # Firestore Security Rules
 
-This document describes the Firestore security rules for the Rezipees application. Any authenticated user can read all recipes, but users can only write (create, update, delete) their own recipes.
+This document describes the Firestore security rules for the Rezipees application. Anyone can read all recipes, but users can only write (create, update, delete) their own recipes. Authentication is only required for creating, updating, or deleting.
 
 ## Overview
 
-All rules are scoped to the `recipes` collection. Read access is open to all authenticated users. Write access is restricted by comparing the authenticated user's UID (`request.auth.uid`) against the `userId` field stored on each document.
+All rules are scoped to the `recipes` collection. Read access is open to all users (authenticated or not). Write access is restricted to authenticated users who own the document by comparing their UID (`request.auth.uid`) against the `userId` field stored on each document.
 
 ## Rules Summary
 
 | Operation | Condition |
 |-----------|-----------|
-| `read`    | User is authenticated |
+| `read`    | Public access (no authentication required) |
 | `create`  | User is authenticated and the new document's `userId` matches their UID (`request.resource.data.userId == request.auth.uid`) |
 | `update`  | User is authenticated and owns the existing document (`resource.data.userId == request.auth.uid`) |
 | `delete`  | User is authenticated and owns the document (`resource.data.userId == request.auth.uid`) |
@@ -22,7 +22,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /recipes/{document=**} {
-      allow read: if request.auth.uid != null;
+      allow read: if true;
       allow create: if request.auth.uid != null && request.resource.data.userId == request.auth.uid;
       allow update: if request.auth.uid != null && resource.data.userId == request.auth.uid;
       allow delete: if request.auth.uid != null && resource.data.userId == request.auth.uid;
