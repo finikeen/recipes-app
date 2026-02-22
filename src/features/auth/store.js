@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const loading = ref(false)
   const error = ref(null)
+  const authReady = ref(false)
 
   const isAuthenticated = computed(() => !!user.value)
 
@@ -63,7 +64,10 @@ export const useAuthStore = defineStore('auth', () => {
     return new Promise((resolve) => {
       onAuthStateChanged(auth, (currentUser) => {
         user.value = currentUser
-        resolve()
+        if (!authReady.value) {
+          authReady.value = true
+          resolve()
+        }
       })
     })
   }
@@ -72,6 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     loading,
     error,
+    authReady,
     isAuthenticated,
     signUp,
     signIn,

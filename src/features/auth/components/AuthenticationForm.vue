@@ -10,6 +10,10 @@ const props = defineProps({
     default: "login",
     validator: (v) => ["login", "signup"].includes(v),
   },
+  error: {
+    type: String,
+    default: null,
+  },
 });
 
 const emit = defineEmits(["submit"]);
@@ -64,6 +68,10 @@ function handleSubmit() {
         />
       </div>
 
+      <p v-if="props.error" class="auth-form__error" role="alert">
+        {{ props.error }}
+      </p>
+
       <Button type="submit" :label="isLogin ? 'Login' : 'Sign Up'" fluid />
     </form>
 
@@ -105,5 +113,9 @@ function handleSubmit() {
 
 .auth-form__toggle-btn {
   @apply text-sm font-semibold text-color underline bg-transparent border-0 cursor-pointer p-0;
+}
+
+.auth-form__error {
+  @apply text-sm text-red-500;
 }
 </style>

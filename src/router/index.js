@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { watch } from 'vue'
 import HomeView from '@/features/recipes/views/HomeView.vue'
 import RecipeDetailView from '@/features/recipes/views/RecipeDetailView.vue'
 import RecipeFormView from '@/features/recipes/views/RecipeFormView.vue'
@@ -43,9 +44,19 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const protectedRoutes = ['recipe-detail', 'recipe-create', 'recipe-edit']
+
+  // Wait for Firebase to restore auth state before checking
+  if (!authStore.authReady) {
+    await new Promise(resolve => {
+      const unwatch = watch(
+        () => authStore.authReady,
+        (ready) => { if (ready) { unwatch(); resolve() } }
+      )
+    })
+  }
 
   if (protectedRoutes.includes(to.name) && !authStore.isAuthenticated) {
     next({ name: 'auth' })

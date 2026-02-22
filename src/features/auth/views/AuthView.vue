@@ -22,7 +22,7 @@ const handleSubmit = async ({ email, password, mode }) => {
 
 <template>
   <div class="auth-view">
-    <AuthenticationForm @submit="handleSubmit" />
+    <AuthenticationForm @submit="handleSubmit" :error="authStore.error" />
   </div>
 </template>
 
