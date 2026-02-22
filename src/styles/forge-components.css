@@ -1,0 +1,209 @@
+/* Forge Components - Card, button, form, and UI element styling */
+
+/* Recipe Cards */
+.forge__card {
+  background-color: var(--surface-0);
+  border-radius: 6px;
+  padding: 1rem;
+  position: relative;
+  transition: all 200ms ease;
+}
+
+.forge__card.forge__texture-metal {
+  border-left: 3px solid var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.forge__card:hover {
+  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.2);
+  transform: translateY(-2px);
+}
+
+.forge__card img {
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.forge__card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0.5rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.forge__card-description {
+  font-size: 0.875rem;
+  color: var(--text-color-secondary);
+  margin: 0.5rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.forge__card-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.forge__tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+  background-color: transparent;
+  color: var(--primary-color);
+  transition: all 150ms ease;
+}
+
+.forge__tag:hover {
+  background-color: rgba(212, 165, 116, 0.1);
+}
+
+/* Buttons */
+.forge__button {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 200ms ease;
+  position: relative;
+  z-index: 1;
+}
+
+.forge__button:hover:not(:disabled) {
+  box-shadow: 0 0 12px rgba(212, 165, 116, 0.6);
+  background-color: rgba(212, 165, 116, 0.05);
+}
+
+.forge__button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.forge__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: var(--surface-100);
+  color: var(--surface-100);
+}
+
+.forge__button-primary {
+  background-color: var(--primary-color);
+  color: #1a1a1a;
+  border-color: var(--primary-color);
+}
+
+.forge__button-primary:hover:not(:disabled) {
+  background-color: var(--primary-light);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 20px rgba(212, 165, 116, 0.7);
+}
+
+/* Forms & Inputs */
+.forge__input {
+  background-color: var(--surface-50);
+  border: 1px solid var(--surface-100);
+  color: var(--text-color);
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 200ms ease;
+}
+
+.forge__input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(212, 165, 116, 0.3);
+}
+
+.forge__input::placeholder {
+  color: var(--text-color-secondary);
+}
+
+.forge__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.forge__textarea {
+  background-color: var(--surface-50);
+  border: 1px solid var(--primary-color);
+  color: var(--text-color);
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 120px;
+  transition: all 200ms ease;
+}
+
+.forge__textarea:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(212, 165, 116, 0.4);
+}
+
+/* Form groups */
+.forge__form-group {
+  margin-bottom: 1.5rem;
+}
+
+.forge__error {
+  color: #d97757;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Links */
+.forge__link {
+  color: var(--primary-color);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 150ms ease;
+}
+
+.forge__link:hover {
+  border-bottom-color: var(--primary-color);
+}
+
+.forge__link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Navbar brand */
+.forge__brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 200ms ease;
+}
+
+.forge__brand:hover {
+  text-shadow: 0 0 8px rgba(212, 165, 116, 0.6);
+}
+
+/* Disabled state */
+.forge__disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
