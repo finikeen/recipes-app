@@ -1,0 +1,54 @@
+/* Forge Animations - Glow effects and fire breathing */
+
+/* Glow effect for interactive elements */
+@keyframes forge-glow {
+  0% {
+    box-shadow: 0 0 8px rgba(212, 165, 116, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(212, 165, 116, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(212, 165, 116, 0.4);
+  }
+}
+
+/* Fire breathing pulse */
+@keyframes forge-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Apply glow animation to interactive elements on hover */
+.forge__button:hover:not(:disabled),
+.forge__card:hover,
+.forge__link:hover {
+  animation: forge-glow 2s ease-in-out infinite;
+}
+
+/* Gentle pulse animation */
+.forge__pulse {
+  animation: forge-pulse 3s ease-in-out infinite;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .forge__button:hover:not(:disabled),
+  .forge__card:hover,
+  .forge__link:hover,
+  .forge__pulse {
+    animation: none;
+  }
+
+  .forge__button:hover:not(:disabled),
+  .forge__card:hover {
+    box-shadow: 0 4px 16px rgba(212, 165, 116, 0.2);
+  }
+}
