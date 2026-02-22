@@ -1,28 +1,28 @@
 # Firestore Security Rules
 
-This document describes the Firestore security rules for the Rezipees application. These rules ensure that users can only access and modify their own recipe data.
+This document describes the Firestore security rules for the Rezipees application. Any authenticated user can read all recipes, but users can only write (create, update, delete) their own recipes.
 
 ## Overview
 
-All rules are scoped to the `recipes` collection. Access is controlled by comparing the authenticated user's UID (`request.auth.uid`) against the `userId` field stored on each document.
+All rules are scoped to the `recipes` collection. Read access is open to all authenticated users. Write access is restricted by comparing the authenticated user's UID (`request.auth.uid`) against the `userId` field stored on each document.
 
 ## Rules Summary
 
 | Operation | Condition |
 |-----------|-----------|
-| `read`    | User is authenticated and owns the document (`resource.data.userId == request.auth.uid`) |
+| `read`    | User is authenticated |
 | `create`  | User is authenticated and the new document's `userId` matches their UID (`request.resource.data.userId == request.auth.uid`) |
 | `update`  | User is authenticated and owns the existing document (`resource.data.userId == request.auth.uid`) |
 | `delete`  | User is authenticated and owns the document (`resource.data.userId == request.auth.uid`) |
 
 ## Security Rules
 
-```
+```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /recipes/{document=**} {
-      allow read: if request.auth.uid != null && resource.data.userId == request.auth.uid;
+      allow read: if request.auth.uid != null;
       allow create: if request.auth.uid != null && request.resource.data.userId == request.auth.uid;
       allow update: if request.auth.uid != null && resource.data.userId == request.auth.uid;
       allow delete: if request.auth.uid != null && resource.data.userId == request.auth.uid;
