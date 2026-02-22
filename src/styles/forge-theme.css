@@ -1,0 +1,53 @@
+/* Forge Theme - Color Palette
+   Overrides PrimeVue CSS variables for dark forge aesthetic
+*/
+
+:root {
+  /* Base Colors */
+  --surface-ground: #1a1a1a;
+  --surface-0: #242424;
+  --surface-50: #2a2a2a;
+  --surface-100: #333333;
+  --surface-200: #3a3a3a;
+
+  /* Text Colors */
+  --text-color: #e0e0e0;
+  --text-color-secondary: #888888;
+
+  /* Primary Accent - Amber */
+  --primary-color: #d4a574;
+  --primary-light: #e8b88f;
+
+  /* Borders & Dividers */
+  --surface-border: #333333;
+  --surface-section: #242424;
+
+  /* Error/Warning (warm colors, not bright) */
+  --red-500: #d97757;
+  --orange-500: #d4a574;
+  --yellow-500: #c9a566;
+
+  /* Success (cool to match forge palette) */
+  --green-500: #66b3a3;
+}
+
+/* Dark mode selector support (for future light mode) */
+:root.dark {
+  /* When explicitly marked as dark, use same variables */
+  /* This allows consistent behavior */
+}
+
+/* Ensure PrimeVue components use these variables */
+body {
+  background-color: var(--surface-ground);
+  color: var(--text-color);
+}
+
+/* Link colors */
+a {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--primary-light);
+}
