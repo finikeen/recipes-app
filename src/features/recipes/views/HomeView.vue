@@ -59,7 +59,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@reference "../../../assets/main.css"
+@reference "../../../assets/main.css";
 
 .featured__container {
   @apply w-full;

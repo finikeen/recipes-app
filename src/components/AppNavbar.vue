@@ -1,6 +1,6 @@
 <script setup>
-import { useAuthStore } from "@/features/auth/store";
-import { useRouter } from "vue-router";
+import { useAuthStore } from "@/features/auth/store"
+import { useRouter } from "vue-router"
 
 const authStore = useAuthStore();
 const router = useRouter();
