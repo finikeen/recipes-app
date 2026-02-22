@@ -30,14 +30,17 @@ onMounted(async () => {
     <div v-else-if="recipesStore.loading" class="home__grid">
       <div v-for="i in 9" :key="i" class="home__skeleton-card">
         <Skeleton
+          class="home__skeleton-card__image"
           :height="i % 3 === 0 ? '10rem' : i % 3 === 1 ? '12rem' : '14rem'"
-          class="mb-3"
         />
         <Skeleton
+          class="home__skeleton-card__title"
           :width="i % 3 === 0 ? '75%' : i % 3 === 1 ? '80%' : '85%'"
-          class="mb-2"
         />
-        <Skeleton :width="i % 3 === 0 ? '50%' : i % 3 === 1 ? '60%' : '70%'" />
+        <Skeleton
+          class="home__skeleton-card__subtitle"
+          :width="i % 3 === 0 ? '50%' : i % 3 === 1 ? '60%' : '70%'"
+        />
       </div>
     </div>
 
@@ -83,5 +86,13 @@ onMounted(async () => {
 
 .home__skeleton-card {
   @apply border border-surface rounded p-4;
+}
+
+.home__skeleton-card__image {
+  @apply mb-3;
+}
+
+.home__skeleton-card__title {
+  @apply mb-2;
 }
 </style>
