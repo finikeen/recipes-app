@@ -55,7 +55,7 @@ onMounted(async () => {
       <div
         v-for="recipe in paginatedRecipes"
         :key="recipe.id"
-        class="forge__card forge__texture-metal forge__distressed"
+        class="forge__card forge__texture-stone forge__runic-border"
       >
         <RecipeCard :recipe="recipe" />
       </div>

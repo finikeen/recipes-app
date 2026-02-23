@@ -98,12 +98,24 @@ const handleTagClick = (tag) => {
 }
 
 .recipe-card__tag {
-  @apply inline-flex items-center px-2 py-1 text-xs rounded transition-colors;
-  @apply bg-surface-50 text-color border border-surface cursor-pointer;
-  @apply hover:bg-surface-100 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1;
+  @apply inline-flex items-center px-2 py-1 text-xs rounded transition-colors cursor-pointer;
+  background-color: transparent;
+  color: var(--purple-accent);
+  border: 1px solid var(--purple-accent);
+}
+
+.recipe-card__tag:hover {
+  background-color: rgba(139, 92, 246, 0.1);
+  border-color: var(--purple-light);
+  color: var(--purple-light);
+}
+
+.recipe-card__tag:focus {
+  outline: 2px solid var(--purple-accent);
+  outline-offset: 1px;
 }
 
 .recipe-card__tag:active {
-  @apply bg-surface-100;
+  background-color: rgba(139, 92, 246, 0.15);
 }
 </style>

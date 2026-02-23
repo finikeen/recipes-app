@@ -1,5 +1,5 @@
 <template>
-  <div class="app forge__texture-subtle">
+  <div class="app forge__texture-subtle forge__embers forge__sparks">
     <AppNavbar />
     <main class="app__main">
       <RouterView />

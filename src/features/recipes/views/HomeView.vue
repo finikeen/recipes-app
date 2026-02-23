@@ -45,7 +45,7 @@ onMounted(async () => {
 
     <div v-else>
       <div
-        class="featured__card-wrapper forge__card forge__texture-metal forge__distressed"
+        class="featured__card-wrapper forge__card forge__texture-stone forge__runic-border"
       >
         <RecipeCard :recipe="featuredRecipe" />
       </div>
