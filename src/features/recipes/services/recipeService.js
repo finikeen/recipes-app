@@ -92,5 +92,15 @@ export const recipeService = {
     } catch (err) {
       throw new Error(`Failed to get recipes: ${err.message}`)
     }
+  },
+
+  async getIngredients(recipeId) {
+    try {
+      const ingredientsRef = collection(db, 'recipes', recipeId, 'ingredients')
+      const querySnapshot = await getDocs(ingredientsRef)
+      return querySnapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }))
+    } catch (err) {
+      throw new Error(`Failed to get ingredients: ${err.message}`)
+    }
   }
 }
