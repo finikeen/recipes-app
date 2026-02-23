@@ -13,10 +13,14 @@ const handleLogout = async () => {
 
 <template>
   <nav class="navbar forge__texture-metal">
-    <div class="navbar__inner">
+    <div class="navbar__inner container">
       <RouterLink :to="{ name: 'home' }" class="navbar__brand forge__brand">
         Recipe Forge
       </RouterLink>
+      <span class="navbar__tagline">
+        Craft and refine your recipes. Build a collection that's completely
+        unique to you.
+      </span>
       <div class="navbar__links">
         <RouterLink :to="{ name: 'browse' }" class="navbar__link forge__link">
           Browse
@@ -52,8 +56,11 @@ const handleLogout = async () => {
 .navbar {
   background-color: var(--surface-0);
   position: relative;
-  z-index: 10;
+  z-index: 10000;
   overflow: hidden;
+  background-image: url("../assets/textures/stone-blocks.svg");
+  background-size: 64px 64px;
+  background-repeat: repeat-x;
 }
 
 .navbar::after {
@@ -71,13 +78,20 @@ const handleLogout = async () => {
 }
 
 .navbar__inner {
-  @apply px-6 py-4 flex items-center gap-6 relative z-2;
+  @apply px-6 py-4 flex items-center gap-6 relative z-2 mx-auto;
+  background-image: url("../assets/textures/stone-blocks.svg");
+  background-size: 64px 64px;
+  background-repeat: repeat-x;
 }
 
 .navbar__brand {
   @apply text-xl font-bold no-underline;
   color: var(--primary-color);
   letter-spacing: 0.5px;
+}
+
+.navbar__tagline {
+  @apply text-xs pt-1 text-muted-color;
 }
 
 .navbar__links {

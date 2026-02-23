@@ -23,5 +23,9 @@ import AppNavbar from "@/components/AppNavbar.vue";
 
 .app__main {
   @apply container mx-auto px-4 py-8;
+  min-height: calc(100vh - 60px);
+  background-color: var(--surface-0);
+  position: relative;
+  z-index: 10000;
 }
 </style>
