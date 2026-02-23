@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import Skeleton from "primevue/skeleton";
+import { useRouter } from "vue-router";
 import { useRecipesStore } from "@/features/recipes/store";
-import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
+import HeroRecipe from "@/features/recipes/components/HeroRecipe.vue";
 
 const recipesStore = useRecipesStore();
+const router = useRouter();
 
 const featuredIndex = ref(null);
 
@@ -19,6 +21,10 @@ const pickRandom = () => {
   featuredIndex.value = Math.floor(Math.random() * len);
 };
 
+const goToRecipe = (recipeId) => {
+  router.push({ name: "recipe-detail", params: { id: recipeId } });
+};
+
 onMounted(async () => {
   await recipesStore.loadAllRecipes();
   pickRandom();
@@ -27,36 +33,43 @@ onMounted(async () => {
 
 <template>
   <div class="featured__container forge__texture-subtle">
-    <h1 class="featured__title">Recipe Forge</h1>
-    <p class="featured__subtitle">
-      Create and refine your recipes. Build a collection that's completely
-      unique to you.
-    </p>
+    <h1 class="featured__title sr-only">Recipe Forge</h1>
 
-    <div v-if="recipesStore.loading" class="featured__skeleton-card">
-      <Skeleton class="featured__skeleton-card__image" height="16rem" />
-      <Skeleton class="featured__skeleton-card__title" width="80%" />
-      <Skeleton class="featured__skeleton-card__subtitle" width="60%" />
+    <div v-if="recipesStore.loading" class="featured__skeleton">
+      <div class="featured__skeleton-left">
+        <Skeleton width="60%" height="2rem" class="featured__skeleton-row" />
+        <Skeleton width="90%" height="1rem" class="featured__skeleton-row" />
+        <Skeleton width="80%" height="1rem" class="featured__skeleton-row" />
+        <Skeleton width="40%" height="1rem" class="featured__skeleton-row" />
+        <div class="featured__skeleton-tags">
+          <Skeleton width="60px" height="1.5rem" />
+          <Skeleton width="80px" height="1.5rem" />
+          <Skeleton width="50px" height="1.5rem" />
+        </div>
+      </div>
+      <div class="featured__skeleton-right">
+        <Skeleton width="100%" height="2rem" class="featured__skeleton-row" />
+        <Skeleton
+          v-for="n in 5"
+          :key="n"
+          width="100%"
+          height="1.25rem"
+          class="featured__skeleton-row"
+        />
+      </div>
     </div>
 
     <div v-else-if="!featuredRecipe" class="featured__empty-message">
       No recipes yet.
     </div>
 
-    <div v-else>
-      <div
-        class="featured__card-wrapper forge__card forge__texture-stone forge__runic-border"
-      >
-        <RecipeCard :recipe="featuredRecipe" />
-      </div>
-      <button
-        v-if="recipesStore.recipes.length > 1"
-        class="featured__button forge__button"
-        @click="pickRandom"
-      >
-        Load another
-      </button>
-    </div>
+    <template v-else>
+      <HeroRecipe
+        :recipe="featuredRecipe"
+        @load-another="pickRandom"
+        @view-recipe="goToRecipe"
+      />
+    </template>
   </div>
 </template>
 
@@ -71,36 +84,34 @@ onMounted(async () => {
   @apply text-3xl font-bold text-color mb-6;
 }
 
-.featured__subtitle {
-  @apply text-lg text-muted-color mb-8;
-}
-
 .featured__empty-message {
   @apply text-muted-color text-center py-12;
 }
 
-.featured__card-wrapper {
-  @apply max-w-md;
+/* Skeleton: two-column layout mirrors the hero */
+.featured__skeleton {
+  @apply flex gap-6 p-6;
+  background-color: var(--surface-0);
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  min-height: 320px;
 }
 
-.featured__button {
-  @apply mt-6 px-4 py-2 rounded transition-colors;
-  @apply bg-primary text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+.featured__skeleton-left {
+  @apply flex flex-col gap-3;
+  flex: 0 0 40%;
 }
 
-.featured__skeleton-card {
-  @apply border border-surface rounded p-4 max-w-md;
+.featured__skeleton-right {
+  @apply flex flex-col gap-3;
+  flex: 1;
 }
 
-.featured__skeleton-card__image {
-  @apply mb-3;
+.featured__skeleton-row {
+  display: block;
 }
 
-.featured__skeleton-card__title {
-  @apply mb-2;
-}
-
-.featured__skeleton-card__subtitle {
-  @apply mb-0;
+.featured__skeleton-tags {
+  @apply flex gap-2 mt-2;
 }
 </style>
