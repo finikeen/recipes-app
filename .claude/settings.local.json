@@ -15,7 +15,12 @@
       "mcp__context7__resolve-library-id",
       "mcp__context7__query-docs",
       "Bash(git switch:*)",
-      "Bash(tail:*)"
+      "Bash(tail:*)",
+      "Bash(test:*)",
+      "Bash(cd /e/Documents/workspaces/rezipees/recipes && npm run build 2>&1)",
+      "Bash(cd E:/Documents/workspaces/rezipees/recipes && npm run build 2>&1)",
+      "Skill(commit-message-v2)",
+      "Skill(spec-v2)"
     ]
   },
   "hooks": {
@@ -30,5 +35,11 @@
         ]
       }
     ]
-  }
+  },
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+        "args": ["-y", "@playwright/mcp@latest", "--caps=vision"]
+      }
+    }
 }
