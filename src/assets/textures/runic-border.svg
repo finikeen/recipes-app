@@ -1,0 +1,36 @@
+<svg width="256" height="8" xmlns="http://www.w3.org/2000/svg">
+  <!-- Abstract angular runic glyphs in amber -->
+  <g fill="none" stroke="#e8a042" stroke-width="1.5" opacity="0.6">
+    <!-- Glyph 1: angular V -->
+    <polyline points="4,2 10,6 16,2"/>
+    <!-- Glyph 2: diamond -->
+    <polyline points="28,1 32,4 28,7 24,4 28,1"/>
+    <!-- Glyph 3: zigzag -->
+    <polyline points="44,6 48,2 52,6 56,2"/>
+    <!-- Glyph 4: cross-hatch -->
+    <line x1="68" y1="1" x2="76" y2="7"/>
+    <line x1="76" y1="1" x2="68" y2="7"/>
+    <!-- Glyph 5: arrow up -->
+    <polyline points="88,7 92,1 96,7"/>
+    <line x1="92" y1="1" x2="92" y2="7"/>
+    <!-- Glyph 6: bracket pair -->
+    <polyline points="110,1 106,4 110,7"/>
+    <polyline points="114,1 118,4 114,7"/>
+    <!-- Glyph 7: triple line -->
+    <line x1="128" y1="1" x2="128" y2="7"/>
+    <line x1="132" y1="1" x2="132" y2="7"/>
+    <line x1="136" y1="1" x2="136" y2="7"/>
+    <!-- Glyph 8: angular S -->
+    <polyline points="148,1 156,1 148,7 156,7"/>
+    <!-- Glyph 9: dot-line-dot -->
+    <circle cx="168" cy="4" r="1.5"/>
+    <line x1="172" y1="4" x2="180" y2="4"/>
+    <circle cx="184" cy="4" r="1.5"/>
+    <!-- Glyph 10: inverted V -->
+    <polyline points="196,6 202,2 208,6"/>
+    <!-- Glyph 11: box -->
+    <rect x="220" y="1" width="6" height="6"/>
+    <!-- Glyph 12: diagonal -->
+    <line x1="240" y1="1" x2="252" y2="7"/>
+  </g>
+</svg>

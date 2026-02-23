@@ -1,0 +1,21 @@
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="stone-noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="5" seed="7" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+    </filter>
+  </defs>
+  <rect width="256" height="256" fill="#1a1722"/>
+  <rect width="256" height="256" fill="#0a0812" opacity="0.2" filter="url(#stone-noise)"/>
+  <!-- Horizontal mortar lines -->
+  <line x1="0" y1="64" x2="256" y2="64" stroke="#0a0812" stroke-width="2" opacity="0.3"/>
+  <line x1="0" y1="128" x2="256" y2="128" stroke="#0a0812" stroke-width="2" opacity="0.3"/>
+  <line x1="0" y1="192" x2="256" y2="192" stroke="#0a0812" stroke-width="2" opacity="0.3"/>
+  <!-- Vertical mortar lines (staggered like brickwork) -->
+  <line x1="128" y1="0" x2="128" y2="64" stroke="#0a0812" stroke-width="2" opacity="0.25"/>
+  <line x1="64" y1="64" x2="64" y2="128" stroke="#0a0812" stroke-width="2" opacity="0.25"/>
+  <line x1="192" y1="64" x2="192" y2="128" stroke="#0a0812" stroke-width="2" opacity="0.25"/>
+  <line x1="128" y1="128" x2="128" y2="192" stroke="#0a0812" stroke-width="2" opacity="0.25"/>
+  <line x1="64" y1="192" x2="64" y2="256" stroke="#0a0812" stroke-width="2" opacity="0.25"/>
+  <line x1="192" y1="192" x2="192" y2="256" stroke="#0a0812" stroke-width="2" opacity="0.25"/>
+</svg>
