@@ -1,22 +1,35 @@
-/* Forge Components - Card, button, form, and UI element styling */
+/* Arcane Forge Components - Stone tablets, rune chips, carved forms */
 
-/* Recipe Cards */
+/* --- Cards: Stone Tablets --- */
+
 .forge__card {
   background-color: var(--surface-0);
   border-radius: 6px;
   padding: 1rem;
   position: relative;
-  transition: all 200ms ease;
+  transition: all 250ms ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
-.forge__card.forge__texture-metal {
-  border-left: 3px solid var(--primary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+/* Gradient top accent: purple to amber */
+.forge__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--purple-accent), var(--primary-color));
+  border-radius: 6px 6px 0 0;
+  z-index: 2;
 }
 
 .forge__card:hover {
-  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.2);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 12px rgba(232, 160, 66, 0.3),
+    0 0 24px rgba(139, 92, 246, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
 .forge__card img {
@@ -52,25 +65,31 @@
   z-index: 2;
 }
 
+/* --- Tags: Rune Chips --- */
+
 .forge__tag {
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--purple-accent);
   border-radius: 3px;
   background-color: transparent;
-  color: var(--primary-color);
+  color: var(--purple-accent);
   transition: all 150ms ease;
+  cursor: pointer;
 }
 
 .forge__tag:hover {
-  background-color: rgba(212, 165, 116, 0.1);
+  background-color: rgba(139, 92, 246, 0.1);
+  border-color: var(--purple-light);
+  color: var(--purple-light);
 }
 
-/* Buttons */
+/* --- Buttons --- */
+
 .forge__button {
   background-color: transparent;
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
+  border: 2px solid var(--purple-accent);
+  color: var(--purple-accent);
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   font-weight: 600;
@@ -82,13 +101,21 @@
 }
 
 .forge__button:hover:not(:disabled) {
-  box-shadow: 0 0 12px rgba(212, 165, 116, 0.6);
-  background-color: rgba(212, 165, 116, 0.05);
+  box-shadow:
+    0 0 12px rgba(139, 92, 246, 0.4),
+    0 0 24px rgba(139, 92, 246, 0.15);
+  background-color: rgba(139, 92, 246, 0.05);
+  border-color: var(--purple-light);
+  color: var(--purple-light);
 }
 
 .forge__button:focus {
-  outline: 2px solid var(--primary-color);
+  outline: 2px solid var(--purple-accent);
   outline-offset: 2px;
+}
+
+.forge__button:active:not(:disabled) {
+  background-color: rgba(139, 92, 246, 0.15);
 }
 
 .forge__button:disabled {
@@ -98,33 +125,41 @@
   color: var(--surface-100);
 }
 
+/* Primary button: amber with purple halo on hover */
 .forge__button-primary {
   background-color: var(--primary-color);
-  color: #1a1a1a;
+  color: #0a0812;
   border-color: var(--primary-color);
 }
 
 .forge__button-primary:hover:not(:disabled) {
   background-color: var(--primary-light);
   border-color: var(--primary-light);
-  box-shadow: 0 0 20px rgba(212, 165, 116, 0.7);
+  box-shadow:
+    0 0 16px rgba(232, 160, 66, 0.5),
+    0 0 32px rgba(139, 92, 246, 0.2);
 }
 
-/* Forms & Inputs */
+/* --- Forms: Carved Stone --- */
+
 .forge__input {
   background-color: var(--surface-50);
-  border: 1px solid var(--surface-100);
+  border: 1px solid var(--surface-200);
   color: var(--text-color);
   padding: 0.75rem;
   border-radius: 4px;
   font-size: 1rem;
   transition: all 200ms ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .forge__input:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 8px rgba(212, 165, 116, 0.3);
+  border-color: var(--purple-accent);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(139, 92, 246, 0.3),
+    0 0 4px rgba(232, 160, 66, 0.2);
 }
 
 .forge__input::placeholder {
@@ -137,11 +172,13 @@
   color: var(--text-color);
   font-weight: 600;
   font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  font-variant: small-caps;
 }
 
 .forge__textarea {
   background-color: var(--surface-50);
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--surface-200);
   color: var(--text-color);
   padding: 0.75rem;
   border-radius: 4px;
@@ -150,14 +187,18 @@
   resize: vertical;
   min-height: 120px;
   transition: all 200ms ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .forge__textarea:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(212, 165, 116, 0.4);
+  border-color: var(--purple-accent);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(139, 92, 246, 0.4),
+    0 0 4px rgba(232, 160, 66, 0.2);
 }
 
-/* Form groups */
 .forge__form-group {
   margin-bottom: 1.5rem;
 }
@@ -169,25 +210,34 @@
   display: block;
 }
 
-/* Links */
+/* --- Links --- */
+
 .forge__link {
-  color: var(--primary-color);
+  color: var(--text-color-secondary);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: all 150ms ease;
 }
 
 .forge__link:hover {
-  border-bottom-color: var(--primary-color);
+  color: var(--purple-accent);
+  border-bottom-color: var(--purple-accent);
 }
 
 .forge__link:focus {
-  outline: 2px solid var(--primary-color);
+  outline: 2px solid var(--purple-accent);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* Navbar brand */
+/* Active/current link: amber */
+.forge__link.router-link-active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* --- Navbar Brand --- */
+
 .forge__brand {
   font-size: 1.5rem;
   font-weight: 700;
@@ -198,10 +248,13 @@
 }
 
 .forge__brand:hover {
-  text-shadow: 0 0 8px rgba(212, 165, 116, 0.6);
+  text-shadow:
+    0 0 12px rgba(232, 160, 66, 0.7),
+    0 0 24px rgba(139, 92, 246, 0.3);
 }
 
-/* Disabled state */
+/* --- Disabled state --- */
+
 .forge__disabled {
   opacity: 0.5;
   cursor: not-allowed;

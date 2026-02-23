@@ -1,51 +1,52 @@
-/* Forge Theme - Color Palette
-   Overrides PrimeVue CSS variables for dark forge aesthetic
+/* Arcane Forge Theme - Color Palette
+   Dungeon darkness with purple undertones, dual amber+purple accents.
+   Overrides PrimeVue CSS variables.
 */
 
 :root {
-  /* Base Colors - Depth Layered (very dark to warm mid-tone) */
-  --surface-ground: #0f0f0f;    /* Deep night - outer forge darkness */
-  --surface-0: #252525;         /* Cards - slightly warm in forge light */
-  --surface-50: #2d2d2d;        /* Warm mid-tone - forge glow influence */
-  --surface-100: #353535;       /* Subtle warmth - readable UI */
-  --surface-200: #3d3d3d;       /* Slightly lighter warm tone */
+  /* Backgrounds - Dungeon darkness with purple undertone */
+  --surface-ground: #0a0812;
+  --surface-0: #1a1722;
+  --surface-50: #24202e;
+  --surface-100: #2e2a3a;
+  --surface-200: #383245;
 
-  /* Text Colors */
-  --text-color: #e0e0e0;
-  --text-color-secondary: #888888;
+  /* Text - Cool silver */
+  --text-color: #c8c4d4;
+  --text-color-secondary: #8a849a;
 
-  /* Primary Accent - Brighter Amber (forge glow) */
-  --primary-color: #e8a042;     /* Bright amber - glowing forge light */
-  --primary-light: #f4b968;     /* Lighter amber - intense glow */
+  /* Primary - Arcane amber (forge flame) */
+  --primary-color: #e8a042;
+  --primary-light: #ffd580;
 
-  /* Borders & Dividers */
-  --surface-border: #353535;
-  --surface-section: #252525;
+  /* Purple accent - Mystic energy */
+  --purple-accent: #8b5cf6;
+  --purple-light: #a78bfa;
 
-  /* Error/Warning (warm colors, not bright) */
+  /* Ember - Flame red-orange */
+  --ember-color: #e85d2a;
+
+  /* Borders */
+  --surface-border: #2e2a3a;
+  --surface-section: #1a1722;
+
+  /* Semantic colors */
   --red-500: #d97757;
-  --orange-500: #e8a042;        /* Match primary amber */
-  --yellow-500: #e8a042;        /* Warm forge tone */
-
-  /* Success (cool to match forge palette) */
+  --orange-500: #e8a042;
+  --yellow-500: #e8a042;
   --green-500: #66b3a3;
 }
 
-/* Dark mode selector support (for future light mode) */
 :root.dark {
-  /* When explicitly marked as dark, use same variables */
-  /* This allows consistent behavior */
+  /* Same variables for explicit dark mode toggle */
 }
 
-/* Ensure PrimeVue components use these variables */
 body {
   background-color: var(--surface-ground);
   color: var(--text-color);
-  /* Subtle warmth to backgrounds for forge atmosphere */
-  background: linear-gradient(135deg, var(--surface-ground) 0%, rgba(31, 15, 10, 0.3) 100%);
+  background: linear-gradient(135deg, #0a0812 0%, rgba(20, 12, 30, 0.6) 100%);
 }
 
-/* Link colors */
 a {
   color: var(--primary-color);
 }

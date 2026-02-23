@@ -1,54 +1,176 @@
-/* Forge Animations - Glow effects and fire breathing */
+/* Arcane Forge Animations - Dual-glow effects, particles, brand flicker */
 
-/* Glow effect for interactive elements */
-@keyframes forge-glow {
+/* Dual amber+purple glow for interactive elements */
+@keyframes arcane-glow {
   0% {
-    box-shadow: 0 0 8px rgba(212, 165, 116, 0.4);
+    box-shadow:
+      0 0 8px rgba(232, 160, 66, 0.3),
+      0 0 16px rgba(139, 92, 246, 0.1);
   }
   50% {
-    box-shadow: 0 0 16px rgba(212, 165, 116, 0.6);
+    box-shadow:
+      0 0 16px rgba(232, 160, 66, 0.5),
+      0 0 24px rgba(139, 92, 246, 0.2);
   }
   100% {
-    box-shadow: 0 0 8px rgba(212, 165, 116, 0.4);
+    box-shadow:
+      0 0 8px rgba(232, 160, 66, 0.3),
+      0 0 16px rgba(139, 92, 246, 0.1);
   }
 }
 
-/* Fire breathing pulse */
-@keyframes forge-pulse {
+/* Brand text flicker between amber and purple */
+@keyframes brand-flicker {
   0% {
-    opacity: 1;
+    text-shadow:
+      0 0 8px rgba(232, 160, 66, 0.6),
+      0 0 20px rgba(232, 160, 66, 0.2);
   }
   50% {
-    opacity: 0.85;
+    text-shadow:
+      0 0 12px rgba(139, 92, 246, 0.5),
+      0 0 24px rgba(139, 92, 246, 0.15);
   }
   100% {
-    opacity: 1;
+    text-shadow:
+      0 0 8px rgba(232, 160, 66, 0.6),
+      0 0 20px rgba(232, 160, 66, 0.2);
   }
 }
 
-/* Apply glow animation to interactive elements on hover */
-.forge__button:hover:not(:disabled),
+/* Ember particles rising */
+@keyframes ember-rise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(30px);
+    opacity: 0;
+  }
+}
+
+/* Purple spark drift */
+@keyframes spark-drift {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.05;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(-20px) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+/* Arcane skeleton shimmer */
+@keyframes shimmer-arcane {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Apply arcane glow to interactive elements on hover */
 .forge__card:hover,
+.forge__button:hover:not(:disabled),
 .forge__link:hover {
-  animation: forge-glow 2s ease-in-out infinite;
+  animation: arcane-glow 2.5s ease-in-out infinite;
 }
 
-/* Gentle pulse animation */
-.forge__pulse {
-  animation: forge-pulse 3s ease-in-out infinite;
+/* Brand flicker on the navbar brand */
+.forge__brand {
+  animation: brand-flicker 5s ease-in-out infinite;
+}
+
+/* Ember particle layer (applied to .app::after) */
+.forge__embers::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow:
+    20px 90vh 3px 0 rgba(232, 160, 66, 0.7),
+    80px 85vh 2px 0 rgba(232, 92, 42, 0.6),
+    150px 92vh 3px 0 rgba(232, 160, 66, 0.5),
+    230px 88vh 2px 0 rgba(232, 92, 42, 0.7),
+    320px 95vh 3px 0 rgba(232, 160, 66, 0.6),
+    410px 87vh 2px 0 rgba(232, 92, 42, 0.5),
+    500px 91vh 3px 0 rgba(232, 160, 66, 0.7),
+    600px 86vh 2px 0 rgba(232, 92, 42, 0.6),
+    700px 93vh 3px 0 rgba(232, 160, 66, 0.5),
+    780px 89vh 2px 0 rgba(232, 92, 42, 0.7),
+    870px 94vh 3px 0 rgba(232, 160, 66, 0.6),
+    950px 88vh 2px 0 rgba(232, 92, 42, 0.5),
+    1050px 91vh 2px 0 rgba(232, 160, 66, 0.7),
+    1150px 86vh 3px 0 rgba(232, 92, 42, 0.6),
+    1250px 95vh 2px 0 rgba(232, 160, 66, 0.5);
+  animation: ember-rise 10s linear infinite;
+}
+
+/* Purple spark layer */
+.forge__sparks::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow:
+    60px 88vh 2px 0 rgba(139, 92, 246, 0.5),
+    200px 93vh 1px 0 rgba(139, 92, 246, 0.4),
+    350px 90vh 2px 0 rgba(167, 139, 250, 0.5),
+    520px 95vh 1px 0 rgba(139, 92, 246, 0.4),
+    680px 87vh 2px 0 rgba(167, 139, 250, 0.5),
+    830px 92vh 1px 0 rgba(139, 92, 246, 0.4),
+    1000px 89vh 2px 0 rgba(167, 139, 250, 0.5),
+    1180px 94vh 1px 0 rgba(139, 92, 246, 0.4);
+  animation: spark-drift 13s linear infinite;
 }
 
 /* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  .forge__button:hover:not(:disabled),
   .forge__card:hover,
+  .forge__button:hover:not(:disabled),
   .forge__link:hover,
-  .forge__pulse {
+  .forge__brand {
     animation: none;
   }
 
-  .forge__button:hover:not(:disabled),
+  .forge__embers::after,
+  .forge__sparks::before {
+    animation: none;
+    opacity: 0;
+  }
+
   .forge__card:hover {
-    box-shadow: 0 4px 16px rgba(212, 165, 116, 0.2);
+    box-shadow:
+      0 0 12px rgba(232, 160, 66, 0.3),
+      0 0 24px rgba(139, 92, 246, 0.15);
+  }
+
+  .forge__brand {
+    text-shadow:
+      0 0 8px rgba(232, 160, 66, 0.6),
+      0 0 20px rgba(232, 160, 66, 0.2);
   }
 }

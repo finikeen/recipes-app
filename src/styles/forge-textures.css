@@ -1,6 +1,31 @@
-/* Forge Textures - Distressed patterns and overlays */
+/* Arcane Forge Textures - Stone, metal, and runic overlays */
 
-/* Metal grain texture for heavy use (cards, buttons) */
+/* Stone block texture for cards and panels */
+.forge__texture-stone::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/textures/stone-blocks.svg");
+  background-size: 256px 256px;
+  opacity: 0.12;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.forge__texture-stone {
+  position: relative;
+}
+
+.forge__texture-stone > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Metal grain texture (kept for navbar accent) */
 .forge__texture-metal::before {
   content: "";
   position: absolute;
@@ -10,29 +35,22 @@
   height: 100%;
   background-image: url("../assets/textures/metal-grain.svg");
   background-size: 256px 256px;
-  opacity: 0.12;
+  opacity: 0.10;
   pointer-events: none;
   border-radius: inherit;
   z-index: 0;
 }
 
-/* Paper texture for alternative surfaces */
-.forge__texture-paper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("../assets/textures/paper-texture.svg");
-  background-size: 256px 256px;
-  opacity: 0.1;
-  pointer-events: none;
-  border-radius: inherit;
-  z-index: 0;
+.forge__texture-metal {
+  position: relative;
 }
 
-/* Subtle background grain (very light) */
+.forge__texture-metal > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Subtle stone background (page-level) */
 .forge__texture-subtle::before {
   content: "";
   position: absolute;
@@ -40,14 +58,37 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../assets/textures/metal-grain.svg");
+  background-image: url("../assets/textures/stone-blocks.svg");
   background-size: 512px 512px;
-  opacity: 0.06;
+  opacity: 0.05;
   pointer-events: none;
   z-index: -1;
 }
 
-/* Distressed corners - worn effect */
+/* Runic accent border (top edge of cards/sections) */
+.forge__runic-border::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-image: url("../assets/textures/runic-border.svg");
+  background-size: 256px 4px;
+  background-repeat: repeat-x;
+  opacity: 0.7;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+/* Amber accent border with purple outer glow */
+.forge__accent-border {
+  border: 2px solid var(--primary-color);
+  box-shadow: inset 0 0 4px rgba(139, 92, 246, 0.15);
+}
+
+/* Distressed corners - dungeon wear */
 .forge__distressed {
   position: relative;
 }
@@ -61,32 +102,14 @@
   height: 100%;
   background: radial-gradient(
     circle at 0% 0%,
-    rgba(0, 0, 0, 0.3) 0%,
+    rgba(10, 8, 18, 0.4) 0%,
     transparent 50%
   ),
   radial-gradient(
     circle at 100% 100%,
-    rgba(0, 0, 0, 0.3) 0%,
+    rgba(10, 8, 18, 0.4) 0%,
     transparent 50%
   );
   pointer-events: none;
   border-radius: inherit;
-}
-
-/* Amber accent border with slight irregularity */
-.forge__accent-border {
-  border: 2px solid var(--primary-color);
-  box-shadow: inset 0 0 4px rgba(212, 165, 116, 0.2);
-}
-
-/* Content positioning for texture elements */
-.forge__texture-metal,
-.forge__texture-paper {
-  position: relative;
-}
-
-.forge__texture-metal > *,
-.forge__texture-paper > * {
-  position: relative;
-  z-index: 1;
 }
