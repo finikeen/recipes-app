@@ -91,7 +91,7 @@ const handleLogout = async () => {
 }
 
 .navbar__tagline {
-  @apply text-xs pt-1 text-muted-color;
+  @apply text-xs pt-1 text-muted-color hidden md:block;
 }
 
 .navbar__links {

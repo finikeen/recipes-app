@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
-import Aura from '@primeuix/themes/aura'
+import ForgePreset from './theme.js'
 import 'primeicons/primeicons.css'
 import router from './router/index.js'
 import App from './App.vue'
@@ -15,7 +15,7 @@ app.use(pinia)
 app.use(router)
 app.use(PrimeVue, {
   theme: {
-    preset: Aura,
+    preset: ForgePreset,
     options: {
       darkModeSelector: '.dark'
     }

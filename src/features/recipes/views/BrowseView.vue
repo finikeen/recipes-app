@@ -22,10 +22,7 @@ onMounted(async () => {
 
 <template>
   <div class="browse__container forge__texture-subtle">
-    <p class="browse__subtitle">
-      Create and refine your recipes. Build a collection that's completely
-      unique to you.
-    </p>
+    <h1 class="browse__heading">Browse Recipes</h1>
 
     <div v-if="recipesStore.loading" class="browse__grid">
       <div v-for="i in 9" :key="i" class="browse__skeleton-card">
@@ -79,8 +76,12 @@ onMounted(async () => {
   @apply w-full;
 }
 
-.browse__subtitle {
-  @apply text-lg text-muted-color mb-4;
+.browse__heading {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0 0 1.5rem;
+  text-shadow: 0 0 16px rgba(232, 160, 66, 0.4);
 }
 
 .browse__empty-message {
