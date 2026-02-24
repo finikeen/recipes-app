@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import Skeleton from "primevue/skeleton";
 import Paginator from "primevue/paginator";
+import InputText from "primevue/inputtext";
 import { useRecipesStore } from "@/features/recipes/store";
 import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
 
@@ -9,10 +10,48 @@ const recipesStore = useRecipesStore();
 
 const currentPage = ref(0);
 const rowsPerPage = 9;
+const searchQuery = ref("");
+const activeTagFilters = ref(new Set());
+const filtersOpen = ref(false);
+
+const nameFilteredRecipes = computed(() => {
+  const q = searchQuery.value.trim().toLowerCase();
+  if (!q) return recipesStore.recipes;
+  return recipesStore.recipes.filter((r) => r.name?.toLowerCase().includes(q));
+});
+
+const availableTags = computed(() => {
+  const tags = new Set();
+  nameFilteredRecipes.value.forEach((r) => {
+    (r.tags ?? []).forEach((t) => tags.add(t));
+  });
+  return [...tags].sort((a, b) => a.localeCompare(b));
+});
+
+const filteredRecipes = computed(() => {
+  if (activeTagFilters.value.size === 0) return nameFilteredRecipes.value;
+  return nameFilteredRecipes.value.filter((r) =>
+    (r.tags ?? []).some((t) => activeTagFilters.value.has(t)),
+  );
+});
 
 const paginatedRecipes = computed(() => {
   const start = currentPage.value * rowsPerPage;
-  return recipesStore.recipes.slice(start, start + rowsPerPage);
+  return filteredRecipes.value.slice(start, start + rowsPerPage);
+});
+
+const toggleTag = (tag) => {
+  const next = new Set(activeTagFilters.value);
+  next.has(tag) ? next.delete(tag) : next.add(tag);
+  activeTagFilters.value = next;
+};
+
+const clearTags = () => {
+  activeTagFilters.value = new Set();
+};
+
+watch([searchQuery, activeTagFilters], () => {
+  currentPage.value = 0;
 });
 
 onMounted(async () => {
@@ -23,6 +62,54 @@ onMounted(async () => {
 <template>
   <div class="browse__container forge__texture-subtle">
     <h1 class="browse__heading">Browse Recipes</h1>
+
+    <div class="browse__filter-bar">
+      <InputText
+        v-model="searchQuery"
+        type="text"
+        placeholder="Search recipes..."
+        class="browse__search"
+        aria-label="Search recipes by name"
+      />
+      <button
+        class="browse__filters-btn"
+        :class="{ 'browse__filters-btn--active': activeTagFilters.size > 0 }"
+        @click="filtersOpen = !filtersOpen"
+        :aria-expanded="filtersOpen"
+        aria-controls="browse-filter-panel"
+      >
+        <span>{{ filtersOpen ? "▲" : "▼" }} Filters</span>
+        <span v-if="activeTagFilters.size > 0" class="browse__filters-badge">{{
+          activeTagFilters.size
+        }}</span>
+      </button>
+    </div>
+
+    <div
+      v-show="filtersOpen"
+      id="browse-filter-panel"
+      class="browse__filter-panel"
+    >
+      <div class="browse__filter-chips">
+        <button
+          v-for="tag in availableTags"
+          :key="tag"
+          class="browse__filter-chip"
+          :class="{ 'browse__filter-chip--active': activeTagFilters.has(tag) }"
+          @click="toggleTag(tag)"
+          :aria-pressed="activeTagFilters.has(tag)"
+        >
+          {{ tag }}
+        </button>
+      </div>
+      <button
+        v-if="activeTagFilters.size > 0"
+        class="browse__filter-clear"
+        @click="clearTags"
+      >
+        Clear all
+      </button>
+    </div>
 
     <div v-if="recipesStore.loading" class="browse__grid">
       <div v-for="i in 9" :key="i" class="browse__skeleton-card">
@@ -48,6 +135,10 @@ onMounted(async () => {
       No recipes yet.
     </div>
 
+    <div v-else-if="filteredRecipes.length === 0" class="browse__empty-message">
+      No recipes found.
+    </div>
+
     <div v-else class="browse__grid">
       <div
         v-for="recipe in paginatedRecipes"
@@ -59,9 +150,9 @@ onMounted(async () => {
     </div>
 
     <Paginator
-      v-if="recipesStore.recipes.length > rowsPerPage"
+      v-if="filteredRecipes.length > rowsPerPage"
       :rows="rowsPerPage"
-      :totalRecords="recipesStore.recipes.length"
+      :totalRecords="filteredRecipes.length"
       :first="currentPage * rowsPerPage"
       @page="currentPage = $event.page"
       class="browse__paginator"
@@ -82,6 +173,80 @@ onMounted(async () => {
   color: var(--primary-color);
   margin: 0 0 1.5rem;
   text-shadow: 0 0 16px rgba(232, 160, 66, 0.4);
+}
+
+.browse__filter-bar {
+  @apply flex gap-3 mb-3;
+}
+
+.browse__search {
+  @apply flex-1;
+}
+
+.browse__filters-btn {
+  @apply flex items-center gap-2 px-4 py-2 rounded border border-surface cursor-pointer transition-all duration-200;
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+.browse__filters-btn:hover {
+  border-color: var(--purple-accent);
+  color: var(--purple-accent);
+}
+
+.browse__filters-btn--active {
+  border-color: var(--purple-accent);
+  color: var(--purple-accent);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+}
+
+.browse__filters-badge {
+  @apply inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold;
+  background-color: var(--purple-accent);
+  color: white;
+}
+
+.browse__filter-panel {
+  @apply border border-surface rounded p-3 mb-4;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.browse__filter-chips {
+  @apply flex flex-wrap gap-2 mb-2;
+}
+
+.browse__filter-chip {
+  @apply inline-flex items-center px-2 py-1 text-xs rounded transition-colors cursor-pointer;
+  background-color: transparent;
+  color: var(--purple-accent);
+  border: 1px solid var(--purple-accent);
+}
+
+.browse__filter-chip:hover {
+  background-color: rgba(139, 92, 246, 0.1);
+}
+
+.browse__filter-chip--active {
+  background-color: var(--purple-accent);
+  color: white;
+}
+
+.browse__filter-chip--active:hover {
+  background-color: var(--purple-light, #a78bfa);
+  border-color: var(--purple-light, #a78bfa);
+}
+
+.browse__filter-clear {
+  @apply text-xs cursor-pointer mt-1 p-0;
+  background: none;
+  border: none;
+  color: var(--text-muted-color);
+  text-decoration: underline;
+}
+
+.browse__filter-clear:hover {
+  color: var(--purple-accent);
 }
 
 .browse__empty-message {
