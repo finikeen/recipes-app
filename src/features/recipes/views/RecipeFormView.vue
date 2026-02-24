@@ -582,7 +582,7 @@ onMounted(async () => {
 }
 
 .rform__direction-controls {
-  @apply flex gap-1 flex-shrink-0;
+  @apply flex gap-1 shrink-0;
 }
 
 /* Compact remove/reorder buttons */
