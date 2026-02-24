@@ -140,6 +140,25 @@
     0 0 32px rgba(139, 92, 246, 0.2);
 }
 
+/* Danger button: red with matching hover glow */
+.forge__button-danger {
+  border-color: #e05252;
+  color: #e05252;
+}
+
+.forge__button-danger:hover:not(:disabled) {
+  background-color: rgba(224, 82, 82, 0.05);
+  border-color: #f87171;
+  color: #f87171;
+  box-shadow:
+    0 0 12px rgba(224, 82, 82, 0.4),
+    0 0 24px rgba(224, 82, 82, 0.15);
+}
+
+.forge__button-danger:active:not(:disabled) {
+  background-color: rgba(224, 82, 82, 0.15);
+}
+
 /* --- Forms: Carved Stone --- */
 
 .forge__input {

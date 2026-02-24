@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
+import ConfirmService from 'primevue/confirmservice'
 import ForgePreset from './theme.js'
 import 'primeicons/primeicons.css'
 import router from './router/index.js'
@@ -21,6 +22,7 @@ app.use(PrimeVue, {
     }
   }
 })
+app.use(ConfirmService)
 
 // Initialize Firebase auth listener before mounting
 const authStore = useAuthStore()
