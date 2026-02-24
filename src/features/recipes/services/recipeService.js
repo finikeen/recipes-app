@@ -9,7 +9,8 @@ import {
   getDoc,
   query,
   where,
-  serverTimestamp
+  serverTimestamp,
+  writeBatch
 } from 'firebase/firestore'
 
 export const recipeService = {
@@ -101,6 +102,25 @@ export const recipeService = {
       return querySnapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }))
     } catch (err) {
       throw new Error(`Failed to get ingredients: ${err.message}`)
+    }
+  },
+
+  async setIngredients(recipeId, ingredients) {
+    try {
+      const ingredientsRef = collection(db, 'recipes', recipeId, 'ingredients')
+      const existingDocs = await getDocs(ingredientsRef)
+
+      const batch = writeBatch(db)
+      existingDocs.docs.forEach(docSnap => {
+        batch.delete(docSnap.ref)
+      })
+      ingredients.forEach(({ quantity, unit, item }) => {
+        const newDocRef = doc(ingredientsRef)
+        batch.set(newDocRef, { quantity, unit, item })
+      })
+      await batch.commit()
+    } catch (err) {
+      throw new Error(`Failed to set ingredients: ${err.message}`)
     }
   }
 }

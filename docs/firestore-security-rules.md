@@ -8,12 +8,23 @@ All rules are scoped to the `recipes` collection. Read access is open to all use
 
 ## Rules Summary
 
+### Recipe documents (`/recipes/{recipeId}`)
+
 | Operation | Condition |
 |-----------|-----------|
 | `read`    | Public access (no authentication required) |
-| `create`  | User is authenticated and the new document's `userId` matches their UID (`request.resource.data.userId == request.auth.uid`) |
-| `update`  | User is authenticated and owns the existing document (`resource.data.userId == request.auth.uid`) |
-| `delete`  | User is authenticated and owns the document (`resource.data.userId == request.auth.uid`) |
+| `create`  | User is authenticated and the new document's `userId` matches their UID |
+| `update`  | User is authenticated and owns the existing document |
+| `delete`  | User is authenticated and owns the document |
+
+### Ingredients subcollection (`/recipes/{recipeId}/ingredients/{ingredientId}`)
+
+| Operation | Condition |
+|-----------|-----------|
+| `read`    | Public access (no authentication required) |
+| `write`   | User is authenticated and owns the parent recipe (verified via `get()`) |
+
+Ingredient documents do not carry a `userId` field themselves, so ownership is established by looking up the parent recipe document.
 
 ## Security Rules
 
@@ -21,11 +32,17 @@ All rules are scoped to the `recipes` collection. Read access is open to all use
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /recipes/{document=**} {
+    match /recipes/{recipeId} {
       allow read: if true;
       allow create: if request.auth.uid != null && request.resource.data.userId == request.auth.uid;
       allow update: if request.auth.uid != null && resource.data.userId == request.auth.uid;
       allow delete: if request.auth.uid != null && resource.data.userId == request.auth.uid;
+
+      match /ingredients/{ingredientId} {
+        allow read: if true;
+        allow write: if request.auth.uid != null &&
+          get(/databases/$(database)/documents/recipes/$(recipeId)).data.userId == request.auth.uid;
+      }
     }
   }
 }

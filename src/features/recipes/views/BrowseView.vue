@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
+import { useRouter } from "vue-router";
 import Skeleton from "primevue/skeleton";
 import Paginator from "primevue/paginator";
 import InputText from "primevue/inputtext";
@@ -7,6 +8,7 @@ import { useRecipesStore } from "@/features/recipes/store";
 import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
 
 const recipesStore = useRecipesStore();
+const router = useRouter();
 
 const currentPage = ref(0);
 const rowsPerPage = 9;
@@ -48,6 +50,15 @@ const toggleTag = (tag) => {
 
 const clearTags = () => {
   activeTagFilters.value = new Set();
+};
+
+const handleRecipeClick = (id) => {
+  router.push({ name: "recipe-detail", params: { id } });
+};
+
+const handleTagClick = (tagName) => {
+  toggleTag(tagName);
+  filtersOpen.value = true;
 };
 
 watch([searchQuery, activeTagFilters], () => {
@@ -145,7 +156,11 @@ onMounted(async () => {
         :key="recipe.id"
         class="forge__card forge__texture-stone forge__runic-border"
       >
-        <RecipeCard :recipe="recipe" />
+        <RecipeCard
+          :recipe="recipe"
+          @click="handleRecipeClick(recipe.id)"
+          @tag-click="handleTagClick($event.tagName)"
+        />
       </div>
     </div>
 
