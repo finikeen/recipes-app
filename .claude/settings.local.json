@@ -20,7 +20,8 @@
       "Bash(cd /e/Documents/workspaces/rezipees/recipes && npm run build 2>&1)",
       "Bash(cd E:/Documents/workspaces/rezipees/recipes && npm run build 2>&1)",
       "Skill(commit-message-v2)",
-      "Skill(spec-v2)"
+      "Skill(spec-v2)",
+      "mcp__firebase__firebase_read_resources"
     ]
   },
   "hooks": {
@@ -39,7 +40,11 @@
   "mcpServers": {
     "playwright": {
       "command": "npx",
-        "args": ["-y", "@playwright/mcp@latest", "--caps=vision"]
-      }
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--caps=vision"
+      ]
     }
+  }
 }
