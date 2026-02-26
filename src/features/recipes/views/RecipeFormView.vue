@@ -1,4 +1,11 @@
 <script setup>
+/*
+* TODO: a new component w/ 2 items:
+*  1. an optional textfield for sourceUrl
+*  2. a button
+*  if sourceUrl exists in Recipe, the textfield is readonly and the button is disabled
+*  if not, see @/server for scraping process, scrape sourceUrl and fill in form fields
+*/
 import { ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import InputText from "primevue/inputtext";
