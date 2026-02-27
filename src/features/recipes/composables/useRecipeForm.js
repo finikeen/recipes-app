@@ -59,9 +59,15 @@ export function useRecipeForm({ recipeId, onSuccess } = {}) {
     if (!name.value.trim()) {
       errors.value.name = 'Name is required'
       valid = false
+    } else if (name.value.trim().length > 200) {
+      errors.value.name = 'Name must be 200 characters or fewer'
+      valid = false
     }
     if (!description.value.trim()) {
       errors.value.description = 'Description is required'
+      valid = false
+    } else if (description.value.trim().length > 2000) {
+      errors.value.description = 'Description must be 2000 characters or fewer'
       valid = false
     }
     if (
