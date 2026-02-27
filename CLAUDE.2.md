@@ -1,5 +1,5 @@
 # CLAUDE.md
-
+DO NOT USE - THIS FILE IS FOR ARCHIVE PURPOSES ONLY - DO NOT UPDATE OR MODIFY - DO NOT USE
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Commands
