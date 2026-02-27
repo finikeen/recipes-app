@@ -35,6 +35,10 @@ npm run preview  # Preview the production build
 
 - Use `git switch -c` to create and switch to new branches (not `git checkout -b`).
 
+### Firebase
+- Only use the Firebase web SDK, do not create any backend functions or use the Admin SDK. 
+- Prefer v9 modular imports (not the older namespaced API).
+
 ### Checking Documentation
 
 - **important:** When implementing any lib/framework-specific features, ALWAYS check the appropriate lib/framework documentation using the Context7 MCP server before writing any code.

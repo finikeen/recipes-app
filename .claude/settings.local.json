@@ -21,7 +21,8 @@
       "Bash(cd E:/Documents/workspaces/rezipees/recipes && npm run build 2>&1)",
       "Skill(commit-message-v2)",
       "Skill(spec-v2)",
-      "mcp__firebase__firebase_read_resources"
+      "mcp__firebase__firebase_read_resources",
+      "Bash(npm test:*)"
     ]
   },
   "hooks": {
@@ -46,5 +47,8 @@
         "--caps=vision"
       ]
     }
+  },
+  "enabledPlugins": {
+    "firebase@firebase": true
   }
 }

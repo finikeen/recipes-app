@@ -31,20 +31,24 @@ From `$ARGUMENTS`, extract:
   - Example: "Card Component for Dashboard Stats".
 
 2. `feature_slug`
-  - A git safe slug.  
-  - Rules:  
-    - Lowercase 
-    - Kebab-case 
-    - Only `a-z`, `0-9` and `-`  
-    - Replace spaces and punctuation with `-`  
-    - Collapse multiple `-` into one  
-    - Trim `-` from start and end  
-    - Maximum length 40 characters  
+  - A git safe slug.
+  - Rules:
+    - Lowercase
+    - Kebab-case
+    - Only `a-z`, `0-9` and `-`
+    - Replace spaces and punctuation with `-`
+    - Collapse multiple `-` into one
+    - Trim `-` from start and end
+    - Maximum length 40 characters
   - Example: `card-component` or `card-component-dashboard`.
 
-3. `branch_name`  
-  - Format: `claude/feature/<feature_slug>`  
+3. `branch_name`
+  - Format: `claude/feature/<feature_slug>`
   - Example: `claude/feature/card-component`.
+
+4. 'file_name'
+  - Format: `YYYY-MM-DD-<feature_slug>.md`
+  - Example: `2024-06-15-card-component.md`.
 
 If you cannot infer a sensible `feature_title` and `feature_slug`, ask the user to clarify instead of guessing.
 

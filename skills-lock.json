@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "primevue": {
+      "source": "kindy/skills",
+      "sourceType": "github",
+      "computedHash": "449d7e02adbd5cdad8db5b04cfe6d00a45669dddbe65ab683fcbbd8b51fecb15"
+    }
+  }
+}

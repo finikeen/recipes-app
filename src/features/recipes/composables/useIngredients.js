@@ -1,4 +1,6 @@
-import { ref, watch, readonly, toValue } from 'vue'
+import { ref, watch, readonly, isRef, toValue } from 'vue'
+
+const isFunction = (v) => typeof v === 'function'
 
 function mapIngredient(ing) {
   return {
@@ -10,7 +12,7 @@ function mapIngredient(ing) {
 }
 
 export function useIngredients(initialValue = []) {
-  const isStaticArray = Array.isArray(toValue(initialValue))
+  const isStaticArray = !isRef(initialValue) && !isFunction(initialValue) && Array.isArray(initialValue)
 
   const ingredients = ref(isStaticArray ? toValue(initialValue).map(mapIngredient) : [])
 

@@ -1,4 +1,6 @@
-import { ref, watch, readonly, toValue } from 'vue'
+import { ref, watch, readonly, isRef, toValue } from 'vue'
+
+const isFunction = (v) => typeof v === 'function'
 
 function mapDirection(dir, i) {
   return {
@@ -8,7 +10,7 @@ function mapDirection(dir, i) {
 }
 
 export function useDirections(initialValue = []) {
-  const isStaticArray = Array.isArray(toValue(initialValue))
+  const isStaticArray = !isRef(initialValue) && !isFunction(initialValue) && Array.isArray(initialValue)
 
   const directions = ref(isStaticArray ? toValue(initialValue).map(mapDirection) : [])
 
