@@ -1,8 +1,5 @@
 <script setup>
 import { ref, computed } from "vue";
-import InputText from "primevue/inputtext";
-import Password from "primevue/password";
-import Button from "primevue/button";
 
 const props = defineProps({
   initialMode: {

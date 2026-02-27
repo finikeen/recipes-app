@@ -8,9 +8,6 @@
  */
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import InputText from "primevue/inputtext";
-import Textarea from "primevue/textarea";
-import Skeleton from "primevue/skeleton";
 import { useRecipeForm } from "@/features/recipes/composables/useRecipeForm";
 
 const route = useRoute();

@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from "vue";
-import Card from "primevue/card";
 
 const props = defineProps({
   recipe: {

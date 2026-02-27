@@ -1,9 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import Skeleton from "primevue/skeleton";
-import Paginator from "primevue/paginator";
-import InputText from "primevue/inputtext";
 import { useRecipesStore } from "@/features/recipes/store";
 import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
 import { useRecipeSearch } from "@/features/recipes/composables/useRecipeSearch";

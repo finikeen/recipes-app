@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from "vue";
-import Skeleton from "primevue/skeleton";
 import { useRecipeIngredients } from "@/features/recipes/composables/useRecipeIngredients";
 
 const props = defineProps({

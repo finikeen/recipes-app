@@ -2,8 +2,6 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useConfirm } from "primevue/useconfirm";
-import ConfirmDialog from "primevue/confirmdialog";
-import Skeleton from "primevue/skeleton";
 import { useRecipesStore } from "@/features/recipes/store";
 import { useAuthStore } from "@/features/auth/store";
 import { recipeService } from "@/features/recipes/services/recipeService";

@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
-import Skeleton from "primevue/skeleton";
 import { useRouter } from "vue-router";
 import { useRecipesStore } from "@/features/recipes/store";
 import HeroRecipe from "@/features/recipes/components/HeroRecipe.vue";
