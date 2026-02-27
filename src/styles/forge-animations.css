@@ -150,7 +150,7 @@
 /* Subtle entrance: fade + slight lift */
 @keyframes forge-entrance {
   from {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(10px);
   }
   to {
