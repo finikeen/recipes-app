@@ -1,7 +1,7 @@
 <script setup>
-import { ref, watch, computed } from "vue";
+import { ref, computed } from "vue";
 import Skeleton from "primevue/skeleton";
-import { recipeService } from "@/features/recipes/services/recipeService";
+import { useRecipeIngredients } from "@/features/recipes/composables/useRecipeIngredients";
 
 const props = defineProps({
   recipe: {
@@ -15,28 +15,8 @@ const emit = defineEmits(["load-another", "view-recipe"]);
 // Tab state: 'ingredients' | 'directions'
 const activeTab = ref("ingredients");
 
-// Ingredients subcollection state
-const subcollectionIngredients = ref([]);
-const ingredientsLoading = ref(false);
-
-// Fetch subcollection when recipe changes
-watch(
-  () => props.recipe?.id,
-  async (id) => {
-    if (!id) return;
-    ingredientsLoading.value = true;
-    subcollectionIngredients.value = [];
-    try {
-      const results = await recipeService.getIngredients(id);
-      subcollectionIngredients.value = results;
-    } catch {
-      subcollectionIngredients.value = [];
-    } finally {
-      ingredientsLoading.value = false;
-    }
-  },
-  { immediate: true },
-);
+const { ingredients: subcollectionIngredients, loading: ingredientsLoading } =
+  useRecipeIngredients(() => props.recipe?.id);
 
 // Resolved ingredient lines: subcollection preferred, fallback to recipe.ingredients array
 const ingredientLines = computed(() => {

@@ -7,6 +7,7 @@ import Skeleton from "primevue/skeleton";
 import { useRecipesStore } from "@/features/recipes/store";
 import { useAuthStore } from "@/features/auth/store";
 import { recipeService } from "@/features/recipes/services/recipeService";
+import { useRecipeIngredients } from "@/features/recipes/composables/useRecipeIngredients";
 
 const route = useRoute();
 const router = useRouter();
@@ -17,9 +18,11 @@ const confirm = useConfirm();
 const recipe = ref(null);
 const loading = ref(false);
 const notFound = ref(false);
-const ingredients = ref([]);
-const ingredientsLoading = ref(false);
 const deleting = ref(false);
+
+const { ingredients, loading: ingredientsLoading } = useRecipeIngredients(
+  () => recipe.value?.id,
+);
 
 const isOwner = computed(
   () => authStore.user?.uid && recipe.value?.userId === authStore.user.uid,
@@ -72,20 +75,14 @@ const handleDelete = () => {
 onMounted(async () => {
   const id = route.params.id;
   loading.value = true;
-  ingredientsLoading.value = true;
   try {
-    const [fetchedRecipe, fetchedIngredients] = await Promise.all([
-      recipeService.getRecipeById(id),
-      recipeService.getIngredients(id),
-    ]);
+    const fetchedRecipe = await recipeService.getRecipeById(id);
     recipe.value = fetchedRecipe;
-    ingredients.value = fetchedIngredients;
     if (!fetchedRecipe) notFound.value = true;
   } catch {
     notFound.value = true;
   } finally {
     loading.value = false;
-    ingredientsLoading.value = false;
   }
 });
 </script>

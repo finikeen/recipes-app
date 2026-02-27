@@ -1,3 +1,7 @@
+<script setup>
+import AppNavbar from "@/components/AppNavbar.vue";
+</script>
+
 <template>
   <div class="app forge__texture-subtle forge__embers forge__sparks">
     <AppNavbar />
@@ -6,10 +10,6 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import AppNavbar from "@/components/AppNavbar.vue";
-</script>
 
 <style scoped>
 @reference "./assets/main.css";

@@ -1,52 +1,31 @@
 <script setup>
-import { onMounted, ref, computed, watch } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Skeleton from "primevue/skeleton";
 import Paginator from "primevue/paginator";
 import InputText from "primevue/inputtext";
 import { useRecipesStore } from "@/features/recipes/store";
 import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
+import { useRecipeSearch } from "@/features/recipes/composables/useRecipeSearch";
+import { usePagination } from "@/features/recipes/composables/usePagination";
 
 const recipesStore = useRecipesStore();
 const router = useRouter();
 
-const currentPage = ref(0);
-const rowsPerPage = 9;
-const searchQuery = ref("");
-const activeTagFilters = ref(new Set());
 const filtersOpen = ref(false);
 
-const nameFilteredRecipes = computed(() => {
-  const q = searchQuery.value.trim().toLowerCase();
-  if (!q) return recipesStore.recipes;
-  return recipesStore.recipes.filter((r) => r.name?.toLowerCase().includes(q));
-});
+const {
+  searchQuery,
+  activeTagFilters,
+  availableTags,
+  filteredRecipes,
+  toggleTag,
+} = useRecipeSearch(() => recipesStore.recipes);
 
-const availableTags = computed(() => {
-  const tags = new Set();
-  nameFilteredRecipes.value.forEach((r) => {
-    (r.tags ?? []).forEach((t) => tags.add(t));
-  });
-  return [...tags].sort((a, b) => a.localeCompare(b));
-});
-
-const filteredRecipes = computed(() => {
-  if (activeTagFilters.value.size === 0) return nameFilteredRecipes.value;
-  return nameFilteredRecipes.value.filter((r) =>
-    (r.tags ?? []).some((t) => activeTagFilters.value.has(t)),
-  );
-});
-
-const paginatedRecipes = computed(() => {
-  const start = currentPage.value * rowsPerPage;
-  return filteredRecipes.value.slice(start, start + rowsPerPage);
-});
-
-const toggleTag = (tag) => {
-  const next = new Set(activeTagFilters.value);
-  next.has(tag) ? next.delete(tag) : next.add(tag);
-  activeTagFilters.value = next;
-};
+const { currentPage, paginatedItems: paginatedRecipes } = usePagination(
+  filteredRecipes,
+  { pageSize: 9 },
+);
 
 const clearTags = () => {
   activeTagFilters.value = new Set();
@@ -60,10 +39,6 @@ const handleTagClick = (tagName) => {
   toggleTag(tagName);
   filtersOpen.value = true;
 };
-
-watch([searchQuery, activeTagFilters], () => {
-  currentPage.value = 0;
-});
 
 onMounted(async () => {
   await recipesStore.loadAllRecipes();
@@ -165,10 +140,10 @@ onMounted(async () => {
     </div>
 
     <Paginator
-      v-if="filteredRecipes.length > rowsPerPage"
-      :rows="rowsPerPage"
+      v-if="filteredRecipes.length > 9"
+      :rows="9"
       :totalRecords="filteredRecipes.length"
-      :first="currentPage * rowsPerPage"
+      :first="currentPage * 9"
       @page="currentPage = $event.page"
       class="browse__paginator"
     />

@@ -1,40 +1,3 @@
-<template>
-  <Card
-    class="recipe-card"
-    :class="{ 'cursor-pointer': clickable }"
-    data-test="card"
-    @click="handleCardClick"
-  >
-    <template #title>
-      <span data-test="title">{{ recipe.name ?? "Untitled Recipe" }}</span>
-    </template>
-    <template #content>
-      <p
-        data-test="description"
-        class="recipe-card__description line-clamp-2 text-muted-color"
-      >
-        {{ displayDescription }}
-      </p>
-      <div
-        v-if="displayTags.length"
-        data-test="tags-container"
-        class="recipe-card__tags"
-      >
-        <button
-          v-for="(tag, index) in displayTags"
-          :key="`${tag}-${index}`"
-          data-test="tag"
-          class="recipe-card__tag"
-          :title="recipe.tags[index]"
-          @click.stop="handleTagClick(recipe.tags[index])"
-        >
-          {{ tag }}
-        </button>
-      </div>
-    </template>
-  </Card>
-</template>
-
 <script setup>
 import { computed } from "vue";
 import Card from "primevue/card";
@@ -77,6 +40,43 @@ const handleTagClick = (tag) => {
   emit("tag-click", { tagName: tag });
 };
 </script>
+
+<template>
+  <Card
+    class="recipe-card"
+    :class="{ 'cursor-pointer': clickable }"
+    data-test="card"
+    @click="handleCardClick"
+  >
+    <template #title>
+      <span data-test="title">{{ recipe.name ?? "Untitled Recipe" }}</span>
+    </template>
+    <template #content>
+      <p
+        data-test="description"
+        class="recipe-card__description line-clamp-2 text-muted-color"
+      >
+        {{ displayDescription }}
+      </p>
+      <div
+        v-if="displayTags.length"
+        data-test="tags-container"
+        class="recipe-card__tags"
+      >
+        <button
+          v-for="(tag, index) in displayTags"
+          :key="`${tag}-${index}`"
+          data-test="tag"
+          class="recipe-card__tag"
+          :title="recipe.tags[index]"
+          @click.stop="handleTagClick(recipe.tags[index])"
+        >
+          {{ tag }}
+        </button>
+      </div>
+    </template>
+  </Card>
+</template>
 
 <style scoped>
 @reference "../../../assets/main.css";
