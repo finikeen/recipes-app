@@ -53,6 +53,8 @@ function handleSubmit() {
           autocomplete="email"
           fluid
           aria-required="true"
+          :aria-invalid="!!props.error || undefined"
+          :aria-describedby="props.error ? 'auth-form-error' : undefined"
         />
       </div>
 
@@ -64,11 +66,20 @@ function handleSubmit() {
           :feedback="false"
           toggleMask
           fluid
-          :inputProps="{ 'aria-required': 'true' }"
+          :inputProps="{
+            'aria-required': 'true',
+            'aria-invalid': props.error ? 'true' : undefined,
+            'aria-describedby': props.error ? 'auth-form-error' : undefined,
+          }"
         />
       </div>
 
-      <p v-if="props.error" class="auth-form__error" role="alert">
+      <p
+        v-if="props.error"
+        id="auth-form-error"
+        class="auth-form__error"
+        role="alert"
+      >
         {{ props.error }}
       </p>
 

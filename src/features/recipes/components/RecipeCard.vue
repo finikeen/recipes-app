@@ -46,7 +46,12 @@ const handleTagClick = (tag) => {
     class="recipe-card"
     :class="{ 'cursor-pointer': clickable }"
     data-test="card"
+    :role="clickable ? 'article' : undefined"
+    :tabindex="clickable ? 0 : undefined"
+    :aria-label="clickable ? `View recipe: ${recipe.name}` : undefined"
     @click="handleCardClick"
+    @keydown.enter="handleCardClick"
+    @keydown.space.prevent="handleCardClick"
   >
     <template #title>
       <span data-test="title">{{ recipe.name ?? "Untitled Recipe" }}</span>

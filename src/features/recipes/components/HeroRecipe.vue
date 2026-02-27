@@ -52,7 +52,7 @@ const displayTags = computed(() => {
 
 <template>
   <article
-    class="hero forge__card forge__runic-border"
+    class="hero forge__card forge__runic-border forge__entrance"
     :aria-label="recipe.name"
   >
     <!-- Left panel: identity -->

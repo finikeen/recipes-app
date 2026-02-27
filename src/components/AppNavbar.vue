@@ -125,4 +125,19 @@ const handleLogout = async () => {
   @apply bg-transparent border-0 cursor-pointer p-0;
   font-family: inherit;
 }
+
+@media (max-width: 479px) {
+  .navbar__inner {
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar__links {
+    gap: 1rem;
+    margin-left: 0;
+    flex: 0 0 100%;
+    justify-content: flex-end;
+  }
+}
 </style>

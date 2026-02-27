@@ -35,40 +35,48 @@ onMounted(async () => {
   <div class="featured__container forge__texture-subtle">
     <h1 class="featured__title sr-only">Recipe Forge</h1>
 
-    <div v-if="recipesStore.loading" class="featured__skeleton">
-      <div class="featured__skeleton-left">
-        <Skeleton width="60%" height="2rem" class="featured__skeleton-row" />
-        <Skeleton width="90%" height="1rem" class="featured__skeleton-row" />
-        <Skeleton width="80%" height="1rem" class="featured__skeleton-row" />
-        <Skeleton width="40%" height="1rem" class="featured__skeleton-row" />
-        <div class="featured__skeleton-tags">
-          <Skeleton width="60px" height="1.5rem" />
-          <Skeleton width="80px" height="1.5rem" />
-          <Skeleton width="50px" height="1.5rem" />
+    <div aria-live="polite" aria-atomic="true">
+      <div
+        v-if="recipesStore.loading"
+        class="featured__skeleton"
+        aria-label="Loading recipes..."
+      >
+        <div class="featured__skeleton-left">
+          <Skeleton width="60%" height="2rem" class="featured__skeleton-row" />
+          <Skeleton width="90%" height="1rem" class="featured__skeleton-row" />
+          <Skeleton width="80%" height="1rem" class="featured__skeleton-row" />
+          <Skeleton width="40%" height="1rem" class="featured__skeleton-row" />
+          <div class="featured__skeleton-tags">
+            <Skeleton width="60px" height="1.5rem" />
+            <Skeleton width="80px" height="1.5rem" />
+            <Skeleton width="50px" height="1.5rem" />
+          </div>
+        </div>
+        <div class="featured__skeleton-right">
+          <Skeleton width="100%" height="2rem" class="featured__skeleton-row" />
+          <Skeleton
+            v-for="n in 5"
+            :key="n"
+            width="100%"
+            height="1.25rem"
+            class="featured__skeleton-row"
+          />
         </div>
       </div>
-      <div class="featured__skeleton-right">
-        <Skeleton width="100%" height="2rem" class="featured__skeleton-row" />
-        <Skeleton
-          v-for="n in 5"
-          :key="n"
-          width="100%"
-          height="1.25rem"
-          class="featured__skeleton-row"
-        />
+    </div>
+
+    <template v-if="!recipesStore.loading">
+      <div v-if="!featuredRecipe" class="featured__empty-message">
+        No recipes yet.
       </div>
-    </div>
 
-    <div v-else-if="!featuredRecipe" class="featured__empty-message">
-      No recipes yet.
-    </div>
-
-    <template v-else>
-      <HeroRecipe
-        :recipe="featuredRecipe"
-        @load-another="pickRandom"
-        @view-recipe="goToRecipe"
-      />
+      <template v-else>
+        <HeroRecipe
+          :recipe="featuredRecipe"
+          @load-another="pickRandom"
+          @view-recipe="goToRecipe"
+        />
+      </template>
     </template>
   </div>
 </template>

@@ -97,56 +97,67 @@ onMounted(async () => {
       </button>
     </div>
 
-    <div v-if="recipesStore.loading" class="browse__grid">
-      <div v-for="i in 9" :key="i" class="browse__skeleton-card">
-        <Skeleton
-          class="browse__skeleton-card__image"
-          :height="i % 3 === 0 ? '10rem' : i % 3 === 1 ? '12rem' : '14rem'"
-        />
-        <Skeleton
-          class="browse__skeleton-card__title"
-          :width="i % 3 === 0 ? '75%' : i % 3 === 1 ? '80%' : '85%'"
-        />
-        <Skeleton
-          class="browse__skeleton-card__subtitle"
-          :width="i % 3 === 0 ? '50%' : i % 3 === 1 ? '60%' : '70%'"
-        />
-      </div>
-    </div>
-
-    <div
-      v-else-if="recipesStore.recipes.length === 0"
-      class="browse__empty-message"
-    >
-      No recipes yet.
-    </div>
-
-    <div v-else-if="filteredRecipes.length === 0" class="browse__empty-message">
-      No recipes found.
-    </div>
-
-    <div v-else class="browse__grid">
+    <div aria-live="polite" aria-atomic="true">
       <div
-        v-for="recipe in paginatedRecipes"
-        :key="recipe.id"
-        class="forge__card forge__texture-stone forge__runic-border"
+        v-if="recipesStore.loading"
+        class="browse__grid"
+        aria-label="Loading recipes..."
       >
-        <RecipeCard
-          :recipe="recipe"
-          @click="handleRecipeClick(recipe.id)"
-          @tag-click="handleTagClick($event.tagName)"
-        />
+        <div v-for="i in 9" :key="i" class="browse__skeleton-card">
+          <Skeleton
+            class="browse__skeleton-card__image"
+            :height="i % 3 === 0 ? '10rem' : i % 3 === 1 ? '12rem' : '14rem'"
+          />
+          <Skeleton
+            class="browse__skeleton-card__title"
+            :width="i % 3 === 0 ? '75%' : i % 3 === 1 ? '80%' : '85%'"
+          />
+          <Skeleton
+            class="browse__skeleton-card__subtitle"
+            :width="i % 3 === 0 ? '50%' : i % 3 === 1 ? '60%' : '70%'"
+          />
+        </div>
       </div>
     </div>
 
-    <Paginator
-      v-if="filteredRecipes.length > 9"
-      :rows="9"
-      :totalRecords="filteredRecipes.length"
-      :first="currentPage * 9"
-      @page="currentPage = $event.page"
-      class="browse__paginator"
-    />
+    <template v-if="!recipesStore.loading">
+      <div
+        v-if="recipesStore.recipes.length === 0"
+        class="browse__empty-message"
+      >
+        No recipes yet.
+      </div>
+
+      <div
+        v-else-if="filteredRecipes.length === 0"
+        class="browse__empty-message"
+      >
+        No recipes found.
+      </div>
+
+      <div v-else class="browse__grid forge__entrance">
+        <div
+          v-for="recipe in paginatedRecipes"
+          :key="recipe.id"
+          class="forge__card forge__texture-stone forge__runic-border"
+        >
+          <RecipeCard
+            :recipe="recipe"
+            @click="handleRecipeClick(recipe.id)"
+            @tag-click="handleTagClick($event.tagName)"
+          />
+        </div>
+      </div>
+
+      <Paginator
+        v-if="filteredRecipes.length > 9"
+        :rows="9"
+        :totalRecords="filteredRecipes.length"
+        :first="currentPage * 9"
+        @page="currentPage = $event.page"
+        class="browse__paginator"
+      />
+    </template>
   </div>
 </template>
 
@@ -193,7 +204,7 @@ onMounted(async () => {
 .browse__filters-badge {
   @apply inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold;
   background-color: var(--purple-accent);
-  color: white;
+  color: #0a0812;
 }
 
 .browse__filter-panel {
@@ -219,7 +230,7 @@ onMounted(async () => {
 
 .browse__filter-chip--active {
   background-color: var(--purple-accent);
-  color: white;
+  color: #0a0812;
 }
 
 .browse__filter-chip--active:hover {
