@@ -81,7 +81,7 @@ onUnmounted(() => {
 .navbar {
   background-color: var(--surface-0);
   position: relative;
-  z-index: 10000;
+  z-index: 100;
   overflow: visible;
   background-image: url("../assets/textures/stone-blocks.svg");
   background-size: 64px 64px;
@@ -180,7 +180,7 @@ onUnmounted(() => {
 .navbar__overlay {
   @apply fixed inset-0 md:hidden;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 9999;
+  z-index: 101;
 }
 
 .navbar__mobile-menu {
@@ -189,7 +189,7 @@ onUnmounted(() => {
   border-left: 1px solid var(--surface-border);
   transform: translateX(0);
   transition: transform 250ms ease;
-  z-index: 10001;
+  z-index: 102;
   padding: 1rem 0;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
 }
