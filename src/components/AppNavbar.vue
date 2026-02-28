@@ -64,12 +64,15 @@ onUnmounted(() => {
     </div>
 
     <div
-      v-show="menuOpen"
+      v-if="menuOpen"
       class="navbar__overlay"
       @click="handleOverlayClick"
     ></div>
 
-    <div v-show="menuOpen" class="navbar__mobile-menu">
+    <div
+      class="navbar__mobile-menu"
+      :class="{ 'navbar__mobile-menu--open': menuOpen }"
+    >
       <NavLinks orientation="vertical" @link-clicked="closeMenu" />
     </div>
   </nav>
@@ -189,10 +192,14 @@ onUnmounted(() => {
   height: calc(100vh - 60px);
   background-color: var(--surface-0);
   border-left: 1px solid var(--surface-border);
-  transform: translateX(0);
+  transform: translateX(100%);
   transition: transform 250ms ease;
   z-index: 102;
   padding: 1rem 0;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.navbar__mobile-menu--open {
+  transform: translateX(0);
 }
 </style>
