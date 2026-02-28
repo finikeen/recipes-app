@@ -98,6 +98,9 @@ onUnmounted(() => {
   position: relative;
   z-index: 100;
   overflow: visible;
+}
+
+:global(.dark) .navbar {
   background-image: url("../assets/textures/stone-blocks.svg");
   background-size: 64px 64px;
   background-repeat: repeat-x;
@@ -119,6 +122,9 @@ onUnmounted(() => {
 
 .navbar__inner {
   @apply px-6 py-4 flex items-center gap-6 relative z-2 mx-auto;
+}
+
+:global(.dark) .navbar__inner {
   background-image: url("../assets/textures/stone-blocks.svg");
   background-size: 64px 64px;
   background-repeat: repeat-x;
