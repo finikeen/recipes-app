@@ -2,6 +2,9 @@
 import { ref, watch, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import NavLinks from "./NavLinks.vue";
+import { useColorMode } from "../composables/useColorMode";
+
+const { isDark, toggle } = useColorMode();
 
 const route = useRoute();
 const menuOpen = ref(false);
@@ -53,14 +56,23 @@ onUnmounted(() => {
       <div class="navbar__links">
         <NavLinks @link-clicked="closeMenu" />
       </div>
-      <button
-        class="navbar__hamburger"
-        :class="{ 'navbar__hamburger--open': menuOpen }"
-        @click="toggleMenu"
-        aria-label="Toggle navigation menu"
-      >
-        <span></span>
-      </button>
+      <div class="navbar__controls">
+        <button
+          class="navbar__theme-toggle"
+          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+          @click="toggle"
+        >
+          <i :class="isDark ? 'pi pi-sun' : 'pi pi-moon'" aria-hidden="true" />
+        </button>
+        <button
+          class="navbar__hamburger"
+          :class="{ 'navbar__hamburger--open': menuOpen }"
+          @click="toggleMenu"
+          aria-label="Toggle navigation menu"
+        >
+          <span></span>
+        </button>
+      </div>
     </div>
 
     <div
@@ -126,8 +138,27 @@ onUnmounted(() => {
   @apply flex gap-6 ml-auto items-center hidden md:flex;
 }
 
+.navbar__controls {
+  @apply flex items-center gap-2 ml-auto md:ml-0;
+}
+
+.navbar__theme-toggle {
+  @apply flex items-center justify-center w-8 h-8 bg-transparent border-0 cursor-pointer rounded;
+  color: var(--text-color-secondary);
+  transition: color 200ms ease;
+}
+
+.navbar__theme-toggle:hover {
+  color: var(--primary-color);
+}
+
+.navbar__theme-toggle:focus {
+  outline: 2px solid var(--purple-accent);
+  outline-offset: 2px;
+}
+
 .navbar__hamburger {
-  @apply flex md:hidden ml-auto relative cursor-pointer bg-transparent border-0 p-0 w-8 h-8 items-center justify-center;
+  @apply flex md:hidden relative cursor-pointer bg-transparent border-0 p-0 w-8 h-8 items-center justify-center;
   transition: all 200ms ease;
 }
 
@@ -196,7 +227,7 @@ onUnmounted(() => {
   transition: transform 250ms ease;
   z-index: 102;
   padding: 1rem 0;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--mobile-menu-shadow);
 }
 
 .navbar__mobile-menu--open {

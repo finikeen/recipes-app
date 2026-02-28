@@ -18,6 +18,23 @@ const ForgePreset = definePreset(Aura, {
       950: '#451a03',
     },
     colorScheme: {
+      light: {
+        primary: {
+          color: '{primary.600}',
+          contrastColor: '#fdf8f0',
+          hoverColor: '{primary.500}',
+          activeColor: '{primary.400}',
+        },
+        formField: {
+          background: '#f0e8d8',
+          color: '#2c2018',
+          borderColor: '#d8ccb4',
+          hoverBorderColor: '#6d3fcf',
+          focusBorderColor: '#6d3fcf',
+          placeholderColor: '#7a6a50',
+          shadow: 'inset 0 2px 4px rgba(100, 70, 20, 0.08)',
+        },
+      },
       dark: {
         primary: {
           color: '{primary.500}',

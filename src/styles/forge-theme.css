@@ -1,29 +1,81 @@
 /* Arcane Forge Theme - Color Palette
-   Dungeon darkness with purple undertones, dual amber+purple accents.
+   Light default: warm parchment lit by torchlight.
+   Dark override: dungeon darkness with purple undertones.
    Overrides PrimeVue CSS variables.
 */
 
+/* LIGHT MODE default — warm parchment */
 :root {
-  /* Backgrounds - Dungeon darkness with purple undertone */
+  /* Backgrounds - Warm parchment */
+  --surface-ground: #f5efe0;
+  --surface-0: #fdf8f0;
+  --surface-50: #f0e8d8;
+  --surface-100: #e8dcc8;
+  --surface-200: #d8ccb4;
+
+  /* Text - Warm dark brown */
+  --text-color: #2c2018;
+  --text-color-secondary: #7a6a50;
+
+  /* Primary - Amber (darkened for contrast on light bg) */
+  --primary-color: #c07820;
+  --primary-light: #e8a042;
+
+  /* Purple accent - Arcane (darkened for contrast) */
+  --purple-accent: #6d3fcf;
+  --purple-light: #8b5cf6;
+
+  /* Ember - Flame red-orange (darkened) */
+  --ember-color: #c44a18;
+
+  /* Borders */
+  --surface-border: #d8ccb4;
+  --surface-section: #fdf8f0;
+
+  /* Semantic colors */
+  --red-500: #b84040;
+  --orange-500: #c07820;
+  --yellow-500: #c07820;
+  --green-500: #3d7a6c;
+
+  /* Semantic shadow/border variables for theme-aware components */
+  --card-shadow: 0 2px 12px rgba(60, 40, 10, 0.15);
+  --card-hover-shadow:
+    0 0 12px rgba(192, 120, 32, 0.25),
+    0 0 24px rgba(109, 63, 207, 0.12),
+    0 6px 20px rgba(60, 40, 10, 0.12);
+  --card-border: 1px solid var(--surface-100);
+  --input-shadow: inset 0 2px 4px rgba(100, 70, 20, 0.08);
+  --input-focus-shadow:
+    inset 0 2px 4px rgba(100, 70, 20, 0.08),
+    0 0 8px rgba(109, 63, 207, 0.25),
+    0 0 4px rgba(192, 120, 32, 0.15);
+  --primary-btn-color: #fdf8f0;
+  --mobile-menu-shadow: -2px 0 8px rgba(60, 40, 10, 0.15);
+}
+
+/* DARK MODE — dungeon darkness with purple undertones */
+:root.dark {
+  /* Backgrounds */
   --surface-ground: #0a0812;
   --surface-0: #1a1722;
   --surface-50: #24202e;
   --surface-100: #2e2a3a;
   --surface-200: #383245;
 
-  /* Text - Cool silver */
+  /* Text */
   --text-color: #c8c4d4;
   --text-color-secondary: #8a849a;
 
-  /* Primary - Arcane amber (forge flame) */
+  /* Primary */
   --primary-color: #e8a042;
   --primary-light: #ffd580;
 
-  /* Purple accent - Mystic energy */
+  /* Purple accent */
   --purple-accent: #8b5cf6;
   --purple-light: #a78bfa;
 
-  /* Ember - Flame red-orange */
+  /* Ember */
   --ember-color: #e85d2a;
 
   /* Borders */
@@ -35,15 +87,30 @@
   --orange-500: #e8a042;
   --yellow-500: #e8a042;
   --green-500: #66b3a3;
-}
 
-:root.dark {
-  /* Same variables for explicit dark mode toggle */
+  /* Semantic shadow/border variables */
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  --card-hover-shadow:
+    0 0 12px rgba(232, 160, 66, 0.3),
+    0 0 24px rgba(139, 92, 246, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.5);
+  --card-border: none;
+  --input-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  --input-focus-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(139, 92, 246, 0.3),
+    0 0 4px rgba(232, 160, 66, 0.2);
+  --primary-btn-color: #0a0812;
+  --mobile-menu-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
 }
 
 body {
   background-color: var(--surface-ground);
   color: var(--text-color);
+  background: linear-gradient(135deg, #f5efe0 0%, rgba(240, 230, 210, 0.6) 100%);
+}
+
+.dark body {
   background: linear-gradient(135deg, #0a0812 0%, rgba(20, 12, 30, 0.6) 100%);
 }
 
