@@ -52,11 +52,16 @@ export function useDirections(initialValue = []) {
     directions.value = arr
   }
 
+  const reset = (items = []) => {
+    directions.value = items.length > 0 ? items.map(mapDirection) : []
+  }
+
   return {
     directions: readonly(directions),
     addDirection,
     removeDirection,
     updateDirection,
     moveDirection,
+    reset,
   }
 }

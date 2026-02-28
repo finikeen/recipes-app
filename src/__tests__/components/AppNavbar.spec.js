@@ -106,6 +106,8 @@ describe("AppNavbar", () => {
 
   it("renders overlay when menu is open", async () => {
     const wrapper = createWrapper();
+    wrapper.vm.menuOpen = true;
+    await wrapper.vm.$nextTick();
     expect(wrapper.find(".navbar__overlay").exists()).toBe(true);
   });
 });

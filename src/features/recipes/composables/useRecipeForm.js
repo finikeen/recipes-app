@@ -25,9 +25,11 @@ export function useRecipeForm({ recipeId, onSuccess } = {}) {
   const initIngredients = ref([])
   const initDirections = ref([])
 
-  const { ingredients, addIngredient, removeIngredient, updateIngredient } =
+  const sourceUrl = ref('')
+
+  const { ingredients, addIngredient, removeIngredient, updateIngredient, reset: resetIngredients } =
     useIngredients(initIngredients)
-  const { directions, addDirection, removeDirection, updateDirection, moveDirection } =
+  const { directions, addDirection, removeDirection, updateDirection, moveDirection, reset: resetDirections } =
     useDirections(initDirections)
 
   const derivedTags = computed(() => {
@@ -86,6 +88,34 @@ export function useRecipeForm({ recipeId, onSuccess } = {}) {
     }
 
     return valid
+  }
+
+  const applyScrapedData = (scrapedRecipe) => {
+    if (scrapedRecipe.name) {
+      name.value = scrapedRecipe.name
+    }
+    if (scrapedRecipe.description) {
+      description.value = scrapedRecipe.description
+    }
+    if (Array.isArray(scrapedRecipe.ingredients)) {
+      const mappedIngredients = scrapedRecipe.ingredients.map((ing) => {
+        if (typeof ing === 'string') {
+          return { quantity: '', unit: '', item: ing }
+        }
+        return ing
+      })
+      resetIngredients(mappedIngredients)
+    }
+    if (Array.isArray(scrapedRecipe.directions)) {
+      const mappedDirections = scrapedRecipe.directions.map((dir) => {
+        if (typeof dir === 'string') {
+          return { text: dir }
+        }
+        return dir
+      })
+      resetDirections(mappedDirections)
+    }
+    sourceUrl.value = ''
   }
 
   const submitForm = async () => {
@@ -184,8 +214,10 @@ export function useRecipeForm({ recipeId, onSuccess } = {}) {
     removeDirection,
     updateDirection,
     moveDirection,
+    sourceUrl,
     validate,
     submitForm,
+    applyScrapedData,
     loading,
     submitting,
     notFound,

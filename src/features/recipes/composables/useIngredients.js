@@ -47,10 +47,15 @@ export function useIngredients(initialValue = []) {
     ingredients.value = arr
   }
 
+  const reset = (items = []) => {
+    ingredients.value = items.length > 0 ? items.map(mapIngredient) : []
+  }
+
   return {
     ingredients: readonly(ingredients),
     addIngredient,
     removeIngredient,
     updateIngredient,
+    reset,
   }
 }

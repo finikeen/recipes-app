@@ -143,4 +143,113 @@ describe('useRecipeForm', () => {
       expect(store.addRecipe).not.toHaveBeenCalled()
     })
   })
+
+  describe('sourceUrl and applyScrapedData', () => {
+    it('initializes sourceUrl as empty ref', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      expect(form.sourceUrl.value).toBe('')
+    })
+
+    it('applyScrapedData sets name and description', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      const scrapedRecipe = {
+        name: 'Scraped Recipe',
+        description: 'Scraped description',
+        ingredients: [],
+        directions: [],
+      }
+      form.applyScrapedData(scrapedRecipe)
+      expect(form.name.value).toBe('Scraped Recipe')
+      expect(form.description.value).toBe('Scraped description')
+    })
+
+    it('applyScrapedData handles string ingredients', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      const scrapedRecipe = {
+        name: 'Test',
+        description: 'Test',
+        ingredients: ['2 cups flour', 'butter', '1 egg'],
+        directions: [],
+      }
+      form.applyScrapedData(scrapedRecipe)
+      expect(form.ingredients.value).toHaveLength(3)
+      expect(form.ingredients.value[0].item).toBe('2 cups flour')
+    })
+
+    it('applyScrapedData handles object ingredients', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      const scrapedRecipe = {
+        name: 'Test',
+        description: 'Test',
+        ingredients: [
+          { quantity: '2', unit: 'cups', item: 'flour' },
+          { quantity: '1', unit: '', item: 'egg' },
+        ],
+        directions: [],
+      }
+      form.applyScrapedData(scrapedRecipe)
+      expect(form.ingredients.value).toHaveLength(2)
+      expect(form.ingredients.value[0].quantity).toBe('2')
+      expect(form.ingredients.value[0].unit).toBe('cups')
+    })
+
+    it('applyScrapedData handles string directions', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      const scrapedRecipe = {
+        name: 'Test',
+        description: 'Test',
+        ingredients: [],
+        directions: ['Preheat oven', 'Mix ingredients', 'Bake'],
+      }
+      form.applyScrapedData(scrapedRecipe)
+      expect(form.directions.value).toHaveLength(3)
+      expect(form.directions.value[0].text).toBe('Preheat oven')
+    })
+
+    it('applyScrapedData clears sourceUrl after applying', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      form.sourceUrl.value = 'https://example.com'
+      const scrapedRecipe = {
+        name: 'Test',
+        description: 'Test',
+        ingredients: [],
+        directions: [],
+      }
+      form.applyScrapedData(scrapedRecipe)
+      expect(form.sourceUrl.value).toBe('')
+    })
+
+    it('applyScrapedData handles partial data', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      form.name.value = 'Original Name'
+      const scrapedRecipe = {
+        ingredients: ['New ingredient'],
+        directions: [],
+      }
+      form.applyScrapedData(scrapedRecipe)
+      expect(form.name.value).toBe('Original Name')
+      expect(form.ingredients.value).toHaveLength(1)
+    })
+
+    it('applyScrapedData does not reset if directions are missing', () => {
+      useRecipesStore.mockReturnValue(makeStore())
+      const form = useRecipeForm()
+      form.addDirection()
+      form.updateDirection(0, { text: 'Original direction' })
+      const scrapedRecipe = {
+        name: 'Test',
+        description: 'Test',
+        ingredients: [],
+      }
+      form.applyScrapedData(scrapedRecipe)
+      expect(form.directions.value[0].text).toBe('Original direction')
+    })
+  })
 })

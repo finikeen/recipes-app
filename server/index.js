@@ -50,6 +50,6 @@ app.post('/api/scrape', async (req, res) => {
   return res.status(200).json({ success: true, recipe })
 })
 
-app.listen(3000, () => {
-  console.log('Scraper server running on http://localhost:3000')
+app.listen(3001, () => {
+  console.log('Scraper server running on http://localhost:3001')
 })

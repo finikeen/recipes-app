@@ -9,6 +9,7 @@
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useRecipeForm } from "@/features/recipes/composables/useRecipeForm";
+import RecipeSourceUrl from "@/features/recipes/components/RecipeSourceUrl.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -30,7 +31,9 @@ const {
   removeDirection,
   updateDirection,
   moveDirection,
+  sourceUrl,
   submitForm,
+  applyScrapedData,
   loading,
   submitting,
   notFound,
@@ -45,6 +48,10 @@ const handleCancel = () => {
   } else {
     router.push({ name: "home" });
   }
+};
+
+const handleScrapedData = (recipe) => {
+  applyScrapedData(recipe);
 };
 </script>
 
@@ -94,6 +101,13 @@ const handleCancel = () => {
       <p v-if="submitError" class="rform__submit-error" role="alert">
         {{ submitError }}
       </p>
+
+      <!-- Recipe Source URL -->
+      <RecipeSourceUrl
+        :source-url="sourceUrl"
+        :is-editing="isEdit"
+        @data-scraped="handleScrapedData"
+      />
 
       <!-- Name -->
       <div class="rform__field">
