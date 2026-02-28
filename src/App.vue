@@ -46,6 +46,5 @@ import AppNavbar from "@/components/AppNavbar.vue";
   min-height: calc(100vh - 60px);
   background-color: var(--surface-0);
   position: relative;
-  z-index: 10000;
 }
 </style>
