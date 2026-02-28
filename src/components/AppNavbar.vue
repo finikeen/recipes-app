@@ -184,7 +184,9 @@ onUnmounted(() => {
 }
 
 .navbar__mobile-menu {
-  @apply fixed top-0 right-0 h-screen w-64 md:hidden overflow-y-auto;
+  @apply fixed right-0 w-64 md:hidden overflow-y-auto;
+  top: 60px;
+  height: calc(100vh - 60px);
   background-color: var(--surface-0);
   border-left: 1px solid var(--surface-border);
   transform: translateX(0);
