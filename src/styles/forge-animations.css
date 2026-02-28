@@ -186,12 +186,23 @@
 /* Subtle entrance: fade + slight lift */
 @keyframes forge-entrance {
   from {
-    opacity: 1;
-    transform: translateY(10px);
+    opacity: 0;
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes forge-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
   }
 }
 
@@ -205,8 +216,12 @@
   .forge__button:hover:not(:disabled),
   .forge__link:hover,
   .forge__brand,
-  .forge__entrance {
-    animation: none;
+  .forge__entrance,
+  .page-enter-active,
+  .page-leave-active {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
   }
 
   .forge__embers::after,

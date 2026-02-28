@@ -7,7 +7,11 @@ import AppNavbar from "@/components/AppNavbar.vue";
     <a href="#main-content" class="skip-link">Skip to content</a>
     <AppNavbar />
     <main id="main-content" class="app__main">
-      <RouterView />
+      <RouterView v-slot="{ Component }">
+        <Transition name="page" mode="out-in">
+          <component :is="Component" :key="$route.path" />
+        </Transition>
+      </RouterView>
     </main>
   </div>
 </template>
@@ -46,5 +50,13 @@ import AppNavbar from "@/components/AppNavbar.vue";
   min-height: calc(100vh - 60px);
   background-color: var(--surface-0);
   position: relative;
+}
+
+.page-enter-active {
+  animation: forge-entrance 0.3s ease-out both;
+}
+
+.page-leave-active {
+  animation: forge-exit 0.2s ease-in both;
 }
 </style>
