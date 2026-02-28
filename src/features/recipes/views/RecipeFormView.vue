@@ -6,9 +6,10 @@
  *  if sourceUrl exists in Recipe, the textfield is readonly and the button is disabled
  *  if not, see @/server for scraping process, scrape sourceUrl and fill in form fields
  */
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useRecipeForm } from "@/features/recipes/composables/useRecipeForm";
+import { useIngredientParser } from "@/features/recipes/composables/useIngredientParser";
 import RecipeSourceUrl from "@/features/recipes/components/RecipeSourceUrl.vue";
 
 const route = useRoute();
@@ -41,6 +42,21 @@ const {
   recipeId: computed(() => (isEdit.value ? route.params.id : null)),
   onSuccess: (id) => router.push({ name: "recipe-detail", params: { id } }),
 });
+
+const { parseIngredient } = useIngredientParser();
+const parseErrors = ref({});
+
+const fixIngredient = (index) => {
+  const ing = ingredients.value[index];
+  const result = parseIngredient(ing.item);
+  if (result) {
+    updateIngredient(index, result);
+    delete parseErrors.value[ing._key];
+  } else {
+    parseErrors.value[ing._key] =
+      "Sorry, we couldn't parse that ingredient. Please check the format and try again.";
+  }
+};
 
 const handleCancel = () => {
   if (isEdit.value) {
@@ -153,39 +169,52 @@ const handleScrapedData = (recipe) => {
       <!-- Ingredients builder -->
       <fieldset class="rform__section" aria-label="Ingredients">
         <legend class="rform__section-title">Ingredients</legend>
-        <div
-          v-for="(ing, i) in ingredients"
-          :key="ing._key"
-          class="rform__ingredient-row"
-        >
-          <InputText
-            :value="ing.quantity"
-            @update:modelValue="updateIngredient(i, { quantity: $event })"
-            placeholder="Qty"
-            aria-label="Quantity"
-          />
-          <InputText
-            :value="ing.unit"
-            @update:modelValue="updateIngredient(i, { unit: $event })"
-            placeholder="Unit"
-            aria-label="Unit"
-          />
-          <InputText
-            :value="ing.item"
-            @update:modelValue="updateIngredient(i, { item: $event })"
-            placeholder="Ingredient *"
-            aria-label="Item"
-            class="rform__ingredient-item"
-          />
-          <button
-            type="button"
-            class="forge__button rform__remove-btn"
-            @click="removeIngredient(i)"
-            :aria-label="`Remove ingredient ${ing.item || ''}`"
+        <template v-for="(ing, i) in ingredients" :key="ing._key">
+          <div class="rform__ingredient-row">
+            <InputText
+              :value="ing.quantity"
+              @update:modelValue="updateIngredient(i, { quantity: $event })"
+              placeholder="Qty"
+              aria-label="Quantity"
+            />
+            <InputText
+              :value="ing.unit"
+              @update:modelValue="updateIngredient(i, { unit: $event })"
+              placeholder="Unit"
+              aria-label="Unit"
+            />
+            <InputText
+              :value="ing.item"
+              @update:modelValue="updateIngredient(i, { item: $event })"
+              placeholder="Ingredient *"
+              aria-label="Item"
+              class="rform__ingredient-item"
+            />
+            <button
+              type="button"
+              class="forge__button rform__fix-btn"
+              :disabled="!ing.item.trim()"
+              :aria-label="`Auto-parse ingredient ${ing.item || ''}`"
+              @click="fixIngredient(i)"
+            >
+              <i class="pi pi-wrench" aria-hidden="true"></i>
+            </button>
+            <button
+              type="button"
+              class="forge__button rform__remove-btn"
+              @click="removeIngredient(i)"
+              :aria-label="`Remove ingredient ${ing.item || ''}`"
+            >
+              ×
+            </button>
+          </div>
+          <span
+            v-if="parseErrors[ing._key]"
+            class="rform__parse-error"
+            role="alert"
+            >{{ parseErrors[ing._key] }}</span
           >
-            ×
-          </button>
-        </div>
+        </template>
         <button
           type="button"
           class="forge__button rform__add-btn"
@@ -421,6 +450,17 @@ const handleScrapedData = (recipe) => {
   padding: 0.375rem 0.625rem;
   font-size: 1rem;
   line-height: 1;
+}
+
+.rform__fix-btn {
+  padding: 0.375rem 0.625rem;
+}
+
+.rform__parse-error {
+  color: #d97757;
+  font-size: 0.875rem;
+  display: block;
+  margin-bottom: 0.25rem;
 }
 
 /* Add buttons */

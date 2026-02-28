@@ -1,7 +1,4 @@
 <script setup>
-/**
- * TODO: crazy idea - add a "fix" icon on the ingredient edit line - icon next to delete - that parses the ingredient text and tries to split it into quantity/unit/ingredient - then updates the current row with those values - this would be a super quick way to fix up ingredients that were scraped in a weird format
- */
 import { ref, computed } from "vue";
 
 const props = defineProps({
