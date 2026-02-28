@@ -1,8 +1,23 @@
 import { ref, computed, toValue } from 'vue'
 
+export const TOP_TAG_COUNT = 12
+
 export function useRecipeSearch(recipesSource) {
   const searchQuery = ref('')
   const activeTagFilters = ref(new Set())
+
+  const topTags = computed(() => {
+    const freq = {}
+    toValue(recipesSource).forEach((r) =>
+      (r.tags ?? []).forEach((t) => {
+        freq[t] = (freq[t] ?? 0) + 1
+      }),
+    )
+    return Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, TOP_TAG_COUNT)
+      .map(([tag]) => tag)
+  })
 
   const nameFilteredRecipes = computed(() => {
     const recipes = toValue(recipesSource)
@@ -41,6 +56,7 @@ export function useRecipeSearch(recipesSource) {
     searchQuery,
     activeTagFilters,
     availableTags,
+    topTags,
     filteredRecipes,
     toggleTag,
     clearFilters,

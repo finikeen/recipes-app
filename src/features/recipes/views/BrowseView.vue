@@ -3,20 +3,26 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useRecipesStore } from "@/features/recipes/store";
 import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
-import { useRecipeSearch } from "@/features/recipes/composables/useRecipeSearch";
+import TagFilterModal from "@/features/recipes/components/TagFilterModal.vue";
+import {
+  useRecipeSearch,
+  TOP_TAG_COUNT,
+} from "@/features/recipes/composables/useRecipeSearch";
 import { usePagination } from "@/features/recipes/composables/usePagination";
 
 const recipesStore = useRecipesStore();
 const router = useRouter();
 
-const filtersOpen = ref(false);
+const tagModalOpen = ref(false);
 
 const {
   searchQuery,
   activeTagFilters,
   availableTags,
+  topTags,
   filteredRecipes,
   toggleTag,
+  clearFilters,
 } = useRecipeSearch(() => recipesStore.recipes);
 
 const { currentPage, paginatedItems: paginatedRecipes } = usePagination(
@@ -24,17 +30,12 @@ const { currentPage, paginatedItems: paginatedRecipes } = usePagination(
   { pageSize: 9 },
 );
 
-const clearTags = () => {
-  activeTagFilters.value = new Set();
-};
-
 const handleRecipeClick = (id) => {
   router.push({ name: "recipe-detail", params: { id } });
 };
 
 const handleTagClick = (tagName) => {
   toggleTag(tagName);
-  filtersOpen.value = true;
 };
 
 onMounted(async () => {
@@ -54,45 +55,48 @@ onMounted(async () => {
         class="browse__search"
         aria-label="Search recipes by name"
       />
+    </div>
+
+    <!-- Active tag pills -->
+    <div v-if="activeTagFilters.size > 0" class="browse__active-tags">
       <button
-        class="browse__filters-btn"
-        :class="{ 'browse__filters-btn--active': activeTagFilters.size > 0 }"
-        @click="filtersOpen = !filtersOpen"
-        :aria-expanded="filtersOpen"
-        aria-controls="browse-filter-panel"
+        v-for="tag in [...activeTagFilters]"
+        :key="tag"
+        class="browse__tag-pill"
+        @click="toggleTag(tag)"
       >
-        <span>{{ filtersOpen ? "▲" : "▼" }} Filters</span>
-        <span v-if="activeTagFilters.size > 0" class="browse__filters-badge">{{
-          activeTagFilters.size
-        }}</span>
+        {{ tag }} ✕
       </button>
     </div>
 
-    <div
-      v-show="filtersOpen"
-      id="browse-filter-panel"
-      class="browse__filter-panel"
-    >
-      <div class="browse__filter-chips">
-        <button
-          v-for="tag in availableTags"
-          :key="tag"
-          class="browse__filter-chip"
-          :class="{ 'browse__filter-chip--active': activeTagFilters.has(tag) }"
-          @click="toggleTag(tag)"
-          :aria-pressed="activeTagFilters.has(tag)"
-        >
-          {{ tag }}
-        </button>
-      </div>
+    <!-- Top tags shortcut row -->
+    <div class="browse__top-tags">
       <button
-        v-if="activeTagFilters.size > 0"
-        class="browse__filter-clear"
-        @click="clearTags"
+        v-for="tag in topTags"
+        :key="tag"
+        class="browse__filter-chip"
+        :class="{ 'browse__filter-chip--active': activeTagFilters.has(tag) }"
+        :aria-pressed="activeTagFilters.has(tag)"
+        @click="toggleTag(tag)"
       >
-        Clear all
+        {{ tag }}
+      </button>
+      <button
+        v-if="availableTags.length > TOP_TAG_COUNT"
+        class="browse__more-tags-btn"
+        @click="tagModalOpen = true"
+      >
+        + {{ availableTags.length - topTags.length }} more…
       </button>
     </div>
+
+    <TagFilterModal
+      v-model:visible="tagModalOpen"
+      :tags="availableTags"
+      :active-tag-filters="activeTagFilters"
+      @toggle-tag="toggleTag"
+      @clear-all="clearFilters"
+    />
 
     <div aria-live="polite" aria-atomic="true">
       <div
@@ -181,37 +185,23 @@ onMounted(async () => {
   @apply flex-1;
 }
 
-.browse__filters-btn {
-  @apply flex items-center gap-2 px-4 py-2 rounded border border-surface cursor-pointer transition-all duration-200;
-  background-color: transparent;
-  color: var(--text-color);
+.browse__active-tags {
+  @apply flex flex-wrap gap-2 mb-3;
 }
 
-.browse__filters-btn:hover {
-  border-color: var(--purple-accent);
-  color: var(--purple-accent);
+.browse__tag-pill {
+  @apply inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full transition-colors cursor-pointer;
+  background-color: rgba(232, 160, 66, 0.15);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
-.browse__filters-btn--active {
-  border-color: var(--purple-accent);
-  color: var(--purple-accent);
-  box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+.browse__tag-pill:hover {
+  background-color: rgba(232, 160, 66, 0.3);
 }
 
-.browse__filters-badge {
-  @apply inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold;
-  background-color: var(--purple-accent);
-  color: #0a0812;
-}
-
-.browse__filter-panel {
-  @apply border border-surface rounded p-3 mb-4;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.browse__filter-chips {
-  @apply flex flex-wrap gap-2 mb-2;
+.browse__top-tags {
+  @apply flex flex-wrap gap-2 mb-4;
 }
 
 .browse__filter-chip {
@@ -235,15 +225,14 @@ onMounted(async () => {
   border-color: var(--purple-light, #a78bfa);
 }
 
-.browse__filter-clear {
-  @apply text-xs cursor-pointer mt-1 p-0;
+.browse__more-tags-btn {
+  @apply inline-flex items-center px-2 py-1 text-xs rounded transition-colors cursor-pointer;
   background: none;
   border: none;
   color: var(--text-muted-color);
-  text-decoration: underline;
 }
 
-.browse__filter-clear:hover {
+.browse__more-tags-btn:hover {
   color: var(--purple-accent);
 }
 
