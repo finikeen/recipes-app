@@ -9,13 +9,25 @@ const router = useRouter();
 
 const featuredIndex = ref(null);
 
+const eligibleRecipes = computed(() =>
+  recipesStore.recipes.filter(
+    (r) =>
+      r.description?.trim() &&
+      Array.isArray(r.ingredients) &&
+      r.ingredients.length > 0 &&
+      Array.isArray(r.directions) &&
+      r.directions.length > 0,
+  ),
+);
+
 const featuredRecipe = computed(() => {
-  if (!recipesStore.recipes.length || featuredIndex.value === null) return null;
-  return recipesStore.recipes[featuredIndex.value];
+  if (!eligibleRecipes.value.length || featuredIndex.value === null)
+    return null;
+  return eligibleRecipes.value[featuredIndex.value];
 });
 
 const pickRandom = () => {
-  const len = recipesStore.recipes.length;
+  const len = eligibleRecipes.value.length;
   if (!len) return;
   featuredIndex.value = Math.floor(Math.random() * len);
 };
