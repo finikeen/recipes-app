@@ -96,7 +96,7 @@
   animation: brand-flicker 5s ease-in-out infinite;
 }
 
-/* Ember particle layer (applied to .app::after) */
+/* Ember particle layer (applied to .app::after)
 .forge__embers::after {
   content: "";
   position: fixed;
@@ -123,9 +123,9 @@
     1150px 86vh 3px 0 rgba(232, 92, 42, 0.6),
     1250px 95vh 2px 0 rgba(232, 160, 66, 0.5);
   animation: ember-rise 10s linear infinite;
-}
+} */
 
-/* Purple spark layer */
+/* Purple spark layer
 .forge__sparks::before {
   content: "";
   position: fixed;
@@ -145,6 +145,42 @@
     1000px 89vh 2px 0 rgba(167, 139, 250, 0.5),
     1180px 94vh 1px 0 rgba(139, 92, 246, 0.4);
   animation: spark-drift 13s linear infinite;
+} */
+
+/* Mobile menu ember particles */
+@keyframes mobile-menu-embers {
+  0% {
+    transform: translateY(100%) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-100%) translateX(20px);
+    opacity: 0;
+  }
+}
+
+/* Mobile menu spark particles */
+@keyframes mobile-menu-sparks {
+  0% {
+    transform: translateY(100%) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.4;
+  }
+  85% {
+    opacity: 0.05;
+  }
+  100% {
+    transform: translateY(-100%) translateX(-15px) rotate(180deg);
+    opacity: 0;
+  }
 }
 
 /* Subtle entrance: fade + slight lift */

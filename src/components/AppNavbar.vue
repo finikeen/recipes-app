@@ -202,4 +202,80 @@ onUnmounted(() => {
 .navbar__mobile-menu--open {
   transform: translateX(0);
 }
+
+/* Ember particles for mobile menu */
+.navbar__mobile-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  box-shadow:
+    10px 85% 2px 0 rgba(232, 160, 66, 0.6),
+    40px 80% 1px 0 rgba(232, 92, 42, 0.5),
+    80px 88% 2px 0 rgba(232, 160, 66, 0.4),
+    120px 82% 1px 0 rgba(232, 92, 42, 0.5),
+    160px 92% 2px 0 rgba(232, 160, 66, 0.5),
+    200px 78% 1px 0 rgba(232, 92, 42, 0.4);
+  animation: mobile-menu-embers 8s linear infinite;
+}
+
+/* Spark particles for mobile menu */
+.navbar__mobile-menu::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  box-shadow:
+    30px 82% 1px 0 rgba(139, 92, 246, 0.4),
+    100px 88% 1px 0 rgba(139, 92, 246, 0.3),
+    170px 80% 1px 0 rgba(167, 139, 250, 0.4),
+    240px 85% 1px 0 rgba(139, 92, 246, 0.3);
+  animation: mobile-menu-sparks 10s linear infinite;
+}
+
+/* Ember particles for mobile menu */
+.navbar__mobile-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  box-shadow:
+    10px 85% 2px 0 rgba(232, 160, 66, 0.6),
+    40px 80% 1px 0 rgba(232, 92, 42, 0.5),
+    80px 88% 2px 0 rgba(232, 160, 66, 0.4),
+    120px 82% 1px 0 rgba(232, 92, 42, 0.5),
+    160px 92% 2px 0 rgba(232, 160, 66, 0.5),
+    200px 78% 1px 0 rgba(232, 92, 42, 0.4);
+  animation: mobile-menu-embers 8s linear infinite;
+}
+
+/* Spark particles for mobile menu */
+.navbar__mobile-menu::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  box-shadow:
+    30px 82% 1px 0 rgba(139, 92, 246, 0.4),
+    100px 88% 1px 0 rgba(139, 92, 246, 0.3),
+    170px 80% 1px 0 rgba(167, 139, 250, 0.4),
+    240px 85% 1px 0 rgba(139, 92, 246, 0.3);
+  animation: mobile-menu-sparks 10s linear infinite;
+}
 </style>
