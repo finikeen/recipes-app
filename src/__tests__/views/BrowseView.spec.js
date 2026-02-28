@@ -69,11 +69,8 @@ describe('BrowseView', () => {
 
   it('shows filter chip buttons for available tags', async () => {
     const wrapper = mountBrowseView({ recipes: sampleRecipes })
-    // Open filters
-    const filtersBtn = wrapper.find('.browse__filters-btn')
-    await filtersBtn.trigger('click')
     await wrapper.vm.$nextTick()
-    // Should have tag filter chips
+    // Top-tags row renders chips directly (no filter button needed)
     const chips = wrapper.findAll('.browse__filter-chip')
     expect(chips.length).toBeGreaterThan(0)
   })

@@ -35,6 +35,13 @@ const handleLogout = async () => {
       Browse
     </RouterLink>
     <RouterLink
+      :to="{ name: 'ingredient-search' }"
+      class="nav-links__item forge__link"
+      @click="$emit('link-clicked')"
+    >
+      By Ingredient
+    </RouterLink>
+    <RouterLink
       :to="{ name: 'recipe-create' }"
       class="nav-links__item forge__link"
       @click="$emit('link-clicked')"

@@ -32,6 +32,11 @@ const routes = [
     component: () => import('@/features/recipes/views/RecipeFormView.vue')
   },
   {
+    path: '/ingredient-search',
+    name: 'ingredient-search',
+    component: () => import('@/features/recipes/views/IngredientSearchView.vue')
+  },
+  {
     path: '/auth',
     name: 'auth',
     component: () => import('@/features/auth/views/AuthView.vue')

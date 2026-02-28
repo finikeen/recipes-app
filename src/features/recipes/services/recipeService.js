@@ -122,5 +122,22 @@ export const recipeService = {
     } catch (err) {
       throw new Error(`Failed to set ingredients: ${err.message}`)
     }
+  },
+
+  async populateIngredientNames(recipes) {
+    try {
+      await Promise.all(
+        recipes.map(async (recipe) => {
+          const ingredientsRef = collection(db, 'recipes', recipe.id, 'ingredients')
+          const snapshot = await getDocs(ingredientsRef)
+          const names = snapshot.docs
+            .map(d => d.data().item?.toLowerCase())
+            .filter(Boolean)
+          recipe.ingredientNames = [...new Set(names)]
+        })
+      )
+    } catch (err) {
+      throw new Error(`Failed to populate ingredient names: ${err.message}`)
+    }
   }
 }
