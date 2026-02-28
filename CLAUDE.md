@@ -15,6 +15,7 @@ npm run preview  # Preview the production build
 - Order: `<script setup>` → `<template>` → `<style scoped>`
 - Plain JavaScript (no TypeScript)
 - No semicolons
+- For PrimeVue: import paths use full names (e.g., `primevue/confirmationservice` not `primevue/confirmservice`). PrimeVueResolver handles most auto-imports — only keep explicit imports for services and directives.
 
 ### Styling
 
@@ -25,6 +26,7 @@ npm run preview  # Preview the production build
   @reference "../../../assets/main.css";
   ```
 - Follow BEM naming for custom CSS classes.
+- Only use valid Tailwind utility classes. Do not invent classes like `ease` or `font-inherit`. When unsure, check the Tailwind docs or grep existing usage in the codebase.
 
 ### Accessibility
 
@@ -34,10 +36,16 @@ npm run preview  # Preview the production build
 ### Git
 
 - Use `git switch -c` to create and switch to new branches (not `git checkout -b`).
+- Always commit or stash changes before starting new features or switching branches. Never block progress by refusing to proceed due to uncommitted changes — instead, offer to commit/stash automatically and continue.
 
 ### Firebase
-- Only use the Firebase web SDK, do not create any backend functions or use the Admin SDK. 
+- Only use the Firebase web SDK, do not create any backend functions or use the Admin SDK.
 - Prefer v9 modular imports (not the older namespaced API).
+- When modifying security rules, always ensure subcollections (e.g., ingredients) are covered. When querying recipes, use the `name` field (not `title`) and ensure public/unauthenticated access where specified.
+
+### Code Editing
+
+- When doing bulk find-and-replace across files, always do a second verification pass to catch files missed by the initial regex/search pattern.
 
 ### Checking Documentation
 

@@ -2,9 +2,7 @@ import { createRouter, createWebHistory } from "vue-router"
 import { watch } from "vue"
 import HomeView from "@/features/recipes/views/HomeView.vue"
 import RecipeDetailView from "@/features/recipes/views/RecipeDetailView.vue"
-import RecipeFormView from "@/features/recipes/views/RecipeFormView.vue"
 import BrowseView from "@/features/recipes/views/BrowseView.vue"
-import AuthView from "@/features/auth/views/AuthView.vue"
 import { useAuthStore } from "@/features/auth/store"
 
 const routes = [
@@ -26,17 +24,17 @@ const routes = [
   {
     path: '/recipes/new',
     name: 'recipe-create',
-    component: RecipeFormView
+    component: () => import('@/features/recipes/views/RecipeFormView.vue')
   },
   {
     path: '/recipes/:id/edit',
     name: 'recipe-edit',
-    component: RecipeFormView
+    component: () => import('@/features/recipes/views/RecipeFormView.vue')
   },
   {
     path: '/auth',
     name: 'auth',
-    component: AuthView
+    component: () => import('@/features/auth/views/AuthView.vue')
   },
   {
     path: '/:pathMatch(.*)*',

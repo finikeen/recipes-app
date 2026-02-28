@@ -39,8 +39,11 @@
     ]
   },
   "enabledPlugins": {
-    "firebase@firebase": true
+    "firebase@firebase": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true
   },
+  "outputStyle": "default",
   "mcpServers": {
     "playwright": {
       "command": "npx",
@@ -50,6 +53,5 @@
         "--caps=vision"
       ]
     }
-  },
-  "outputStyle": "default"
+  }
 }
