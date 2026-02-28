@@ -38,6 +38,9 @@
       }
     ]
   },
+  "enabledPlugins": {
+    "firebase@firebase": true
+  },
   "mcpServers": {
     "playwright": {
       "command": "npx",
@@ -48,7 +51,5 @@
       ]
     }
   },
-  "enabledPlugins": {
-    "firebase@firebase": true
-  }
+  "outputStyle": "default"
 }

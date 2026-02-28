@@ -1,4 +1,8 @@
 <script setup>
+/**
+ * TODO: move browse, new recipe, and auth links into a separate component that can be reused in the mobile menu
+ * TODO: add a mobile menu with a hamburger icon, on the right side, that toggles the visibility of the links on small screens
+ */
 import { useAuthStore } from "@/features/auth/store";
 import { useRouter } from "vue-router";
 
