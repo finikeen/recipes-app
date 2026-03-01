@@ -50,7 +50,7 @@ describe('RecipeCard', () => {
         tags: ['VeryLongTagNameThatExceedsFifteen']
       }
       const wrapper = mount(RecipeCard, { props: { recipe } })
-      const tagButton = wrapper.find('button[data-test="tag"]')
+      const tagButton = wrapper.find('button[data-test="keyword"]')
       expect(tagButton.text()).toBe('VeryLongTagName...')
     })
 
@@ -132,7 +132,7 @@ describe('RecipeCard', () => {
         tags: ['VeryLongTagNameThatExceedsFifteen', 'Short']
       }
       const wrapper = mount(RecipeCard, { props: { recipe } })
-      const tagButtons = wrapper.findAll('button[data-test="tag"]')
+      const tagButtons = wrapper.findAll('button[data-test="keyword"]')
       await tagButtons[0].trigger('click')
       const emitted = wrapper.emitted('tag-click')
       expect(emitted).toBeTruthy()
@@ -147,7 +147,7 @@ describe('RecipeCard', () => {
         tags: ['Tag1']
       }
       const wrapper = mount(RecipeCard, { props: { recipe, clickable: true } })
-      const tagButton = wrapper.find('button[data-test="tag"]')
+      const tagButton = wrapper.find('button[data-test="keyword"]')
       await tagButton.trigger('click')
       expect(wrapper.emitted('tag-click')).toBeTruthy()
       // Card click should not have been emitted
@@ -221,7 +221,7 @@ describe('RecipeCard', () => {
         tags: ['VeryLongTagNameThatExceedsFifteen']
       }
       const wrapper = mount(RecipeCard, { props: { recipe } })
-      const tagButton = wrapper.find('button[data-test="tag"]')
+      const tagButton = wrapper.find('button[data-test="keyword"]')
       expect(tagButton.attributes('title')).toBe('VeryLongTagNameThatExceedsFifteen')
     })
   })

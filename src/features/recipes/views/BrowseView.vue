@@ -63,6 +63,7 @@ onMounted(async () => {
         v-for="tag in [...activeTagFilters]"
         :key="tag"
         class="browse__tag-pill"
+        :aria-label="`Remove keyword ${tag}`"
         @click="toggleTag(tag)"
       >
         {{ tag }} ✕

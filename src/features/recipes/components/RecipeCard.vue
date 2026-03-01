@@ -74,9 +74,10 @@ const handleTagClick = (tag) => {
         <button
           v-for="(tag, index) in displayTags"
           :key="`${tag}-${index}`"
-          data-test="tag"
+          data-test="keyword"
           class="recipe-card__tag"
           :title="sourceKeywords[index]"
+          :aria-label="`Filter by keyword: ${sourceKeywords[index]}`"
           @click.stop="handleTagClick(sourceKeywords[index])"
         >
           {{ tag }}
