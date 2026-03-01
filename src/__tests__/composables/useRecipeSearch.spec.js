@@ -8,6 +8,14 @@ const recipes = [
   { id: 3, name: 'Caesar Salad', description: 'Crispy romaine', tags: ['salad', 'italian'] },
 ]
 
+const keywordRecipes = [
+  { id: 1, name: 'Pasta Carbonara', keywords: ['italian', 'pasta', 'weeknight'] },
+  { id: 2, name: 'Chicken Soup',    keywords: ['soup', 'chicken', 'comfort food'] },
+  { id: 3, name: 'Caesar Salad',    keywords: ['salad', 'italian'] },
+  { id: 4, name: 'Unnamed Dish' },
+  { id: 5, name: 'Old Recipe',      tags: ['legacy', 'soup'] },
+]
+
 describe('useRecipeSearch', () => {
   it('returns all recipes when query is empty and no tags active', () => {
     const source = ref(recipes)
@@ -73,5 +81,42 @@ describe('useRecipeSearch', () => {
     clearFilters()
     expect(searchQuery.value).toBe('')
     expect(filteredRecipes.value).toHaveLength(3)
+  })
+
+  describe('keywords support', () => {
+    it('uses keywords for topTags when present', () => {
+      const source = ref(keywordRecipes)
+      const { topTags } = useRecipeSearch(source)
+      expect(topTags.value).toContain('italian')
+      expect(topTags.value).toContain('soup')
+    })
+
+    it('falls back to tags when keywords is absent', () => {
+      const source = ref(keywordRecipes)
+      const { topTags } = useRecipeSearch(source)
+      expect(topTags.value).toContain('legacy')
+    })
+
+    it('filters recipes by keyword via toggleTag', () => {
+      const source = ref(keywordRecipes)
+      const { filteredRecipes, toggleTag } = useRecipeSearch(source)
+      toggleTag('italian')
+      expect(filteredRecipes.value.map(r => r.id)).toEqual(expect.arrayContaining([1, 3]))
+      expect(filteredRecipes.value.map(r => r.id)).not.toContain(2)
+    })
+
+    it('text search matches against keywords as well as name', () => {
+      const source = ref(keywordRecipes)
+      const { filteredRecipes, searchQuery } = useRecipeSearch(source)
+      searchQuery.value = 'weeknight'
+      expect(filteredRecipes.value).toHaveLength(1)
+      expect(filteredRecipes.value[0].id).toBe(1)
+    })
+
+    it('recipe with no keywords and no tags does not break composable', () => {
+      const source = ref(keywordRecipes)
+      const { filteredRecipes } = useRecipeSearch(source)
+      expect(() => filteredRecipes.value).not.toThrow()
+    })
   })
 })
