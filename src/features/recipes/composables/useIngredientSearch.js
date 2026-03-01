@@ -3,16 +3,19 @@ import { TOP_TAG_COUNT } from './useRecipeSearch'
 
 export function useIngredientSearch(recipesSource) {
   const selectedIngredients = ref([])
+  const brewedIngredients = ref([])
   const matchThreshold = ref(1)
   const activeTagFilters = ref(new Set())
   const ingredientQuery = ref('')
 
-  const clampThreshold = () => {
-    const max = selectedIngredients.value.length
-    if (max === 0) {
+  const hasBrewed = computed(() => brewedIngredients.value.length > 0)
+
+  const clampThreshold = (max) => {
+    const limit = max ?? selectedIngredients.value.length
+    if (limit === 0) {
       matchThreshold.value = 1
     } else {
-      matchThreshold.value = Math.min(matchThreshold.value, max)
+      matchThreshold.value = Math.min(matchThreshold.value, limit)
     }
   }
 
@@ -54,11 +57,10 @@ export function useIngredientSearch(recipesSource) {
   })
 
   const filteredRecipes = computed(() => {
-    if (selectedIngredients.value.length === 0) return []
-    const lowerSelected = selectedIngredients.value.map(i => i.toLowerCase())
+    if (brewedIngredients.value.length === 0) return []
     return toValue(recipesSource).filter(recipe => {
       const recipeIngredients = new Set(recipe.ingredientNames ?? [])
-      const matchCount = lowerSelected.filter(i => recipeIngredients.has(i)).length
+      const matchCount = brewedIngredients.value.filter(i => recipeIngredients.has(i)).length
       if (matchCount < matchThreshold.value) return false
       if (activeTagFilters.value.size === 0) return true
       return [...activeTagFilters.value].every(tag => (recipe.tags ?? []).includes(tag))
@@ -80,6 +82,11 @@ export function useIngredientSearch(recipesSource) {
     clampThreshold()
   }
 
+  const brew = () => {
+    brewedIngredients.value = [...selectedIngredients.value]
+    clampThreshold(brewedIngredients.value.length)
+  }
+
   const toggleTag = (tag) => {
     const next = new Set(activeTagFilters.value)
     next.has(tag) ? next.delete(tag) : next.add(tag)
@@ -92,6 +99,7 @@ export function useIngredientSearch(recipesSource) {
 
   const clearAll = () => {
     selectedIngredients.value = []
+    brewedIngredients.value = []
     matchThreshold.value = 1
     activeTagFilters.value = new Set()
     ingredientQuery.value = ''
@@ -99,6 +107,8 @@ export function useIngredientSearch(recipesSource) {
 
   return {
     selectedIngredients,
+    brewedIngredients,
+    hasBrewed,
     matchThreshold,
     activeTagFilters,
     ingredientQuery,
@@ -109,6 +119,7 @@ export function useIngredientSearch(recipesSource) {
     filteredRecipes,
     addIngredient,
     removeIngredient,
+    brew,
     toggleTag,
     clearTagFilters,
     clearAll,

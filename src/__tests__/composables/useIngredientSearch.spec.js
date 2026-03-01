@@ -38,8 +38,9 @@ describe('useIngredientSearch', () => {
 
   it('filters by a single ingredient with threshold 1', () => {
     const source = ref(recipes)
-    const { filteredRecipes, addIngredient } = useIngredientSearch(source)
+    const { filteredRecipes, addIngredient, brew } = useIngredientSearch(source)
     addIngredient('egg')
+    brew()
     expect(filteredRecipes.value).toHaveLength(2)
     expect(filteredRecipes.value.map((r) => r.name)).toContain('Pasta Carbonara')
     expect(filteredRecipes.value.map((r) => r.name)).toContain('Egg Fried Rice')
@@ -47,18 +48,20 @@ describe('useIngredientSearch', () => {
 
   it('filters by multiple ingredients with threshold 1 (any match)', () => {
     const source = ref(recipes)
-    const { filteredRecipes, addIngredient } = useIngredientSearch(source)
+    const { filteredRecipes, addIngredient, brew } = useIngredientSearch(source)
     addIngredient('egg')
     addIngredient('chicken')
+    brew()
     // threshold stays at 1 — any recipe containing egg OR chicken
     expect(filteredRecipes.value).toHaveLength(3)
   })
 
   it('filters by multiple ingredients with threshold equal to count (all must match)', () => {
     const source = ref(recipes)
-    const { filteredRecipes, matchThreshold, addIngredient } = useIngredientSearch(source)
+    const { filteredRecipes, matchThreshold, addIngredient, brew } = useIngredientSearch(source)
     addIngredient('egg')
     addIngredient('onion')
+    brew()
     matchThreshold.value = 2
     // Only Egg Fried Rice has both egg and onion
     expect(filteredRecipes.value).toHaveLength(1)
@@ -79,8 +82,9 @@ describe('useIngredientSearch', () => {
 
   it('combines ingredient filter and tag filter (AND logic)', () => {
     const source = ref(recipes)
-    const { filteredRecipes, addIngredient, toggleTag } = useIngredientSearch(source)
+    const { filteredRecipes, addIngredient, brew, toggleTag } = useIngredientSearch(source)
     addIngredient('parmesan')
+    brew()
     toggleTag('italian')
     // Both Pasta Carbonara and Caesar Salad have parmesan, but only Italian-tagged ones remain
     expect(filteredRecipes.value.every((r) => r.tags.includes('italian'))).toBe(true)
@@ -89,8 +93,9 @@ describe('useIngredientSearch', () => {
 
   it('returns empty array when no recipes match selected ingredients', () => {
     const source = ref(recipes)
-    const { filteredRecipes, addIngredient } = useIngredientSearch(source)
+    const { filteredRecipes, addIngredient, brew } = useIngredientSearch(source)
     addIngredient('truffle oil')
+    brew()
     expect(filteredRecipes.value).toHaveLength(0)
   })
 
