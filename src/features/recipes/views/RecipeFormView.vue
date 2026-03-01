@@ -125,196 +125,293 @@ const handleScrapedData = (recipe) => {
         @data-scraped="handleScrapedData"
       />
 
-      <!-- Name -->
-      <div class="rform__field">
-        <label class="rform__label" for="recipe-name">Name *</label>
-        <InputText
-          id="recipe-name"
-          v-model="name"
-          fluid
-          placeholder="Recipe name"
-          :aria-describedby="errors.name ? 'name-error' : undefined"
-          :aria-invalid="!!errors.name"
-        />
-        <span
-          v-if="errors.name"
-          id="name-error"
-          class="rform__error"
-          role="alert"
-          >{{ errors.name }}</span
-        >
+      <!-- Divider -->
+      <div class="rform__divider" aria-hidden="true">
+        <div class="rform__divider-book">
+          <span class="rform__divider-line"></span>
+          <svg
+            class="rform__divider-icon"
+            viewBox="0 0 48 36"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M24 8C20 6 10 5 2 7L2 28C10 26 20 27 24 29Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              fill="rgba(232,160,66,0.1)"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M24 8C28 6 38 5 46 7L46 28C38 26 28 27 24 29Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              fill="rgba(232,160,66,0.1)"
+              stroke-linejoin="round"
+            />
+            <line
+              x1="24"
+              y1="8"
+              x2="24"
+              y2="29"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <line
+              x1="7"
+              y1="13"
+              x2="21"
+              y2="12"
+              stroke="currentColor"
+              stroke-width="0.8"
+              opacity="0.5"
+            />
+            <line
+              x1="7"
+              y1="17"
+              x2="21"
+              y2="16"
+              stroke="currentColor"
+              stroke-width="0.8"
+              opacity="0.5"
+            />
+            <line
+              x1="7"
+              y1="21"
+              x2="21"
+              y2="20"
+              stroke="currentColor"
+              stroke-width="0.8"
+              opacity="0.5"
+            />
+            <line
+              x1="27"
+              y1="12"
+              x2="41"
+              y2="13"
+              stroke="currentColor"
+              stroke-width="0.8"
+              opacity="0.5"
+            />
+            <line
+              x1="27"
+              y1="16"
+              x2="41"
+              y2="17"
+              stroke="currentColor"
+              stroke-width="0.8"
+              opacity="0.5"
+            />
+            <line
+              x1="27"
+              y1="20"
+              x2="41"
+              y2="21"
+              stroke="currentColor"
+              stroke-width="0.8"
+              opacity="0.5"
+            />
+          </svg>
+          <span class="rform__divider-line"></span>
+        </div>
+        <div class="rform__divider-scroll"></div>
       </div>
 
-      <!-- Description -->
-      <div class="rform__field">
-        <label class="rform__label" for="recipe-desc">Description *</label>
-        <Textarea
-          id="recipe-desc"
-          v-model="description"
-          rows="3"
-          fluid
-          placeholder="A short description of the recipe"
-          :aria-describedby="errors.description ? 'desc-error' : undefined"
-          :aria-invalid="!!errors.description"
-        />
-        <span
-          v-if="errors.description"
-          id="desc-error"
-          class="rform__error"
-          role="alert"
-          >{{ errors.description }}</span
-        >
-      </div>
-
-      <!-- Ingredients builder -->
-      <fieldset class="rform__section" aria-label="Ingredients">
-        <legend class="rform__section-title">Ingredients</legend>
-        <template v-for="(ing, i) in ingredients" :key="ing._key">
-          <div class="rform__ingredient-row">
-            <InputText
-              :value="ing.quantity"
-              @update:modelValue="updateIngredient(i, { quantity: $event })"
-              placeholder="Qty"
-              aria-label="Quantity"
-            />
-            <InputText
-              :value="ing.unit"
-              @update:modelValue="updateIngredient(i, { unit: $event })"
-              placeholder="Unit"
-              aria-label="Unit"
-            />
-            <InputText
-              :value="ing.item"
-              @update:modelValue="updateIngredient(i, { item: $event })"
-              placeholder="Ingredient *"
-              aria-label="Item"
-              class="rform__ingredient-item"
-            />
-            <button
-              type="button"
-              class="forge__button rform__fix-btn"
-              :disabled="!ing.item.trim()"
-              :aria-label="`Auto-parse ingredient ${ing.item || ''}`"
-              @click="fixIngredient(i)"
-            >
-              <i class="pi pi-wrench" aria-hidden="true"></i>
-            </button>
-            <button
-              type="button"
-              class="forge__button rform__remove-btn"
-              @click="removeIngredient(i)"
-              :aria-label="`Remove ingredient ${ing.item || ''}`"
-            >
-              ×
-            </button>
-          </div>
-          <span
-            v-if="parseErrors[ing._key]"
-            class="rform__parse-error"
-            role="alert"
-            >{{ parseErrors[ing._key] }}</span
-          >
-        </template>
-        <button
-          type="button"
-          class="forge__button rform__add-btn"
-          @click="addIngredient"
-        >
-          + Add ingredient
-        </button>
-        <span v-if="errors.ingredients" class="rform__error" role="alert">{{
-          errors.ingredients
-        }}</span>
-      </fieldset>
-
-      <!-- Directions builder -->
-      <fieldset class="rform__section" aria-label="Directions">
-        <legend class="rform__section-title">Directions</legend>
-        <div
-          v-for="(dir, index) in directions"
-          :key="dir._key"
-          class="rform__direction-row"
-        >
-          <span class="rform__step-num" aria-hidden="true"
-            >{{ index + 1 }}.</span
-          >
+      <div class="rform__body">
+        <!-- Name -->
+        <div class="rform__field">
+          <label class="rform__label" for="recipe-name">Name *</label>
           <InputText
-            :value="dir.text"
-            @update:modelValue="updateDirection(index, { text: $event })"
-            placeholder="Describe this step…"
-            class="rform__direction-input"
-            :aria-label="`Step ${index + 1}`"
+            id="recipe-name"
+            v-model="name"
+            fluid
+            placeholder="Recipe name"
+            :aria-describedby="errors.name ? 'name-error' : undefined"
+            :aria-invalid="!!errors.name"
           />
-          <div class="rform__direction-controls">
-            <button
-              type="button"
-              class="forge__button rform__remove-btn"
-              @click="moveDirection(index, index - 1)"
-              :disabled="index === 0"
-              aria-label="Move step up"
+          <span
+            v-if="errors.name"
+            id="name-error"
+            class="rform__error"
+            role="alert"
+            >{{ errors.name }}</span
+          >
+        </div>
+
+        <!-- Description -->
+        <div class="rform__field">
+          <label class="rform__label" for="recipe-desc">Description *</label>
+          <Textarea
+            id="recipe-desc"
+            v-model="description"
+            rows="3"
+            fluid
+            placeholder="A short description of the recipe"
+            :aria-describedby="errors.description ? 'desc-error' : undefined"
+            :aria-invalid="!!errors.description"
+          />
+          <span
+            v-if="errors.description"
+            id="desc-error"
+            class="rform__error"
+            role="alert"
+            >{{ errors.description }}</span
+          >
+        </div>
+
+        <!-- Ingredients builder -->
+        <fieldset class="rform__section" aria-label="Ingredients">
+          <legend class="rform__section-title">Ingredients</legend>
+          <template v-for="(ing, i) in ingredients" :key="ing._key">
+            <div class="rform__ingredient-row">
+              <InputText
+                :value="ing.quantity"
+                @update:modelValue="updateIngredient(i, { quantity: $event })"
+                placeholder="Qty"
+                aria-label="Quantity"
+              />
+              <InputText
+                :value="ing.unit"
+                @update:modelValue="updateIngredient(i, { unit: $event })"
+                placeholder="Unit"
+                aria-label="Unit"
+              />
+              <InputText
+                :value="ing.item"
+                @update:modelValue="updateIngredient(i, { item: $event })"
+                placeholder="Ingredient *"
+                aria-label="Item"
+                class="rform__ingredient-item"
+              />
+              <button
+                type="button"
+                class="forge__button rform__fix-btn"
+                :disabled="!ing.item.trim()"
+                :aria-label="`Auto-parse ingredient ${ing.item || ''}`"
+                @click="fixIngredient(i)"
+              >
+                <i class="pi pi-wrench" aria-hidden="true"></i>
+              </button>
+              <button
+                type="button"
+                class="forge__button rform__remove-btn"
+                @click="removeIngredient(i)"
+                :aria-label="`Remove ingredient ${ing.item || ''}`"
+              >
+                ×
+              </button>
+            </div>
+            <span
+              v-if="parseErrors[ing._key]"
+              class="rform__parse-error"
+              role="alert"
+              >{{ parseErrors[ing._key] }}</span
             >
-              ↑
-            </button>
-            <button
-              type="button"
-              class="forge__button rform__remove-btn"
-              @click="moveDirection(index, index + 1)"
-              :disabled="index === directions.length - 1"
-              aria-label="Move step down"
+          </template>
+          <button
+            type="button"
+            class="forge__button rform__add-btn"
+            @click="addIngredient"
+          >
+            + Add ingredient
+          </button>
+          <span v-if="errors.ingredients" class="rform__error" role="alert">{{
+            errors.ingredients
+          }}</span>
+        </fieldset>
+
+        <!-- Directions builder -->
+        <fieldset class="rform__section" aria-label="Directions">
+          <legend class="rform__section-title">Directions</legend>
+          <div
+            v-for="(dir, index) in directions"
+            :key="dir._key"
+            class="rform__direction-row"
+          >
+            <span class="rform__step-num" aria-hidden="true"
+              >{{ index + 1 }}.</span
             >
-              ↓
-            </button>
-            <button
-              type="button"
-              class="forge__button rform__remove-btn"
-              @click="removeDirection(index)"
-              :aria-label="`Remove step ${index + 1}`"
-            >
-              ×
-            </button>
+            <InputText
+              :value="dir.text"
+              @update:modelValue="updateDirection(index, { text: $event })"
+              placeholder="Describe this step…"
+              class="rform__direction-input"
+              :aria-label="`Step ${index + 1}`"
+            />
+            <div class="rform__direction-controls">
+              <button
+                type="button"
+                class="forge__button rform__remove-btn"
+                @click="moveDirection(index, index - 1)"
+                :disabled="index === 0"
+                aria-label="Move step up"
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                class="forge__button rform__remove-btn"
+                @click="moveDirection(index, index + 1)"
+                :disabled="index === directions.length - 1"
+                aria-label="Move step down"
+              >
+                ↓
+              </button>
+              <button
+                type="button"
+                class="forge__button rform__remove-btn"
+                @click="removeDirection(index)"
+                :aria-label="`Remove step ${index + 1}`"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="forge__button rform__add-btn"
+            @click="addDirection"
+          >
+            + Add step
+          </button>
+          <span v-if="errors.directions" class="rform__error" role="alert">{{
+            errors.directions
+          }}</span>
+        </fieldset>
+
+        <!-- Tags preview -->
+        <div
+          v-if="derivedTags.length"
+          class="rform__section rform__tags-section"
+        >
+          <p class="rform__section-title">Derived Tags</p>
+          <div class="rform__tags">
+            <span v-for="tag in derivedTags" :key="tag" class="forge__tag">{{
+              tag
+            }}</span>
           </div>
         </div>
-        <button
-          type="button"
-          class="forge__button rform__add-btn"
-          @click="addDirection"
-        >
-          + Add step
-        </button>
-        <span v-if="errors.directions" class="rform__error" role="alert">{{
-          errors.directions
-        }}</span>
-      </fieldset>
 
-      <!-- Tags preview -->
-      <div v-if="derivedTags.length" class="rform__section rform__tags-section">
-        <p class="rform__section-title">Derived Tags</p>
-        <div class="rform__tags">
-          <span v-for="tag in derivedTags" :key="tag" class="forge__tag">{{
-            tag
-          }}</span>
+        <!-- Actions -->
+        <div class="rform__actions">
+          <button
+            type="submit"
+            class="forge__button forge__button-primary"
+            :disabled="submitting"
+          >
+            {{
+              submitting ? "Saving…" : isEdit ? "Save Changes" : "Create Recipe"
+            }}
+          </button>
+          <button
+            type="button"
+            class="forge__button"
+            @click="handleCancel"
+            :disabled="submitting"
+          >
+            Cancel
+          </button>
         </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="rform__actions">
-        <button
-          type="submit"
-          class="forge__button forge__button-primary"
-          :disabled="submitting"
-        >
-          {{
-            submitting ? "Saving…" : isEdit ? "Save Changes" : "Create Recipe"
-          }}
-        </button>
-        <button
-          type="button"
-          class="forge__button"
-          @click="handleCancel"
-          :disabled="submitting"
-        >
-          Cancel
-        </button>
       </div>
     </form>
   </div>
@@ -489,5 +586,100 @@ const handleScrapedData = (recipe) => {
   .rform__actions {
     @apply flex-col;
   }
+}
+
+.rform__body {
+  width: 88%;
+  margin: 0 auto;
+}
+
+/* ── Divider ── */
+.rform__divider {
+  @apply my-6;
+}
+
+.rform__divider-book {
+  @apply flex items-center gap-4 mb-4;
+}
+
+.rform__divider-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.25),
+    var(--primary-color)
+  );
+}
+
+.rform__divider-line:last-child {
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    rgba(139, 92, 246, 0.25)
+  );
+}
+
+@keyframes rform-icon-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(232, 160, 66, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(232, 160, 66, 0.75))
+      drop-shadow(0 0 18px rgba(139, 92, 246, 0.35));
+  }
+}
+
+.rform__divider-icon {
+  width: 44px;
+  height: 33px;
+  flex-shrink: 0;
+  color: var(--primary-color);
+  animation: rform-icon-pulse 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rform__divider-icon {
+    animation: none;
+    filter: drop-shadow(0 0 4px rgba(232, 160, 66, 0.4));
+  }
+}
+
+.rform__divider-scroll {
+  position: relative;
+  height: 24px;
+  width: 88%;
+  margin: 0 auto;
+  border-top: 2px solid var(--purple-accent);
+  border-left: 2px solid var(--purple-accent);
+  border-right: 2px solid var(--purple-accent);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: linear-gradient(
+    180deg,
+    rgba(139, 92, 246, 0.07) 0%,
+    transparent 100%
+  );
+  box-shadow: 0 -4px 14px rgba(139, 92, 246, 0.1);
+}
+
+.rform__divider-scroll::before,
+.rform__divider-scroll::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--purple-accent);
+  border-radius: 50%;
+  background: var(--surface-0);
+}
+
+.rform__divider-scroll::before {
+  left: -7px;
+}
+
+.rform__divider-scroll::after {
+  right: -7px;
 }
 </style>

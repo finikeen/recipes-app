@@ -41,12 +41,18 @@ const ingredientLines = computed(() => {
   return null;
 });
 
-const directionLines = computed(() => {
+const stepData = computed(() => {
+  if (
+    Array.isArray(recipe.value?.enrichedSteps) &&
+    recipe.value.enrichedSteps.length > 0
+  ) {
+    return recipe.value.enrichedSteps;
+  }
   if (
     Array.isArray(recipe.value?.directions) &&
     recipe.value.directions.length > 0
   ) {
-    return recipe.value.directions;
+    return recipe.value.directions.map((text, i) => ({ text, order: i }));
   }
   return null;
 });
@@ -229,13 +235,40 @@ onMounted(async () => {
           aria-label="Directions"
         >
           <h2 class="detail__col-heading">Directions</h2>
-          <ol v-if="directionLines" class="detail__list detail__list--ordered">
+          <ol v-if="stepData" class="detail__steps" role="list">
             <li
-              v-for="(step, i) in directionLines"
-              :key="i"
-              class="detail__list-item"
+              v-for="step in stepData"
+              :key="step.order"
+              class="detail__step"
+              :class="{ 'detail__step--critical': step.isCritical }"
             >
-              {{ step }}
+              <div class="detail__step__header">
+                <span class="detail__step__number" aria-hidden="true">{{
+                  step.order + 1
+                }}</span>
+                <span class="detail__step__body">{{ step.text }}</span>
+              </div>
+              <div
+                v-if="
+                  step.estimatedMinutes || step.techniqueType || step.isCritical
+                "
+                class="detail__step__meta"
+              >
+                <span v-if="step.estimatedMinutes" class="detail__step__chip">
+                  <i class="pi pi-clock" aria-hidden="true"></i>
+                  ~{{ step.estimatedMinutes }} min
+                </span>
+                <span v-if="step.techniqueType" class="detail__step__chip">
+                  {{ step.techniqueType }}
+                </span>
+                <span
+                  v-if="step.isCritical"
+                  class="detail__step__chip detail__step__chip--key"
+                >
+                  <i class="pi pi-exclamation-triangle" aria-hidden="true"></i>
+                  Key step
+                </span>
+              </div>
             </li>
           </ol>
           <p v-else class="detail__empty">No directions listed.</p>
@@ -437,15 +470,11 @@ onMounted(async () => {
   padding-bottom: 0.5rem;
 }
 
-/* Lists */
+/* Lists (ingredients) */
 .detail__list {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.detail__list--ordered {
-  counter-reset: direction-counter;
 }
 
 .detail__list-item {
@@ -460,19 +489,57 @@ onMounted(async () => {
   border-bottom: none;
 }
 
-.detail__list--ordered .detail__list-item {
-  counter-increment: direction-counter;
-  padding-left: 2rem;
-  position: relative;
+/* Step cards */
+.detail__steps {
+  @apply m-0 p-0 flex flex-col gap-3 mt-4;
+  list-style: none;
+  padding-inline-start: 0;
 }
 
-.detail__list--ordered .detail__list-item::before {
-  content: counter(direction-counter) ".";
-  position: absolute;
-  left: 0;
-  color: var(--primary-color);
-  font-weight: 700;
-  font-size: 0.8125rem;
+.detail__step {
+  @apply rounded-md p-3;
+  background: var(--surface-100);
+  border: 1px solid
+    color-mix(in srgb, var(--text-color-secondary) 40%, transparent);
+  border-left: 3px solid transparent;
+}
+
+.detail__step--critical {
+  border-left-color: var(--primary-color);
+}
+
+.detail__step__header {
+  @apply flex gap-3 items-start;
+}
+
+.detail__step__number {
+  @apply flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold;
+  background: var(--primary-color);
+  color: var(--primary-btn-color, #0a0812);
+}
+
+.detail__step__body {
+  @apply text-sm leading-relaxed;
+  display: block;
+  color: var(--text-color);
+}
+
+.detail__step__meta {
+  @apply flex flex-wrap gap-2 mt-2 pl-9;
+}
+
+.detail__step__chip {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs;
+  background: var(--surface-200);
+  color: var(--text-color);
+  outline: 1px solid
+    color-mix(in srgb, var(--text-color-secondary) 30%, transparent);
+}
+
+.detail__step__chip--key {
+  background: color-mix(in srgb, var(--primary-color) 15%, transparent);
+  color: var(--text-color);
+  font-weight: 600;
 }
 
 /* Empty state */
