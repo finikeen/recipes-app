@@ -29,6 +29,12 @@ const recipes = [
   },
 ]
 
+const keywordRecipes = [
+  { id: '1', name: 'Pasta Carbonara', keywords: ['italian', 'pasta'], ingredientNames: ['pasta', 'egg'] },
+  { id: '2', name: 'Chicken Soup',    keywords: ['soup', 'chicken'],  ingredientNames: ['chicken', 'broth'] },
+  { id: '3', name: 'Old Stew',        tags: ['legacy', 'stew'],       ingredientNames: ['beef', 'potato'] },
+]
+
 describe('useIngredientSearch', () => {
   it('returns empty array when no ingredients are selected', () => {
     const source = ref(recipes)
@@ -119,5 +125,30 @@ describe('useIngredientSearch', () => {
     expect(matchThreshold.value).toBe(1)
     expect(activeTagFilters.value.size).toBe(0)
     expect(filteredRecipes.value).toHaveLength(0)
+  })
+
+  describe('keywords support', () => {
+    it('uses keywords for topTags when present', () => {
+      const source = ref(keywordRecipes)
+      const { topTags } = useIngredientSearch(source)
+      expect(topTags.value).toContain('italian')
+      expect(topTags.value).toContain('soup')
+    })
+
+    it('falls back to tags when keywords is absent', () => {
+      const source = ref(keywordRecipes)
+      const { topTags } = useIngredientSearch(source)
+      expect(topTags.value).toContain('legacy')
+    })
+
+    it('keyword filter excludes non-matching recipes', () => {
+      const source = ref(keywordRecipes)
+      const { filteredRecipes, addIngredient, brew, toggleTag } = useIngredientSearch(source)
+      addIngredient('pasta')
+      brew()
+      toggleTag('italian')
+      expect(filteredRecipes.value.map(r => r.id)).toContain('1')
+      expect(filteredRecipes.value.map(r => r.id)).not.toContain('2')
+    })
   })
 })

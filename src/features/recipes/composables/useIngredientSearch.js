@@ -8,6 +8,8 @@ export function useIngredientSearch(recipesSource) {
   const activeTagFilters = ref(new Set())
   const ingredientQuery = ref('')
 
+  const getKeywords = (r) => r.keywords ?? r.tags ?? []
+
   const hasBrewed = computed(() => brewedIngredients.value.length > 0)
 
   const clampThreshold = (max) => {
@@ -38,7 +40,7 @@ export function useIngredientSearch(recipesSource) {
   const availableTags = computed(() => {
     const tags = new Set()
     toValue(recipesSource).forEach(recipe => {
-      ;(recipe.tags ?? []).forEach(tag => tags.add(tag))
+      ;getKeywords(recipe).forEach(tag => tags.add(tag))
     })
     return [...tags].sort((a, b) => a.localeCompare(b))
   })
@@ -46,7 +48,7 @@ export function useIngredientSearch(recipesSource) {
   const topTags = computed(() => {
     const freq = {}
     toValue(recipesSource).forEach(recipe => {
-      ;(recipe.tags ?? []).forEach(tag => {
+      ;getKeywords(recipe).forEach(tag => {
         freq[tag] = (freq[tag] ?? 0) + 1
       })
     })
@@ -63,7 +65,7 @@ export function useIngredientSearch(recipesSource) {
       const matchCount = brewedIngredients.value.filter(i => recipeIngredients.has(i)).length
       if (matchCount < matchThreshold.value) return false
       if (activeTagFilters.value.size === 0) return true
-      return [...activeTagFilters.value].every(tag => (recipe.tags ?? []).includes(tag))
+      return [...activeTagFilters.value].every(tag => getKeywords(recipe).includes(tag))
     })
   })
 
