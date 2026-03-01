@@ -21,9 +21,13 @@ const displayDescription = computed(() => {
 });
 
 const displayTags = computed(() => {
-  const tags = props.recipe.tags ?? [];
-  return tags.slice(0, 5).map((tag) => truncateTag(tag));
+  const keywords = props.recipe.keywords ?? props.recipe.tags ?? [];
+  return keywords.slice(0, 5).map((kw) => truncateTag(kw));
 });
+
+const sourceKeywords = computed(
+  () => props.recipe.keywords ?? props.recipe.tags ?? [],
+);
 
 const truncateTag = (tag, maxLength = 15) => {
   return tag.length > maxLength ? tag.substring(0, maxLength) + "..." : tag;
@@ -72,8 +76,8 @@ const handleTagClick = (tag) => {
           :key="`${tag}-${index}`"
           data-test="tag"
           class="recipe-card__tag"
-          :title="recipe.tags[index]"
-          @click.stop="handleTagClick(recipe.tags[index])"
+          :title="sourceKeywords[index]"
+          @click.stop="handleTagClick(sourceKeywords[index])"
         >
           {{ tag }}
         </button>
