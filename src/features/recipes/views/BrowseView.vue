@@ -57,7 +57,7 @@ onMounted(async () => {
       />
     </div>
 
-    <!-- Active tag pills -->
+    <!-- Active keyword pills -->
     <div v-if="activeTagFilters.size > 0" class="browse__active-tags">
       <button
         v-for="tag in [...activeTagFilters]"
@@ -69,7 +69,7 @@ onMounted(async () => {
       </button>
     </div>
 
-    <!-- Top tags shortcut row -->
+    <!-- Top keywords row -->
     <div class="browse__top-tags">
       <button
         v-for="tag in topTags"

@@ -142,9 +142,9 @@ const handleAutocompleteKeydown = (event) => {
         </div>
       </div>
 
-      <!-- Column 2: Tags -->
+      <!-- Column 2: Keywords -->
       <div class="ingredient-search__col-tags">
-        <!-- Active tag pills -->
+        <!-- Active keyword pills -->
         <div
           v-if="activeTagFilters.size > 0"
           class="ingredient-search__active-tags"
@@ -153,14 +153,14 @@ const handleAutocompleteKeydown = (event) => {
             v-for="tag in [...activeTagFilters]"
             :key="tag"
             class="ingredient-search__tag-pill"
-            :aria-label="`Remove tag ${tag}`"
+            :aria-label="`Remove keyword ${tag}`"
             @click="toggleTag(tag)"
           >
             {{ tag }} ✕
           </button>
         </div>
 
-        <!-- Top tags row -->
+        <!-- Top keywords row -->
         <div
           v-if="availableTags.length > 0"
           class="ingredient-search__top-tags"

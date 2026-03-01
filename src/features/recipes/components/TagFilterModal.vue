@@ -30,7 +30,7 @@ const selectedCount = computed(() => props.activeTagFilters.size);
   <Dialog
     :visible="visible"
     @update:visible="emit('update:visible', $event)"
-    header="Filter by Tag"
+    header="Filter by Keyword"
     :modal="true"
     :dismissableMask="true"
     :draggable="false"
@@ -39,8 +39,8 @@ const selectedCount = computed(() => props.activeTagFilters.size);
     <div class="tag-modal__search">
       <InputText
         v-model="searchQuery"
-        placeholder="Search tags..."
-        aria-label="Search tags"
+        placeholder="Search keywords..."
+        aria-label="Search keywords"
         class="tag-modal__search-input"
       />
     </div>
@@ -57,7 +57,7 @@ const selectedCount = computed(() => props.activeTagFilters.size);
         {{ tag }}
       </button>
       <p v-if="filteredTags.length === 0" class="tag-modal__empty">
-        No tags match your search.
+        No keywords match your search.
       </p>
     </div>
 
