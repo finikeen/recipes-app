@@ -5,13 +5,19 @@ const emit = defineEmits(["reforge"]);
 const router = useRouter();
 
 const MEAL_BUTTONS = [
-  { label: "Breakfast", icon: "🌅", tags: ["breakfast"] },
-  { label: "Lunch", icon: "☀️", tags: ["lunch"] },
-  { label: "Dinner", icon: "🌙", tags: ["dinner"] },
+  {
+    label: "Breakfast",
+    icon: "🌅",
+    tags: ["breakfast"],
+    ariaLabel: "Browse Breakfast",
+  },
+  { label: "Lunch", icon: "☀️", tags: ["lunch"], ariaLabel: "Browse Lunch" },
+  { label: "Dinner", icon: "🌙", tags: ["dinner"], ariaLabel: "Browse Dinner" },
   {
     label: "Special",
     icon: "✨",
     tags: ["vegan", "dairy-free", "vegetarian", "seafood"],
+    ariaLabel: "Browse Special recipes",
   },
 ];
 
@@ -27,16 +33,21 @@ function browse(tags) {
         v-for="btn in MEAL_BUTTONS"
         :key="btn.label"
         class="cta-row__btn"
+        :aria-label="btn.ariaLabel"
         @click="browse(btn.tags)"
       >
         <span class="cta-row__icon" aria-hidden="true">{{ btn.icon }}</span>
-        {{ btn.label }}
+        <span class="cta-row__label">{{ btn.label }}</span>
       </button>
     </div>
     <div class="justify-end">
-      <button class="cta-row__btn cta-row__btn--reforge" @click="emit('reforge')">
+      <button
+        class="cta-row__btn cta-row__btn--reforge"
+        aria-label="Reforge recipe"
+        @click="emit('reforge')"
+      >
         <span class="cta-row__icon" aria-hidden="true">🔥</span>
-        Reforge
+        <span class="cta-row__label">Reforge</span>
       </button>
     </div>
   </nav>
