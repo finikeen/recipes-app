@@ -2,6 +2,7 @@
 import { ref, watch, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import NavLinks from "./NavLinks.vue";
+import ForgeFlame from "./ForgeFlame.vue";
 import { useColorMode } from "../composables/useColorMode";
 
 const { isDark, toggle } = useColorMode();
@@ -47,6 +48,7 @@ onUnmounted(() => {
   <nav class="navbar forge__texture-metal">
     <div class="navbar__inner container">
       <RouterLink :to="{ name: 'home' }" class="navbar__brand forge__brand">
+        <ForgeFlame :size="22" />
         Recipe Forge
       </RouterLink>
       <span class="navbar__tagline">
@@ -131,7 +133,7 @@ onUnmounted(() => {
 }
 
 .navbar__brand {
-  @apply text-xl font-bold no-underline;
+  @apply flex items-center gap-2 text-xl font-bold no-underline;
   color: var(--primary-color);
   letter-spacing: 0.5px;
 }

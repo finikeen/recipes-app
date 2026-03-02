@@ -1,0 +1,15 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background circle -->
+  <circle cx="16" cy="16" r="16" fill="#0a0812"/>
+  <!-- Purple flame (back) -->
+  <path
+    d="M 15,26 C 8,24 7,16 11,11 C 12,8 14,6 15,6 C 16,6 18,8 19,11 C 23,16 22,24 15,26 Z"
+    fill="#8b5cf6"
+    opacity="0.9"
+  />
+  <!-- Amber flame (front) -->
+  <path
+    d="M 17,26 C 12,24 11,19 14,14 C 15,11 16,8 17,5 C 18,8 19,11 22,14 C 25,19 22,24 17,26 Z"
+    fill="#e8a042"
+  />
+</svg>
