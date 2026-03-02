@@ -3,6 +3,7 @@ import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useRecipesStore } from "@/features/recipes/store";
 import HeroRecipe from "@/features/recipes/components/HeroRecipe.vue";
+import CtaButtonRow from "@/features/recipes/components/CtaButtonRow.vue";
 
 const recipesStore = useRecipesStore();
 const router = useRouter();
@@ -82,11 +83,8 @@ onMounted(async () => {
       </div>
 
       <template v-else>
-        <HeroRecipe
-          :recipe="featuredRecipe"
-          @load-another="pickRandom"
-          @view-recipe="goToRecipe"
-        />
+        <CtaButtonRow @reforge="pickRandom" />
+        <HeroRecipe :recipe="featuredRecipe" @view-recipe="goToRecipe" />
       </template>
     </template>
   </div>

@@ -77,12 +77,6 @@ describe('HeroRecipe', () => {
     expect(wrapper.text()).toContain('eggs')
   })
 
-  it('emits load-another when Load Another button is clicked', async () => {
-    const wrapper = mountHero()
-    await wrapper.find('button.forge__button:not(.forge__button-primary)').trigger('click')
-    expect(wrapper.emitted('load-another')).toBeTruthy()
-  })
-
   it('emits view-recipe with recipe id when View Full Recipe is clicked', async () => {
     const wrapper = mountHero()
     await wrapper.find('button.forge__button-primary').trigger('click')

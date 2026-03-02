@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useRecipesStore } from "@/features/recipes/store";
 import RecipeCard from "@/features/recipes/components/RecipeCard.vue";
 import TagFilterModal from "@/features/recipes/components/TagFilterModal.vue";
@@ -12,6 +12,7 @@ import { usePagination } from "@/features/recipes/composables/usePagination";
 
 const recipesStore = useRecipesStore();
 const router = useRouter();
+const route = useRoute();
 
 const tagModalOpen = ref(false);
 
@@ -40,6 +41,13 @@ const handleTagClick = (tagName) => {
 
 onMounted(async () => {
   await recipesStore.loadAllRecipes();
+  if (route.query?.tags) {
+    route.query?.tags
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean)
+      .forEach((tag) => toggleTag(tag));
+  }
 });
 </script>
 

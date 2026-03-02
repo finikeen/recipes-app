@@ -9,7 +9,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["load-another", "view-recipe"]);
+const emit = defineEmits(["view-recipe"]);
 
 // Tab state: 'ingredients' | 'directions'
 const activeTab = ref("ingredients");
@@ -73,9 +73,6 @@ const displayTags = computed(() => {
       </div>
 
       <div class="hero__actions">
-        <button class="forge__button" @click="emit('load-another')">
-          Load another
-        </button>
         <button
           class="forge__button forge__button-primary"
           @click="emit('view-recipe', recipe.id)"
