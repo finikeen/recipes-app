@@ -153,14 +153,6 @@ src/
 - **`theme.js`** — PrimeVue Arcane Forge theme preset
 - **`src/assets/main.css`** — Global Tailwind and PrimeUI semantic token imports
 
-## Contributing
-
-When implementing new features:
-1. Check framework documentation using the Context7 MCP server
-2. Follow the coding conventions in this README and [CLAUDE.md](CLAUDE.md)
-3. Add tests for new functionality
-4. Ensure dark mode and responsive design work correctly
-
 ## License
 
 MIT
