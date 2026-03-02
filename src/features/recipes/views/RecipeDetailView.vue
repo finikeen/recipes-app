@@ -41,6 +41,13 @@ const ingredientLines = computed(() => {
   return null;
 });
 
+const completedSteps = ref(new Set());
+const toggleStep = (order) => {
+  const next = new Set(completedSteps.value);
+  next.has(order) ? next.delete(order) : next.add(order);
+  completedSteps.value = next;
+};
+
 const stepData = computed(() => {
   if (
     Array.isArray(recipe.value?.enrichedSteps) &&
@@ -243,9 +250,27 @@ onMounted(async () => {
               :class="{ 'detail__step--critical': step.isCritical }"
             >
               <div class="detail__step__header">
-                <span class="detail__step__number" aria-hidden="true">{{
-                  step.order + 1
-                }}</span>
+                <button
+                  class="detail__step__number"
+                  :class="{
+                    'detail__step__number--done': completedSteps.has(
+                      step.order,
+                    ),
+                  }"
+                  :aria-label="
+                    completedSteps.has(step.order)
+                      ? 'Mark step incomplete'
+                      : 'Mark step complete'
+                  "
+                  @click="toggleStep(step.order)"
+                >
+                  <i
+                    v-if="completedSteps.has(step.order)"
+                    class="pi pi-check"
+                    aria-hidden="true"
+                  ></i>
+                  <span v-else aria-hidden="true">{{ step.order + 1 }}</span>
+                </button>
                 <span class="detail__step__body">{{ step.text }}</span>
               </div>
               <div
@@ -516,6 +541,15 @@ onMounted(async () => {
   @apply flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold;
   background: var(--primary-color);
   color: var(--primary-btn-color, #0a0812);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.detail__step__number--done {
+  background: #22c55e;
+  color: #fff;
 }
 
 .detail__step__body {
