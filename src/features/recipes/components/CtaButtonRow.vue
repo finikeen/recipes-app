@@ -28,7 +28,7 @@ function browse(tags) {
 
 <template>
   <nav class="cta-row" aria-label="Browse by meal type">
-    <div class="flex gap-4">
+    <div class="cta-row__meal-group">
       <button
         v-for="btn in MEAL_BUTTONS"
         :key="btn.label"
@@ -40,7 +40,7 @@ function browse(tags) {
         <span class="cta-row__label">{{ btn.label }}</span>
       </button>
     </div>
-    <div class="justify-end">
+    <div class="cta-row__reforge-group">
       <button
         class="cta-row__btn cta-row__btn--reforge"
         aria-label="Reforge recipe"
@@ -60,8 +60,17 @@ function browse(tags) {
   @apply flex flex-wrap justify-between gap-3 pb-6;
 }
 
+.cta-row__meal-group {
+  @apply flex gap-4;
+}
+
+.cta-row__reforge-group {
+  @apply flex justify-end;
+}
+
 .cta-row__btn {
-  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold cursor-pointer transition-all;
+  @apply inline-flex items-center justify-center gap-2 rounded-full text-sm font-semibold cursor-pointer transition-all;
+  @apply w-11 h-11 p-0 sm:w-auto sm:h-auto sm:px-5 sm:py-2.5;
   background-color: var(--surface-100);
   color: var(--text-color);
   border: 1px solid var(--surface-200);
@@ -89,7 +98,11 @@ function browse(tags) {
 }
 
 .cta-row__icon {
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1;
+}
+
+.cta-row__label {
+  @apply hidden sm:inline;
 }
 </style>
